@@ -11,12 +11,12 @@ Rico\
 Johannes
 ## Unity Portierung von KSR Adventure 2023:
 Noemi\
-Andrin
+Lorenzo
 ## Framework 2025 Demo:
 ### 360° Bilder und Navigation:
 Leon
 ### Minigames Framework:
-Lorenzo
+Andrin
 
 # Zeitplan:
 Sobald Framework Demo fertig hilft Frameworkteam bei Portierung
