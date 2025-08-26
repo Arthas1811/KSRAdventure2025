@@ -41,4 +41,4 @@
 \
 Firmenstrukturierung:\
 CEO: Colin Züst\
-Headcoder: Colin Züst
+Headcoder: Colin Züst\
