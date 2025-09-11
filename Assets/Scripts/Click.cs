@@ -33,8 +33,10 @@ public class Click : MonoBehaviour
             Vector3 position = Quaternion.Euler(0, degree, 0) * Vector3.forward * 25f;
 
             GameObject hotspotObject = Instantiate(hotspotPrefab, position, Quaternion.identity);
-
             hotspotObject.transform.LookAt(Vector3.zero);
+
+            hotspotObject.transform.position += new Vector3(0f, -10f, 0f);
+
             hotspotTargets[hotspotObject] = targetImage;
         }
     }

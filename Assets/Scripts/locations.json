@@ -3,7 +3,7 @@
         "path": "Assets/Images/pi_IMG_20180703_154205_115.jpg",
         "hotspots": [
             {"image": "2", "hotspotDegree": "0"}, 
-            {"image": "3", "hotspotDegree": "180"}]
+            {"image": "4", "hotspotDegree": "180"}]
     },
     "2": {
         "path": "Assets/Images/pi_IMG_20180703_153253_109.jpg",
