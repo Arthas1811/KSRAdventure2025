@@ -1,5 +1,7 @@
 # Framework
-404 not found
+Leon
+Rico 
+Andrin
 # Firmenstrukturierung:
 CEO: Colin\
 Headcoder: Leon
@@ -15,6 +17,8 @@ Lorenzo
 ## Framework 2025 Demo:
 ### 360° Bilder und Navigation:
 Leon
+Rico
+Andrin
 ### Minigames Framework:
 Andrin
 
