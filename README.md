@@ -1,5 +1,5 @@
 # Framework
-Leon 
+Leon\
 Andrin
 # Firmenstrukturierung:
 CEO: Colin\
