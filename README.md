@@ -7,19 +7,19 @@ Headcoder: Leon
 ## Unity Portierung von KSR Adventure 2023:
 ### Navigation/Anzeigen von Bildern, Inventoty:
 Colin\
-Noemi\
+Noemi
 
 ### Minigames:
 Dylan\
-Rico\
+Rico
 
 ### Musik/Videos:
 Lorenzo\
 Andrin
 
 ### Dialoge:
-Johannes\
-\
+Johannes
+
 ## Framework 2025:
 ### 360° Bilder und Navigation:
 Leon\
