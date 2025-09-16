@@ -5,7 +5,7 @@ Headcoder: Leon
 # Aufteilung:
 
 ## Unity Portierung von KSR Adventure 2023:
-### Navigation/Anzeigen von Bildern, Inventoty:
+### Navigation/Anzeigen von Bildern, Inventory:
 Colin\
 Noemi
 
