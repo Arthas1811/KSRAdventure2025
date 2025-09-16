@@ -15,7 +15,7 @@ Johannes\
 Lorenzo
 ## Framework 2025 Demo:
 ### 360° Bilder und Navigation:
-Leon
+Leon\
 Andrin
 ### Minigames Framework:
 Andrin
