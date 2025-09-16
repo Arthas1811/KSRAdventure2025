@@ -1,6 +1,3 @@
-# Framework
-Leon\
-Andrin
 # Firmenstrukturierung:
 CEO: Colin\
 Headcoder: Leon
@@ -8,12 +5,22 @@ Headcoder: Leon
 # Aufteilung:
 
 ## Unity Portierung von KSR Adventure 2023:
+### Navigation/Anzeigen von Bildern, Inventoty:
+Colin\
 Noemi\
+
+### Minigames:
 Dylan\
 Rico\
+
+### Musik/Videos:
+Lorenzo\
+Andrin
+
+### Dialoge:
 Johannes\
-Lorenzo
-## Framework 2025 Demo:
+\
+## Framework 2025:
 ### 360° Bilder und Navigation:
 Leon\
 Andrin
