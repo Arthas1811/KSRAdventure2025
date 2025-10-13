@@ -2,28 +2,13 @@
     "1": {
         "path": "Assets/Images/pi_IMG_20180703_154205_115.jpg",
         "hotspots": [
-            {"image": "2", "hotspotDegree": "0"}, 
-            {"image": "4", "hotspotDegree": "180"}]
+            {"image": "2", "xyDegree": "270", "yzDegree": "0", "bodyDegree": "90"}
+        ]
     },
     "2": {
         "path": "Assets/Images/pi_IMG_20180703_153253_109.jpg",
         "hotspots": [
-            {"image": "1", "hotspotDegree": "90"}, 
-            {"image": "3", "hotspotDegree": "270"}
-        ]
-    },
-    "3": {
-        "path": "Assets/Images/pi_IMG_20180703_154205_115.jpg",
-        "hotspots": [
-            {"image": "2", "hotspotDegree": "45"}, 
-            {"image": "4", "hotspotDegree": "135"}
-        ]
-    },
-    "4": {
-        "path": "Assets/Images/pi_IMG_20180703_153253_109.jpg",
-        "hotspots": [
-            {"image": "1", "hotspotDegree": "0"}, 
-            {"image": "3", "hotspotDegree": "30"}
+            {"image": "1", "xyDegree": "90", "yzDegree": "270", "bodyDegree": "0"}
         ]
     }
 }

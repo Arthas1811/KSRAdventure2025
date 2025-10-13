@@ -7,17 +7,11 @@ using System.Collections.Generic;
 
 public class Click : MonoBehaviour
 {
-
     public Renderer sphere;
-
     private Dictionary<string, Material> materials = new Dictionary<string, Material>();
-
     private int currentImage = 1;
-
     public GameObject hotspotPrefab;
-
     private JObject data;
-
     private Dictionary<GameObject, string> hotspotTargets = new Dictionary<GameObject, string>();
 
 
@@ -28,15 +22,20 @@ public class Click : MonoBehaviour
         foreach (var hotspot in hotspots)
         {
             string targetImage = hotspot["image"].ToString();
-            float degree = float.Parse(hotspot["hotspotDegree"].ToString());
+            float xyDegree = float.Parse(hotspot["xyDegree"].ToString());
+            float yzDegree = float.Parse(hotspot["yzDegree"].ToString());
+            float bodyDegree = float.Parse(hotspot["bodyDegree"].ToString());
 
-            Vector3 position = Quaternion.Euler(0, degree, 0) * Vector3.forward * 25f;
+            Vector3 position = Quaternion.Euler(yzDegree, xyDegree, 0) * Vector3.forward * 25f;
 
             GameObject hotspotObject = Instantiate(hotspotPrefab, position, Quaternion.identity);
             hotspotObject.transform.LookAt(Vector3.zero);
 
-            hotspotObject.transform.position += new Vector3(0f, -10f, 0f);
+            Vector3 euler = hotspotObject.transform.eulerAngles;
+            euler.x = bodyDegree;
+            hotspotObject.transform.eulerAngles = euler;
 
+            // hotspotObject.transform.position += new Vector3(0f, -10f, 0f);
             hotspotTargets[hotspotObject] = targetImage;
         }
     }
@@ -45,7 +44,6 @@ public class Click : MonoBehaviour
     {
         sphere.material = materials[currentImage.ToString()];
     }
-
     void hotspotDestroy(IEnumerable<GameObject> hotspots)
     {
         foreach (var hotspot in hotspots)
@@ -94,7 +92,6 @@ public class Click : MonoBehaviour
                 }
             }
         }
-
         // if (using1) {
         //     sphere.material = material2;
         //     button.transform.position = new Vector3(0f, -10f, 25f);
