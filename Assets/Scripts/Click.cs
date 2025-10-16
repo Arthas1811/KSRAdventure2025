@@ -4,6 +4,9 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Collections.Generic;
+//using System.Numerics;
+//using System.Reflection.Metadata.Ecma335;
+//using System.Drawing;
 
 public class Click : MonoBehaviour
 {
@@ -11,8 +14,10 @@ public class Click : MonoBehaviour
     private Dictionary<string, Material> materials = new Dictionary<string, Material>();
     private int currentImage = 1;
     public GameObject hotspotPrefab;
+    public GameObject polygonPrefab;
     private JObject data;
     private Dictionary<GameObject, string> hotspotTargets = new Dictionary<GameObject, string>();
+    private List<GameObject> polygons = new List<GameObject>();
 
 
     void hotspotInstantiation(int currentImage)
@@ -38,6 +43,58 @@ public class Click : MonoBehaviour
             // hotspotObject.transform.position += new Vector3(0f, -10f, 0f);
             hotspotTargets[hotspotObject] = targetImage;
         }
+
+        JArray costumHotspots = (JArray)data[currentImage.ToString()]["costumHotspots"];
+
+        foreach (var costumHotspot in costumHotspots)
+        {
+            string targetImage = costumHotspot["image"].ToString();
+            var polygonCoordiantes = costumHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
+
+            var vectors = new List<Vector3>();
+            foreach (var coordinates in polygonCoordiantes)
+            {
+                float u = coordinates.x;
+                float v = coordinates.y;
+                float longitude = u * 2f * Mathf.PI;
+                float latitude = (1f - v) * Mathf.PI;
+                float x = 70f * Mathf.Sin(latitude) * Mathf.Cos(longitude);
+                float y = 70f * Mathf.Cos(latitude);
+                float z = 70f * Mathf.Sin(latitude) * Mathf.Sin(longitude);
+
+                vectors.Add(new Vector3(x, y, z));
+            }
+
+            int[] triangles = new int[(vectors.Count - 2) * 3];
+            for (int i = 0; i < vectors.Count - 2; i++)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                triangles[i * 3 + 2] = i + 2;
+            }
+            System.Array.Reverse(triangles);
+
+            Mesh mesh = new Mesh { name = "mesh", vertices = vectors.ToArray(), triangles = triangles, uv = polygonCoordiantes.ToArray() };
+            mesh.RecalculateNormals();
+
+            GameObject polygonObject = Instantiate(polygonPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
+            polygonObject.GetComponent<MeshFilter>().sharedMesh = mesh;
+
+            MeshRenderer meshRenderer = polygonObject.GetComponent<MeshRenderer>();
+            Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+            material.SetColor("_BaseColor", new Color(0, 1, 1, 0.3f));
+            material.SetFloat("_Surface", 1);
+            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+            meshRenderer.sharedMaterial = material;
+
+            MeshCollider meshCollider = polygonObject.GetComponent<MeshCollider>();
+            meshCollider.sharedMesh = mesh;
+            meshCollider.convex = true;
+
+            polygons.Add(polygonObject);
+            hotspotTargets[polygonObject] = targetImage;
+        }
     }
 
     void setMaterial(int currentImage)
@@ -50,6 +107,14 @@ public class Click : MonoBehaviour
         {
             Destroy(hotspot);
         }
+
+        foreach (var polygon in polygons)
+        {
+            Destroy(polygon);
+        }
+
+        polygons.Clear();
+
     }
     void Start()
     {
@@ -111,7 +176,7 @@ public class Click : MonoBehaviour
         Texture2D texture = new Texture2D(2, 2);
         texture.LoadImage(data);
 
-        Material material = new Material(Shader.Find("Unlit/Texture"));
+        Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
         material.mainTexture = texture;
 
         return material;

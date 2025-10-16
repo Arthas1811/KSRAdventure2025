@@ -10,7 +10,7 @@ public class SphereMask : MonoBehaviour
     public string UvString = "0.8870081018518519,0.556712962962963|0.9827835648148148,0.5642361111111112|0.9842303240740741,0.4658564814814815|0.8872974537037037,0.45630787037037035";
 
     [Header("Visual only")]
-    public Color fillColor = new Color(1, 0, 0, 0.5f);
+    public Color fillColor = new Color(0, 1, 1, 0.3f);
 
     private void OnValidate() => Rebuild();
     private void Awake()      => Rebuild();
@@ -20,10 +20,7 @@ public class SphereMask : MonoBehaviour
         if (string.IsNullOrEmpty(UvString)) return;
 
         /* 1. parse uv */
-        var uv = UvString.Split('|')
-                         .Select(p => p.Split(','))
-                         .Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1])))
-                         .ToList();
+        var uv = UvString.Split('|').Select(p => p.Split(',')).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
 
         /* 2. build vertices at the sphere’s current radius */
         float radius = 0.7f;          // ← use whatever scale you have
@@ -64,18 +61,32 @@ public class SphereMask : MonoBehaviour
         GetComponent<MeshFilter>().sharedMesh = m;
 
         /* 6. transparent material */
+        /* 6. transparent material */
         MeshRenderer mr = GetComponent<MeshRenderer>();
+        Material mat;
+
         if (mr.sharedMaterial == null || mr.sharedMaterial.name == "Default-Material")
         {
-            Material mat = new Material(Shader.Find("Universal Render Pipeline/Unlit"))
+            mat = new Material(Shader.Find("Universal Render Pipeline/Unlit"))
             {
-                color = fillColor,
                 name = "MaskMat"
             };
-            mat.SetFloat("_Surface", 1);          // transparent
-            mat.SetFloat("_Blend", 0);            // alpha
-            mat.renderQueue = 3000;
             mr.sharedMaterial = mat;
         }
+        else
+        {
+            mat = mr.sharedMaterial;
+        }
+
+        // correct color + transparency setup for URP
+        mat.SetColor("_BaseColor", fillColor);   // ← key line!
+        mat.SetFloat("_Surface", 1);
+        mat.SetFloat("_Blend", 0);
+        mat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+        mat.SetOverrideTag("RenderType", "Transparent");
+        mat.SetInt("_ZWrite", 0);
+        mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+
+
     }
 }
