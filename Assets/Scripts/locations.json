@@ -2,16 +2,16 @@
     "1": {
         "path": "Assets/Images/pi_IMG_20180703_154205_115.jpg",
         "hotspots": [
-            {"image": "2", "xyDegree": "270", "yzDegree": "0", "bodyDegree": "90"}
+            {"action": "2", "xyDegree": "270", "yzDegree": "0", "bodyDegree": "90"}
         ],
         "costumHotspots": [
-            {"image": "2", "polygonString": "0.16984953703703703,0.6793981481481481;0.3236400462962963,0.6733217592592593;0.3247974537037037,0.4667245370370371;0.17418981481481483,0.46412037037037035"}
+            {"action": "2", "polygonString": "0.16984953703703703,0.6793981481481481;0.3236400462962963,0.6733217592592593;0.3247974537037037,0.4667245370370371;0.17418981481481483,0.46412037037037035"}
         ]
     },
     "2": {
         "path": "Assets/Images/pi_IMG_20180703_153253_109.jpg",
         "hotspots": [
-            {"image": "1", "xyDegree": "90", "yzDegree": "270", "bodyDegree": "0"}
+            {"action": "1", "xyDegree": "90", "yzDegree": "270", "bodyDegree": "0"}
         ],
         "costumHotspots": [
         ]

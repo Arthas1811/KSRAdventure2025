@@ -4,6 +4,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 //using System.Numerics;
 //using System.Reflection.Metadata.Ecma335;
 //using System.Drawing;
@@ -16,7 +17,7 @@ public class Click : MonoBehaviour
     public GameObject hotspotPrefab;
     public GameObject polygonPrefab;
     private JObject data;
-    private Dictionary<GameObject, string> hotspotTargets = new Dictionary<GameObject, string>();
+    private Dictionary<GameObject, string> hotspotActions = new Dictionary<GameObject, string>();
     private List<GameObject> polygons = new List<GameObject>();
 
 
@@ -26,7 +27,7 @@ public class Click : MonoBehaviour
 
         foreach (var hotspot in hotspots)
         {
-            string targetImage = hotspot["image"].ToString();
+            string action = hotspot["action"].ToString();
             float xyDegree = float.Parse(hotspot["xyDegree"].ToString());
             float yzDegree = float.Parse(hotspot["yzDegree"].ToString());
             float bodyDegree = float.Parse(hotspot["bodyDegree"].ToString());
@@ -41,14 +42,14 @@ public class Click : MonoBehaviour
             hotspotObject.transform.eulerAngles = euler;
 
             // hotspotObject.transform.position += new Vector3(0f, -10f, 0f);
-            hotspotTargets[hotspotObject] = targetImage;
+            hotspotActions[hotspotObject] = action;
         }
 
         JArray costumHotspots = (JArray)data[currentImage.ToString()]["costumHotspots"];
 
         foreach (var costumHotspot in costumHotspots)
         {
-            string targetImage = costumHotspot["image"].ToString();
+            string action = costumHotspot["action"].ToString();
             var polygonCoordiantes = costumHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
 
             var vectors = new List<Vector3>();
@@ -82,10 +83,16 @@ public class Click : MonoBehaviour
 
             MeshRenderer meshRenderer = polygonObject.GetComponent<MeshRenderer>();
             Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-            material.SetColor("_BaseColor", new Color(0, 1, 1, 0.3f));
+            material.SetColor("_BaseColor", new Color(1, 1, 0, 0.2f));
             material.SetFloat("_Surface", 1);
             material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
             material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            material.SetInt("_ZWrite", 0);
+            material.SetOverrideTag("RenderType", "Transparent");
+            
             meshRenderer.sharedMaterial = material;
 
             MeshCollider meshCollider = polygonObject.GetComponent<MeshCollider>();
@@ -93,7 +100,11 @@ public class Click : MonoBehaviour
             meshCollider.convex = true;
 
             polygons.Add(polygonObject);
-            hotspotTargets[polygonObject] = targetImage;
+
+            if (int.TryParse(action, out _))
+            {
+                hotspotActions[polygonObject] = action;
+            }
         }
     }
 
@@ -146,12 +157,20 @@ public class Click : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hotspotTargets.TryGetValue(hit.collider.gameObject, out string targetImage))
+                if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
                 {
-                    currentImage = int.Parse(targetImage);
+                    if (int.TryParse(action, out _))
+                    {
+                        currentImage = int.Parse(action);
+                    }
 
-                    hotspotDestroy(hotspotTargets.Keys.ToList());
-                    hotspotTargets.Clear();
+                    else if (action == "minigameOne")
+                    {
+                        SceneManager.LoadScene(action);
+                        return;
+                    }
+                    hotspotDestroy(hotspotActions.Keys.ToList());
+                    hotspotActions.Clear();
                     hotspotInstantiation(currentImage);
                     setMaterial(currentImage);
                 }
