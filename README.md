@@ -2,6 +2,9 @@
 CEO: Colin\
 Headcoder: Leon
 
+# Unity Version
+Unity 6.2 
+
 # Aufteilung:
 
 ## Unity Portierung von KSR Adventure 2023:
