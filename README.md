@@ -11,9 +11,7 @@ Noemi
 
 ### Minigames:
 Dylan\
-Rico
-
-### Musik/Videos:
+Rico\
 Lorenzo\
 Andrin
 
