@@ -59,7 +59,7 @@ public class Click : MonoBehaviour
                 float v = coordinates.y;
                 float longitude = u * 2f * Mathf.PI;
                 float latitude = (1f - v) * Mathf.PI;
-                float x = 70f * Mathf.Sin(latitude) * Mathf.Cos(longitude);
+                float x = 70f * Mathf.Sin(latitude) * Mathf.Cos(longitude) * -1f;
                 float y = 70f * Mathf.Cos(latitude);
                 float z = 70f * Mathf.Sin(latitude) * Mathf.Sin(longitude);
 
@@ -73,7 +73,7 @@ public class Click : MonoBehaviour
                 triangles[i * 3 + 1] = i + 1;
                 triangles[i * 3 + 2] = i + 2;
             }
-            System.Array.Reverse(triangles);
+            //System.Array.Reverse(triangles);
 
             Mesh mesh = new Mesh { name = "mesh", vertices = vectors.ToArray(), triangles = triangles, uv = polygonCoordiantes.ToArray() };
             mesh.RecalculateNormals();
@@ -83,7 +83,7 @@ public class Click : MonoBehaviour
 
             MeshRenderer meshRenderer = polygonObject.GetComponent<MeshRenderer>();
             Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-            material.SetColor("_BaseColor", new Color(1, 1, 0, 0.2f));
+            material.SetColor("_BaseColor", new Color(1, 0, 0, 0.4f));
             material.SetFloat("_Surface", 1);
             material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
             material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
