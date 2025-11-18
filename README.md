@@ -32,3 +32,11 @@ Andrin
 Sobald Framework Demo fertig hilft Frameworkteam bei Portierung
 
 # To Do:
+Alle Features vom alten Game (siehe Teil I) ins neue Framework übernehmen:
+- inventory
+- video
+- musik & sfx
+- einbinden der existierenden MiniGames
+- dialogsystem (z. B. Sprechblasen)
+
+Dokumentation!
