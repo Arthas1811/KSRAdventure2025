@@ -1,3 +1,5 @@
+# JSON Generator:
+https://lesieber.github.io/hotspots-website
 # Firmenstrukturierung:
 CEO: Colin\
 Headcoder: Leon
