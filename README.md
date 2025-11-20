@@ -11,7 +11,7 @@ Unity 6.2
 
 ## Unity Portierung von KSR Adventure 2023:
 ### Merging von Inventory und Navigation:
-Colin\
+Colin
 ### Spielstand Speichern:
 Noemi
 
