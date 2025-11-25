@@ -159,12 +159,11 @@ public class Click : MonoBehaviour
             {
                 if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
                 {
-                    if (int.TryParse(action, out _))
+                    if (action.split(":")[0] != "scene")
                     {
                         currentImage = int.Parse(action);
                     }
-
-                    else if (action == "minigameOne")
+                    else
                     {
                         SceneManager.LoadScene(action);
                         return;
