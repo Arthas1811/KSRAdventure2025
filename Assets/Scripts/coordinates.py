@@ -1,5 +1,5 @@
 import cv2
-path = "/Users/leonsieber/360 Demo/Placeholder/Assets/Images/6.jpg"
+path = "/Users/leonsieber/360 Demo/Placeholder/Assets/Images/1.jpg"
 image = cv2.imread(path)
 height, width = image.shape[:2]
 points = []

@@ -42,12 +42,12 @@ public class Click : MonoBehaviour
         //     hotspotActions[hotspotObject] = action;
         // }
 
-        JArray costumHotspots = (JArray)data[currentImage.ToString()]["costumHotspots"];
+        JArray customHotspots = (JArray)data[currentImage.ToString()]["customHotspots"];
 
-        foreach (var costumHotspot in costumHotspots)
+        foreach (var customHotspot in customHotspots)
         {
-            string action = costumHotspot["action"].ToString();
-            var polygonCoordiantes = costumHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
+            string action = customHotspot["action"].ToString();
+            var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
 
             var vectors = new List<Vector3>();
             foreach (var coordinates in polygonCoordiantes)
