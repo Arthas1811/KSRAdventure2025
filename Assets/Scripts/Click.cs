@@ -5,9 +5,6 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-//using System.Numerics;
-//using System.Reflection.Metadata.Ecma335;
-//using System.Drawing;
 
 public class Click : MonoBehaviour
 {
@@ -23,27 +20,27 @@ public class Click : MonoBehaviour
 
     void hotspotInstantiation(int currentImage)
     {
-        JArray hotspots = (JArray)data[currentImage.ToString()]["hotspots"];
+        // JArray hotspots = (JArray)data[currentImage.ToString()]["hotspots"];
 
-        foreach (var hotspot in hotspots)
-        {
-            string action = hotspot["action"].ToString();
-            float xyDegree = float.Parse(hotspot["xyDegree"].ToString());
-            float yzDegree = float.Parse(hotspot["yzDegree"].ToString());
-            float bodyDegree = float.Parse(hotspot["bodyDegree"].ToString());
+        // foreach (var hotspot in hotspots)
+        // {
+        //     string action = hotspot["action"].ToString();
+        //     float xyDegree = float.Parse(hotspot["xyDegree"].ToString());
+        //     float yzDegree = float.Parse(hotspot["yzDegree"].ToString());
+        //     float bodyDegree = float.Parse(hotspot["bodyDegree"].ToString());
 
-            Vector3 position = Quaternion.Euler(yzDegree, xyDegree, 0) * Vector3.forward * 25f;
+        //     Vector3 position = Quaternion.Euler(yzDegree, xyDegree, 0) * Vector3.forward * 25f;
 
-            GameObject hotspotObject = Instantiate(hotspotPrefab, position, Quaternion.identity);
-            hotspotObject.transform.LookAt(Vector3.zero);
+        //     GameObject hotspotObject = Instantiate(hotspotPrefab, position, Quaternion.identity);
+        //     hotspotObject.transform.LookAt(Vector3.zero);
 
-            Vector3 euler = hotspotObject.transform.eulerAngles;
-            euler.x = bodyDegree;
-            hotspotObject.transform.eulerAngles = euler;
+        //     Vector3 euler = hotspotObject.transform.eulerAngles;
+        //     euler.x = bodyDegree;
+        //     hotspotObject.transform.eulerAngles = euler;
 
-            // hotspotObject.transform.position += new Vector3(0f, -10f, 0f);
-            hotspotActions[hotspotObject] = action;
-        }
+        //     // hotspotObject.transform.position += new Vector3(0f, -10f, 0f);
+        //     hotspotActions[hotspotObject] = action;
+        // }
 
         JArray costumHotspots = (JArray)data[currentImage.ToString()]["costumHotspots"];
 
@@ -159,7 +156,7 @@ public class Click : MonoBehaviour
             {
                 if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
                 {
-                    if (action.split(":")[0] != "scene")
+                    if (action.Split(":")[0] != "scene")
                     {
                         currentImage = int.Parse(action);
                     }
