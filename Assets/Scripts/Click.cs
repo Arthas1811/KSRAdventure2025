@@ -10,7 +10,7 @@ public class Click : MonoBehaviour
 {
     public Renderer sphere;
     private Dictionary<string, Material> materials = new Dictionary<string, Material>();
-    private int currentImage = 1;
+    private string currentImage = "start";
     public GameObject hotspotPrefab;
     public GameObject polygonPrefab;
     private JObject data;
@@ -18,7 +18,7 @@ public class Click : MonoBehaviour
     private List<GameObject> polygons = new List<GameObject>();
 
 
-    void hotspotInstantiation(int currentImage)
+    void hotspotInstantiation(string currentImage)
     {
         // JArray hotspots = (JArray)data[currentImage.ToString()]["hotspots"];
 
@@ -42,7 +42,7 @@ public class Click : MonoBehaviour
         //     hotspotActions[hotspotObject] = action;
         // }
 
-        JArray customHotspots = (JArray)data[currentImage.ToString()]["customHotspots"];
+        JArray customHotspots = (JArray)data[currentImage]["customHotspots"];
 
         foreach (var customHotspot in customHotspots)
         {
@@ -105,9 +105,9 @@ public class Click : MonoBehaviour
         }
     }
 
-    void setMaterial(int currentImage)
+    void setMaterial(string currentImage)
     {
-        sphere.material = materials[currentImage.ToString()];
+        sphere.material = materials[currentImage];
     }
     void hotspotDestroy(IEnumerable<GameObject> hotspots)
     {
@@ -158,7 +158,7 @@ public class Click : MonoBehaviour
                 {
                     if (action.Split(":")[0] != "scene")
                     {
-                        currentImage = int.Parse(action);
+                        currentImage = action;
                     }
                     else
                     {
