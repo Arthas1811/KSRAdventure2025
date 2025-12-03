@@ -97,11 +97,7 @@ public class Click : MonoBehaviour
             meshCollider.convex = true;
 
             polygons.Add(polygonObject);
-
-            if (int.TryParse(action, out _))
-            {
-                hotspotActions[polygonObject] = action;
-            }
+            hotspotActions[polygonObject] = action;
         }
     }
 
@@ -162,7 +158,8 @@ public class Click : MonoBehaviour
                     }
                     else
                     {
-                        SceneManager.LoadScene(action);
+                        Debug.Log("Loading scene: " + action.Split(":")[1]);
+                        SceneManager.LoadScene(action.Split(":")[1]);
                         return;
                     }
                     hotspotDestroy(hotspotActions.Keys.ToList());
