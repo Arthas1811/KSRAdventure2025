@@ -16,6 +16,9 @@ public class Click : MonoBehaviour
     private JObject data;
     private Dictionary<GameObject, string> hotspotActions = new Dictionary<GameObject, string>();
     private List<GameObject> polygons = new List<GameObject>();
+    private Vector2 mouseOne;
+    private Vector2 mouseTwo;
+    private Vector2 deltaMouse;
 
 
     void hotspotInstantiation(string currentImage)
@@ -143,8 +146,15 @@ public class Click : MonoBehaviour
 
     void Update()
     {
-
         if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            mouseOne = Mouse.current.position.ReadValue();
+        }
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            mouseTwo = Mouse.current.position.ReadValue();
+            deltaMouse = mouseOne - mouseTwo;
+            if (deltaMouse.magnitude < 5f)
         {
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
@@ -168,6 +178,7 @@ public class Click : MonoBehaviour
                     setMaterial(currentImage);
                 }
             }
+        }
         }
         // if (using1) {
         //     sphere.material = material2;
