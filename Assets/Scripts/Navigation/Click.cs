@@ -128,7 +128,7 @@ public class Click : MonoBehaviour
     {
         cam.fieldOfView = 60f;
 
-        string jsonPath = "Assets/Scripts/locations.json";
+        string jsonPath = "Assets/Scripts/Navigation/locations.json";
         string json = File.ReadAllText(jsonPath);
 
         data = JObject.Parse(json);

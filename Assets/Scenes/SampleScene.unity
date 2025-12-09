@@ -821,6 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be1e85d04d434842b795ff0097721aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 330585545}
   sphere: {fileID: 814811506}
   hotspotPrefab: {fileID: 1590938207}
   polygonPrefab: {fileID: 104267027}
