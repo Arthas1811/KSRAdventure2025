@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
+using System.IO;
 
 public class chemie_keller : MonoBehaviour
 {
@@ -67,7 +69,7 @@ public class chemie_keller : MonoBehaviour
             c = Mathf.Lerp(8f, 21f, normalized);
         }
 
-        if (Input.GetMouseButtonDown(0) && !isFrozen)
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             isFrozen = true;
             if (cText != null)
