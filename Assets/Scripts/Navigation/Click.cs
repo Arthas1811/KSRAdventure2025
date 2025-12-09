@@ -22,6 +22,7 @@ public class Click : MonoBehaviour
     private Vector2 mouseTwo;
     private Vector2 deltaMouse;
     public float zoomDuration = 0.2f;
+    public float FOV = 60f;
 
     void hotspotInstantiation(string currentImage)
     {
@@ -107,18 +108,24 @@ public class Click : MonoBehaviour
     }
 
 
-    IEnumerator updateImage(float duration, string currentImage, Dictionary<GameObject, string> hotspotActions)
+    IEnumerator updateImage(float duration, float startFOV, string currentImage, Dictionary<GameObject, string> hotspotActions)
     {
-        cam.fieldOfView = 60f;
+        //cam.fieldOfView = startFOV;
         float startTime = Time.time;
+        float subtraction = 40;
+        if (startFOV - subtraction < 1)
+        {
+            subtraction = startFOV - 1;
+        }
+
         while((Time.time - startTime) < duration)
         {
             float t = (Time.time - startTime) / duration;
-            cam.fieldOfView = Mathf.Lerp(60f, 20f, t);
+            cam.fieldOfView = Mathf.Lerp(startFOV, startFOV-subtraction, t);
             yield return null;
         }
-        cam.fieldOfView = 20f;
-        cam.fieldOfView = 60f;
+        //cam.fieldOfView = startFOV-subtraction;
+        cam.fieldOfView = startFOV;
 
         hotspotDestroy(hotspotActions.Keys.ToList());
         hotspotActions.Clear();
@@ -146,7 +153,7 @@ public class Click : MonoBehaviour
     }
     void Start()
     {
-        cam.fieldOfView = 60f;
+        cam.fieldOfView = FOV;
 
         string jsonPath = "Assets/Scripts/Navigation/locations.json";
         string json = File.ReadAllText(jsonPath);
@@ -178,32 +185,45 @@ public class Click : MonoBehaviour
             mouseTwo = Mouse.current.position.ReadValue();
             deltaMouse = mouseOne - mouseTwo;
             if (deltaMouse.magnitude < 5f)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
+                Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+                if (Physics.Raycast(ray, out RaycastHit hit))
                 {
-                    if (action.Split(":")[0] == "scene")
+                    if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
                     {
-                        Debug.Log("Loading scene: " + action.Split(":")[1]);
-                        SceneManager.LoadScene(action.Split(":")[1]);
-                        return;
+                        if (action.Split(":")[0] == "scene")
+                        {
+                            Debug.Log("Loading scene: " + action.Split(":")[1]);
+                            SceneManager.LoadScene(action.Split(":")[1]);
+                            return;
+                        }
+                        // else if (action.Split(":")[0] = "item")
+                        // {
+                        //     inventory.add(action.Split(":")[1]);
+                        // }
+                        else
+                        {
+                            currentImage = action;
+                        }
+                        
+                        StartCoroutine(updateImage(zoomDuration, FOV, currentImage, hotspotActions));
                     }
-                    // else if (action.Split(":")[0] = "item")
-                    // {
-                    //     inventory.add(action.Split(":")[1]);
-                    // }
-                    else
-                    {
-                        currentImage = action;
-                    }
-                    
-                    StartCoroutine(updateImage(zoomDuration, currentImage, hotspotActions));
                 }
             }
         }
+
+        Vector2 scroll = Mouse.current.scroll.ReadValue();
+
+        if (scroll.y < 0)
+        {
+            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView + 2f, 5f, 60f);
+            FOV = cam.fieldOfView;
+        }
+        else if (scroll.y > 0)
+        {
+            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - 2f, 5f, 60f);
+            FOV = cam.fieldOfView;
         }
         // if (using1) {
         //     sphere.material = material2;
