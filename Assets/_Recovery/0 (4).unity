@@ -829,7 +829,7 @@ MonoBehaviour:
   sphere: {fileID: 814811506}
   hotspotPrefab: {fileID: 1590938207}
   polygonPrefab: {fileID: 104267027}
-  zoomDuration: 0.2
+  zoomDuration: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

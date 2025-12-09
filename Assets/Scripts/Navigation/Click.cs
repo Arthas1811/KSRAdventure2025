@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Click : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class Click : MonoBehaviour
     private Vector2 mouseOne;
     private Vector2 mouseTwo;
     private Vector2 deltaMouse;
-
+    public float zoomDuration = 0.2f;
 
     void hotspotInstantiation(string currentImage)
     {
@@ -105,6 +106,26 @@ public class Click : MonoBehaviour
         }
     }
 
+
+    IEnumerator updateImage(float duration, string currentImage, Dictionary<GameObject, string> hotspotActions)
+    {
+        cam.fieldOfView = 60f;
+        float startTime = Time.time;
+        while((Time.time - startTime) < duration)
+        {
+            float t = (Time.time - startTime) / duration;
+            cam.fieldOfView = Mathf.Lerp(60f, 20f, t);
+            yield return null;
+        }
+        cam.fieldOfView = 20f;
+        cam.fieldOfView = 60f;
+
+        hotspotDestroy(hotspotActions.Keys.ToList());
+        hotspotActions.Clear();
+        hotspotInstantiation(currentImage);
+        setMaterial(currentImage);
+    }
+
     void setMaterial(string currentImage)
     {
         sphere.material = materials[currentImage];
@@ -122,7 +143,6 @@ public class Click : MonoBehaviour
         }
 
         polygons.Clear();
-
     }
     void Start()
     {
@@ -165,21 +185,22 @@ public class Click : MonoBehaviour
             {
                 if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
                 {
-                    if (action.Split(":")[0] != "scene")
-                    {
-                        currentImage = action;
-                    }
-                    else
+                    if (action.Split(":")[0] == "scene")
                     {
                         Debug.Log("Loading scene: " + action.Split(":")[1]);
                         SceneManager.LoadScene(action.Split(":")[1]);
                         return;
                     }
+                    // else if (action.Split(":")[0] = "item")
+                    // {
+                    //     inventory.add(action.Split(":")[1]);
+                    // }
+                    else
+                    {
+                        currentImage = action;
+                    }
                     
-                    hotspotDestroy(hotspotActions.Keys.ToList());
-                    hotspotActions.Clear();
-                    hotspotInstantiation(currentImage);
-                    setMaterial(currentImage);
+                    StartCoroutine(updateImage(zoomDuration, currentImage, hotspotActions));
                 }
             }
         }
