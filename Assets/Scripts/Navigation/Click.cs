@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class Click : MonoBehaviour
 {
+    public Camera cam;
     public Renderer sphere;
     private Dictionary<string, Material> materials = new Dictionary<string, Material>();
     private string currentImage = "start";
@@ -125,6 +126,8 @@ public class Click : MonoBehaviour
     }
     void Start()
     {
+        cam.fieldOfView = 60f;
+
         string jsonPath = "Assets/Scripts/locations.json";
         string json = File.ReadAllText(jsonPath);
 
@@ -172,6 +175,7 @@ public class Click : MonoBehaviour
                         SceneManager.LoadScene(action.Split(":")[1]);
                         return;
                     }
+                    
                     hotspotDestroy(hotspotActions.Keys.ToList());
                     hotspotActions.Clear();
                     hotspotInstantiation(currentImage);

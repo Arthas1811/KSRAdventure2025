@@ -1,6 +1,6 @@
 {
     "start": {
-        "path": "Assets/Images/1.jpg",
+        "path": "Assets/images/Navigation/1.jpg",
         "customHotspots": [
         {
             "action": "2",
@@ -9,7 +9,7 @@
         ]
     },
     "2": {
-        "path": "Assets/Images/2.jpg",
+        "path": "Assets/images/Navigation/2.jpg",
         "hotspots": [],
         "customHotspots": [
             {
@@ -23,7 +23,7 @@
         ]
     },
     "3": {
-        "path": "Assets/Images/3.jpg",
+        "path": "Assets/images/Navigation/3.jpg",
         "hotspots": [],
         "customHotspots": [
             {
@@ -41,7 +41,7 @@
         ]
     },
     "4": {
-        "path": "Assets/Images/4.jpg",
+        "path": "Assets/images/Navigation/4.jpg",
         "hotspots": [],
         "customHotspots": [
             {
@@ -55,7 +55,7 @@
         ]
     },
     "5": {
-        "path": "Assets/Images/5.jpg",
+        "path": "Assets/images/Navigation/5.jpg",
         "hotspots": [],
         "customHotspots": [
             {
@@ -69,7 +69,7 @@
         ]
     },
     "6": {
-        "path": "Assets/Images/6.jpg",
+        "path": "Assets/images/Navigation/6.jpg",
         "hotspots": [],
         "customHotspots": [
             {
@@ -83,7 +83,7 @@
         ]
     },
     "7": {
-        "path": "Assets/Images/7.jpg",
+        "path": "Assets/images/Navigation/7.jpg",
         "hotspots": [],
         "customHotspots": [
             {
