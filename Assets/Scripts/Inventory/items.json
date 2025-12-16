@@ -1,0 +1,17 @@
+{
+  "entries": [
+    { "id": "frog", "data": { "name": "frog", "description": "One lick away...", "image": "Inventory/inventory_items/frog" } },
+    { "id": "glycerin", "data": { "name": "Glycerin", "description": "Zutat für Nitroglycerin", "image": "Inventory/inventory_items/glycerin" } },
+    { "id": "coffeemug", "data": { "name": "Mug", "description": "Mugman", "image": "Inventory/inventory_items/Kaffeetasse" } },
+    { "id": "goldkey", "data": { "name": "Key1", "description": "Key to everything", "image": "Inventory/inventory_items/key" } },
+    { "id": "key2", "data": { "name": "Key2", "description": "Another key", "image": "Inventory/inventory_items/key2" } },
+    { "id": "keys", "data": { "name": "Kellerschlüssel", "description": "Ein Schlüssel, der den Keller öffnet", "image": "Inventory/inventory_items/keys" } },
+    { "id": "nitric_acid", "data": { "name": "Salpetersäure", "description": "Zutat für Nitroglycerin, ätzend", "image": "Inventory/inventory_items/nitric_acid" } },
+    { "id": "nitro_beaker", "data": { "name": "Nitroglyceringemisch", "description": "Gemisch mit Nitroglycerin, bereit für den Kühlschrank", "image": "Inventory/inventory_items/nitro_beaker" } },
+    { "id": "nitrogly_beaker", "data": { "name": "Nitroglycerin", "description": "Klumpen Nitroglycerin, instabil", "image": "Inventory/inventory_items/nitrogly_beaker" } },
+    { "id": "pipette", "data": { "name": "Pipette", "description": "Gefüllt mit Nitroglycerin, hochexplosiv", "image": "Inventory/inventory_items/pipette" } },
+    { "id": "redbull", "data": { "name": "RedBull", "description": "Energydrink mit mythischer Heilkraft", "image": "Inventory/inventory_items/redbull" } },
+    { "id": "sulfuric_acid", "data": { "name": "Schwefelsäure", "description": "Zutat für Nitroglycerin, ätzend, brandfördernd, giftig", "image": "Inventory/inventory_items/sulfuric_acid" } },
+    { "id": "surfacecharger", "data": { "name": "Surface Charger", "description": "fills the cup with a hole in it", "image": "Inventory/inventory_items/SurfaceCharger" } }
+  ]
+}
