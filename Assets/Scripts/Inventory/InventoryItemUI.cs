@@ -11,7 +11,8 @@ public class InventoryItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void Setup(ItemData data)
     {
-        itemName.text = data.name;
+        //itemName.text = data.name;
+        name = data.name;
         description = data.description;
         itemImage.sprite = data.sprite;
     }
@@ -21,7 +22,7 @@ public class InventoryItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         if (HoverWindow.Instance != null)
         {
-            HoverWindow.Instance.Show(description);
+            HoverWindow.Instance.Show(name, description);
         }
     }
 

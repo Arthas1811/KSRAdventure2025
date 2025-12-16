@@ -8,6 +8,7 @@ public class HoverWindow : MonoBehaviour
 
     [Header("UI References")]
     public CanvasGroup canvasGroup;
+    public TMP_Text hoverWindowTitle;
     public TMP_Text hoverWindowText;
 
     [Header("Settings")]
@@ -36,10 +37,12 @@ public class HoverWindow : MonoBehaviour
     }
 
     // show hover window
-    public void Show(string text)
+    public void Show(string name, string description)
     {
+        if (hoverWindowTitle != null)
+            hoverWindowTitle.text = name;
         if (hoverWindowText != null)
-            hoverWindowText.text = text;
+            hoverWindowText.text = description;
 
         if (canvasGroup != null)
             canvasGroup.alpha = 1f;
