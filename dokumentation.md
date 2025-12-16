@@ -5,7 +5,7 @@ The [locations.json](/Assets/Scripts/locations.json) file in this case is used t
 The Json Structure is built as following. **"image_name"** at the beginning should be replaced wkth the name of the image file. The **"path"** should contain the path to the image. In this structure, **"costumHotspots"** was used as the definition of an area one clicks to complete an action (like switching to the next image or starting a minigame).
 ```json
     "image_name": {
-        "path": "Assets/Images/image_name.jpg",
+        "path": "Assets/Images/Navigation/image_name.jpg",
         "costumHotspots": [
             {
                 "action": "2",
@@ -37,7 +37,7 @@ To add the generated code to the [final file](/Assets/Scripts/locations.json), o
 ```json
 {
     "image_name": {
-        "path": "Assets/Images/image_name.jpg",
+        "path": "Assets/Images/Navigation/image_name.jpg",
         "costumHotspots": [
             {
                 "action": "2",
