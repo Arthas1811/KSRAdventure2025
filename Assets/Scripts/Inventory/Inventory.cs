@@ -1,14 +1,12 @@
 using UnityEngine;
 
-public class TestInventory : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
     void Start()
     {
         string[] allItems = new string[]
         {
-            "frog", "glycerin", "coffeemug", "goldkey", "key2", "keys",
-            "nitric_acid", "nitro_beaker", "nitrogly_beaker", "pipette",
-            "redbull", "sulfuric_acid", "surfacecharger"
+            "frog", "glycerin"
         };
 
         foreach (var id in allItems)
@@ -18,4 +16,11 @@ public class TestInventory : MonoBehaviour
 
         Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
     }
+
+    public void add(string id)
+    {
+        InventoryState.Instance.ReceiveItem(id);
+        Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
+    }
+
 }

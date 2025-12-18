@@ -23,6 +23,7 @@ public class Click : MonoBehaviour
     private Vector2 deltaMouse;
     public float zoomDuration = 0.2f;
     public float FOV = 60f;
+    public Inventory inventory;
 
     void hotspotInstantiation(string currentImage)
     {
@@ -198,10 +199,10 @@ public class Click : MonoBehaviour
                             SceneManager.LoadScene(action.Split(":")[1]);
                             return;
                         }
-                        // else if (action.Split(":")[0] = "item")
-                        // {
-                        //     inventory.add(action.Split(":")[1]);
-                        // }
+                        else if (action.Split(":")[0] == "item")
+                        {
+                            inventory.add(action.Split(":")[1]);
+                        }
                         else
                         {
                             currentImage = action;
