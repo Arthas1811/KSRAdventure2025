@@ -206,9 +206,8 @@ public class Click : MonoBehaviour
                         else
                         {
                             currentImage = action;
+                            StartCoroutine(updateImage(zoomDuration, FOV, currentImage, hotspotActions));
                         }
-                        
-                        StartCoroutine(updateImage(zoomDuration, FOV, currentImage, hotspotActions));
                     }
                 }
             }
