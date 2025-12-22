@@ -1,38 +1,24 @@
 # JSON Generator:
 https://lesieber.github.io/hotspots-website
-# Firmenstrukturierung:
-CEO: Colin\
-Headcoder: Leon
 
 # Unity Version
 Unity 6.2 
 
-# Aufteilung:
-
 ## Unity Portierung von KSR Adventure 2023:
-### Merging von Inventory und Navigation:
-Colin
-### Spielstand Speichern:
-Noemi
 
 ### Minigames:
 Dylan\
-Rico\
 Lorenzo\
-Andrin
 
 ### Dialoge:
 Johannes
 
 ## Framework 2025:
-### 360° Bilder und Navigation:
+### Allgemeines:
 Leon\
-Andrin
-### Minigames Framework:
-Andrin
-
-# Zeitplan:
-Sobald Framework Demo fertig hilft Frameworkteam bei Portierung
+Andrin\
+Rico\
+Noemi
 
 # To Do:
 Alle Features vom alten Game (siehe Teil I) ins neue Framework übernehmen:
@@ -41,5 +27,6 @@ Alle Features vom alten Game (siehe Teil I) ins neue Framework übernehmen:
 - musik & sfx
 - einbinden der existierenden MiniGames
 - dialogsystem (z. B. Sprechblasen)
+- spielstand speichern
 
 Dokumentation!
