@@ -22,10 +22,10 @@ Noemi
 
 # To Do:
 Alle Features vom alten Game (siehe Teil I) ins neue Framework übernehmen:
-- inventory
+- inventory ✅
 - video
 - musik & sfx
-- einbinden der existierenden MiniGames
+- einbinden von einem MiniGame
 - dialogsystem (z. B. Sprechblasen)
 - spielstand speichern
 
