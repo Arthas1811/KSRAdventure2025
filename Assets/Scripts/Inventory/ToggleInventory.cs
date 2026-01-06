@@ -10,6 +10,7 @@ public class InventoryAnimatedToggle : MonoBehaviour
     private CanvasGroup canvasGroup;
     private bool isOpen = false;
     private float animationDuration = 0.25f; // seconds
+    public Click main;
 
     void Start()
     {
@@ -39,7 +40,7 @@ public class InventoryAnimatedToggle : MonoBehaviour
     private void ToggleInventory()
     {
         isOpen = !isOpen;
-
+        main.inventoryOpen = isOpen;
         StopAllCoroutines();
         StartCoroutine(AnimateInventory(isOpen));
     }

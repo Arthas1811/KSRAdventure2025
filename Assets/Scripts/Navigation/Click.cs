@@ -24,6 +24,7 @@ public class Click : MonoBehaviour
     public float zoomDuration = 0.2f;
     public float FOV = 60f;
     public Inventory inventory;
+    public bool inventoryOpen = false;
 
     void hotspotInstantiation(string currentImage)
     {
@@ -177,65 +178,68 @@ public class Click : MonoBehaviour
 
     void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            mouseOne = Mouse.current.position.ReadValue();
-        }
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
-        {
-            mouseTwo = Mouse.current.position.ReadValue();
-            deltaMouse = mouseOne - mouseTwo;
-            if (deltaMouse.magnitude < 5f)
+        if (!inventoryOpen)
+        {   
+            if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                mouseOne = Mouse.current.position.ReadValue();
+            }
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                mouseTwo = Mouse.current.position.ReadValue();
+                deltaMouse = mouseOne - mouseTwo;
+                if (deltaMouse.magnitude < 5f)
                 {
-                    if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
+                    Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+                    if (Physics.Raycast(ray, out RaycastHit hit))
                     {
-                        if (action.Split(":")[0] == "scene")
+                        if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
                         {
-                            Debug.Log("Loading scene: " + action.Split(":")[1]);
-                            SceneManager.LoadScene(action.Split(":")[1]);
-                            return;
-                        }
-                        else if (action.Split(":")[0] == "item")
-                        {
-                            inventory.add(action.Split(":")[1]);
-                        }
-                        else
-                        {
-                            currentImage = action;
-                            StartCoroutine(updateImage(zoomDuration, FOV, currentImage, hotspotActions));
+                            if (action.Split(":")[0] == "scene")
+                            {
+                                Debug.Log("Loading scene: " + action.Split(":")[1]);
+                                SceneManager.LoadScene(action.Split(":")[1]);
+                                return;
+                            }
+                            else if (action.Split(":")[0] == "item")
+                            {
+                                inventory.add(action.Split(":")[1]);
+                            }
+                            else
+                            {
+                                currentImage = action;
+                                StartCoroutine(updateImage(zoomDuration, FOV, currentImage, hotspotActions));
+                            }
                         }
                     }
                 }
             }
-        }
 
-        Vector2 scroll = Mouse.current.scroll.ReadValue();
+            Vector2 scroll = Mouse.current.scroll.ReadValue();
 
-        if (scroll.y < 0)
-        {
-            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView + 2f, 5f, 60f);
-            FOV = cam.fieldOfView;
-        }
-        else if (scroll.y > 0)
-        {
-            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - 2f, 5f, 60f);
-            FOV = cam.fieldOfView;
-        }
-        // if (using1) {
-        //     sphere.material = material2;
-        //     button.transform.position = new Vector3(0f, -10f, 25f);
-        //     button.transform.rotation = Quaternion.Euler(0, 0, 0);
-        // }
+            if (scroll.y < 0)
+            {
+                cam.fieldOfView = Mathf.Clamp(cam.fieldOfView + 2f, 5f, 60f);
+                FOV = cam.fieldOfView;
+            }
+            else if (scroll.y > 0)
+            {
+                cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - 2f, 5f, 60f);
+                FOV = cam.fieldOfView;
+            }
+            // if (using1) {
+            //     sphere.material = material2;
+            //     button.transform.position = new Vector3(0f, -10f, 25f);
+            //     button.transform.rotation = Quaternion.Euler(0, 0, 0);
+            // }
 
-        // else if (!using1) {
-        //     sphere.material = material1;
-        //     button.transform.position = new Vector3(0f, -10f, -25f);
-        //     button.transform.rotation = Quaternion.Euler(0, 0, 0);
-        // }
+            // else if (!using1) {
+            //     sphere.material = material1;
+            //     button.transform.position = new Vector3(0f, -10f, -25f);
+            //     button.transform.rotation = Quaternion.Euler(0, 0, 0);
+            // }
+        }
     }
 
     private Material LoadMaterialFromPath(string path) 
