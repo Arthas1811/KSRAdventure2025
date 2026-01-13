@@ -26,7 +26,7 @@ Alle Features vom alten Game (siehe Teil I) ins neue Framework übernehmen:
 - video
 - musik & sfx
 - einbinden von einem MiniGame
-- dialogsystem (z. B. Sprechblasen)
+- dialogsystem (z. B. Sprechblasen) ✅
 - spielstand speichern
 
 Dokumentation!
