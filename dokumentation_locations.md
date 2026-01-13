@@ -1,33 +1,72 @@
-# Documentation
+# Documentation Json
 ## Json Structure
-The [locations.json](/Assets/Scripts/locations.json) file in this case is used to build up the whole navigation system and link images to one another. Jsons are mostly used to store data as it is in this case.
+The [locations.json](/Assets/Resources/Locations/locations.json) file in this case is used to build up the whole navigation system and link images to one another. Jsons are mostly used to store data as it is in this case.
 
-The Json Structure is built as following. **"image_name"** at the beginning should be replaced wkth the name of the image file. The **"path"** should contain the path to the image. In this structure, **"costumHotspots"** was used as the definition of an area one clicks to complete an action (like switching to the next image or starting a minigame).
+The Json Structure is built as following. **"image_name"** at the beginning should be replaced wkth the name of the image file. The **"path"** should contain the path to the image. In this structure, **"costumHotspots"** was used as the definition of an area one clicks to complete an action (like switching to the next image, starting a minigame, adding an Item to the inventory, etc.).
 ```json
-    "image_name": {
-        "path": "Assets/Images/Navigation/image_name.jpg",
-        "costumHotspots": [
-            {
-                "action": "2",
-                "polygonString": "0.47452445652173914,0.6022418478260869;0.5322690217391305,0.6059782608695652;0.5407608695652174,0.37024456521739135;0.47927989130434784,0.3627717391304348"
-            }
-        ]
-    }
+"image_name": {
+    "states": {
+        "main": {
+            "requirements": [],
+            "path": "Assets/Images/Navigation/image_name.jpg"
+        },
+        "lightOn": {
+            "requirements": ["states:start:light:true"],
+            "path": "Assets/Images/Navigation/image_name_different_state.jpg"
+        }
+    },
+    "customHotspots": [
+        {
+            "actions": [
+                "next_image_name",
+                "item:redbull",
+                "dialogue:library_dialogue",
+                "states:start:openDoor:true"
+            ],
+            "requirements": ["item:redbull:true", "states:start:openDoor:true"],
+            "polygonString": "polygon_string"
+        },
+        {
+            "actions": [
+                "next_image_name"
+            ],
+            "requirements": [],
+            "polygonString": "0.041254125412541254,0.6328382838283828;0.13366336633663367,0.5932343234323432;0.13036303630363036,0.4744224422442245;0.03135313531353135,0.5008250825082508"
+        },
+    ]
+}
 ```
-The to be completed action is defined as **"action"** and can either contain the image name (to switch to the next image):
+The first definition "states" lets and image have different states (for example: if a location can have a door closed/open, lights on/off it needs different images for the different states). The "main" state is the state in which the location is in when you first enter it. In a state, there are two things to be defined: "requirements" and "path":
 ```json
-"action": "image_name",
+"requirements": ["requirement_one", "requirement_two"],
+"path": "path_to_image_state"
 ```
-or a unity scene name (to switch to the named scene like a minigame or a cutscene): 
+The to be completed actions of a specific hotspot are defined as **"actions"**. These actions will be completed when clicking on the Hotspot (button) and can contain the image name (to switch to the next image):
 ```json
-"action": "scene:scene_name",
+"actions": [
+    "next_image_name"
+]
 ```
-This action has to be defined as **scene:scene_name** or else the code will think it's and image name. 
+a unity scene name (to switch to the named scene like a minigame or a cutscene): 
+```json
+"actions": [
+    "scene:scene_name"
+]
+```
+an item ID (to add an item to the inventory):
+```json
+"actions": [
+    "item:item_ID"
+]
+```
+a dialogue (to start a defined dialogue):
+```json
+"actions": [
+    "dialogue:dialogue_name"
+]
+```
+or a state (to change a state in the save file which are checked by the above named requirements).
 
-The polygon string contains coordinates of specific points on the 360° image:
-```json
-"polygonString": "0.47452445652173914,0.6022418478260869;0.5322690217391305,0.6059782608695652;0.5407608695652174,0.37024456521739135;0.47927989130434784,0.3627717391304348"
-```
 ### Json generator:
 Using the [Json generator](https://lesieber.github.io/hotspots-website) you can effortlessly create a json code with the above mentioned structure for a given image.
 

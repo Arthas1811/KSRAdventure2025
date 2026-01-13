@@ -5,9 +5,8 @@ using System.IO;
 public class Inventory : MonoBehaviour
 {   
     JObject saveData;
-    private string[] allItems;
-
     public SaveDataManager saveDataManager;
+    private string[] allItems;
 
     void Start()
     {
