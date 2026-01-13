@@ -33,7 +33,7 @@ public class InventoryAnimatedToggle : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Keyboard.current.eKey.wasPressedThisFrame && !main.dialogueOpen)
             ToggleInventory();
     }
 

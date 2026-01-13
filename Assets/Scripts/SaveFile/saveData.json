@@ -1,0 +1,14 @@
+{
+  "currentImage": "start",
+  "itemsOwned": [
+    "frog",
+    "glycerin",
+    "redbull",
+    "redbull"
+  ],
+  "states": {
+    "start": {
+      "openDoor": true
+    }
+  }
+}

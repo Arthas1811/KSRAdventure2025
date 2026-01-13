@@ -12,11 +12,13 @@ public class Click : MonoBehaviour
     public Camera cam;
     public Renderer sphere;
     private Dictionary<string, Material> materials = new Dictionary<string, Material>();
-    private string currentImage = "start";
+    private string currentImage = "";
     public GameObject hotspotPrefab;
     public GameObject polygonPrefab;
     private JObject data;
-    private Dictionary<GameObject, string> hotspotActions = new Dictionary<GameObject, string>();
+    private JObject saveData;
+    private Dictionary<GameObject, string[]> hotspotActions = new Dictionary<GameObject, string[]>();
+    private Dictionary<GameObject, string[]> hotspotRequirements = new Dictionary<GameObject, string[]>();
     private List<GameObject> polygons = new List<GameObject>();
     private Vector2 mouseOne;
     private Vector2 mouseTwo;
@@ -25,36 +27,17 @@ public class Click : MonoBehaviour
     public float FOV = 60f;
     public Inventory inventory;
     public bool inventoryOpen = false;
+    public bool dialogueOpen = false;
 
     void hotspotInstantiation(string currentImage)
     {
-        // JArray hotspots = (JArray)data[currentImage.ToString()]["hotspots"];
-
-        // foreach (var hotspot in hotspots)
-        // {
-        //     string action = hotspot["action"].ToString();
-        //     float xyDegree = float.Parse(hotspot["xyDegree"].ToString());
-        //     float yzDegree = float.Parse(hotspot["yzDegree"].ToString());
-        //     float bodyDegree = float.Parse(hotspot["bodyDegree"].ToString());
-
-        //     Vector3 position = Quaternion.Euler(yzDegree, xyDegree, 0) * Vector3.forward * 25f;
-
-        //     GameObject hotspotObject = Instantiate(hotspotPrefab, position, Quaternion.identity);
-        //     hotspotObject.transform.LookAt(Vector3.zero);
-
-        //     Vector3 euler = hotspotObject.transform.eulerAngles;
-        //     euler.x = bodyDegree;
-        //     hotspotObject.transform.eulerAngles = euler;
-
-        //     // hotspotObject.transform.position += new Vector3(0f, -10f, 0f);
-        //     hotspotActions[hotspotObject] = action;
-        // }
-
         JArray customHotspots = (JArray)data[currentImage]["customHotspots"];
 
         foreach (var customHotspot in customHotspots)
         {
-            string action = customHotspot["action"].ToString();
+            string[] actions = customHotspot["actions"].ToObject<string[]>();
+            string[] requirements = customHotspot["requirements"].ToObject<string[]>();
+
             var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
 
             var vectors = new List<Vector3>();
@@ -97,7 +80,7 @@ public class Click : MonoBehaviour
             material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
             material.SetInt("_ZWrite", 0);
             material.SetOverrideTag("RenderType", "Transparent");
-            
+
             meshRenderer.sharedMaterial = material;
 
             MeshCollider meshCollider = polygonObject.GetComponent<MeshCollider>();
@@ -105,12 +88,13 @@ public class Click : MonoBehaviour
             meshCollider.convex = true;
 
             polygons.Add(polygonObject);
-            hotspotActions[polygonObject] = action;
+            hotspotActions[polygonObject] = actions;
+            hotspotRequirements[polygonObject] = requirements;
+
         }
     }
 
-
-    IEnumerator updateImage(float duration, float startFOV, string currentImage, Dictionary<GameObject, string> hotspotActions)
+    IEnumerator updateImage(float duration, float startFOV, string currentImage, Dictionary<GameObject, string[]> hotspotActions, Dictionary<GameObject, string[]> hotspotRequirements)
     {
         //cam.fieldOfView = startFOV;
         float startTime = Time.time;
@@ -120,10 +104,10 @@ public class Click : MonoBehaviour
             subtraction = startFOV - 1;
         }
 
-        while((Time.time - startTime) < duration)
+        while ((Time.time - startTime) < duration)
         {
             float t = (Time.time - startTime) / duration;
-            cam.fieldOfView = Mathf.Lerp(startFOV, startFOV-subtraction, t);
+            cam.fieldOfView = Mathf.Lerp(startFOV, startFOV - subtraction, t);
             yield return null;
         }
         //cam.fieldOfView = startFOV-subtraction;
@@ -131,6 +115,7 @@ public class Click : MonoBehaviour
 
         hotspotDestroy(hotspotActions.Keys.ToList());
         hotspotActions.Clear();
+        hotspotRequirements.Clear();
         hotspotInstantiation(currentImage);
         setMaterial(currentImage);
     }
@@ -153,33 +138,227 @@ public class Click : MonoBehaviour
 
         polygons.Clear();
     }
+
+    void updateState(string action, string currentImage)
+    {
+        //string path = action.Replace("states:", "");
+
+        string[] parts = action.Split(':');
+
+        string newValueStr = parts[parts.Length - 1];
+        string targetKey = parts[parts.Length - 2];
+
+        JToken current = saveData;
+        for (int i = 0; i < parts.Length - 2; i++)
+        {
+            if (current[parts[i]] != null)
+            {
+                current = (JObject)current[parts[i]];
+            }
+            else
+            {
+                Debug.LogError("path not found");
+                return;
+            }
+        }
+
+        if (bool.TryParse(newValueStr, out bool boolValue))
+        {
+            current[targetKey] = boolValue;
+        }
+        else if (int.TryParse(newValueStr, out int intValue))
+        {
+            current[targetKey] = intValue;
+        }
+        else
+        {
+            current[targetKey] = newValueStr;
+        }
+
+        // save changes to save file
+        saveDataInFile(saveData);
+
+        // setMaterial(currentImage);
+        // hotspotDestroy(hotspotActions.Keys.ToList());
+        // hotspotActions.Clear();
+        // hotspotInstantiation(currentImage);
+
+        Debug.Log($"Updated {targetKey} to {newValueStr}");
+
+        // foreach (var img in data)
+        // {
+        //     if (img.Key == image)
+        //     {
+        //         foreach (var imgstate in img.Value["states"])
+        //         {
+        //             if (imgstate["action"].ToString() == state.ToString())
+        //             {
+
+        //                 imgstate["active"] = !imgstate["active"].ToObject<bool>();
+        //             }
+        //             if (imgstate["active"].ToObject<bool>())
+        //             {
+        //                 string key = img.Key + ":" + imgstate["action"].ToString();
+        //                 string path = imgstate["path"].ToString();
+        //                 Material material = LoadMaterialFromPath(path);
+        //                 materials[key] = material;
+        //             }
+        //             if (currentImage == img.Key)
+        //             {
+        //                 hotspotDestroy(hotspotActions.Keys.ToList());
+        //                 hotspotActions.Clear();
+        //                 setMaterial(currentImage);
+        //                 hotspotInstantiation(currentImage);
+        //             }
+        //         }
+        //     }
+        // }
+    }
+
+    void saveDataInFile(JObject saveData)
+    {
+        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
+        string saveJson = saveData.ToString();
+        File.WriteAllText(savePath, saveJson);
+    }
+
+    private bool checkRequirements(string[] requirements)
+    {
+        if (requirements == null || requirements.Length == 0)
+        {
+            return true;
+        }
+        foreach (var requirement in requirements)
+        {
+            if (requirement.StartsWith("item:"))
+            {
+                string[] parts = requirement.Split(':');
+                string itemName = parts[1];
+                bool itemValue = parts[2].ToLower() == "true";
+
+                JArray itemsOwned = saveData["itemsOwned"] as JArray;
+
+                bool hasItem = itemsOwned != null && itemsOwned.Any(t => t.ToString() == itemName);
+
+                if (hasItem != itemValue)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                string[] parts = requirement.Split(':');
+                JToken current = saveData;
+
+                bool pathFound = true;
+                for (int i = 0; i < parts.Length - 1; i++)
+                {
+                    if (current != null && current[parts[i]] != null)
+                    {
+                        current = current[parts[i]];
+                    }
+                    else
+                    {
+                        pathFound = false;
+                        break;
+                    }
+                }
+
+                if (!pathFound)
+                {
+                    return false;
+                }
+
+                string requiredValue = parts[parts.Length - 1].ToLower();
+                string actualValue = current.ToString().ToLower();
+
+                if (actualValue != requiredValue)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    void completeAction(string action, string[] requirements, string currentImage, float zoomDuration, float FOV, Dictionary<GameObject, string[]> hotspotActions, Dictionary<GameObject, string[]> hotspotRequirements)
+    {
+        if (!checkRequirements(requirements))
+        {
+            return;
+        }
+        if (action.Split(":")[0] == "scene")
+        {
+            Debug.Log("Loading scene: " + action.Split(":")[1]);
+            SceneManager.LoadScene(action.Split(":")[1]);
+            return;
+        }
+        else if (action.Split(":")[0] == "item")
+        {
+            inventory.add(action.Split(":")[1]);
+        }
+        else if (action.Split(":")[0] == "states")
+        {
+            updateState(action, currentImage);
+        }
+        else if (action.Split(":")[0] == "dialogue")
+        {
+            DialogueManager.Instance.StartDialogue(action.Split(":")[1]);
+            return;
+        }
+        else
+        {
+            saveData["currentImage"] = action;
+            saveDataInFile(saveData);
+            currentImage = action;
+
+            var states = data[currentImage]["states"] as JObject;
+            string bestPath = states["main"]["path"].ToString();
+
+            foreach (var state in states)
+            {
+                if (state.Key == "main") continue;
+
+                if (checkRequirements(state.Value["requirements"].ToObject<string[]>()))
+                {
+                    bestPath = state.Value["path"].ToString();
+                }
+            }
+
+            materials[currentImage] = LoadMaterialFromPath(bestPath);
+            StartCoroutine(updateImage(zoomDuration, FOV, currentImage, hotspotActions, hotspotRequirements));
+        }
+    }
     void Start()
     {
         cam.fieldOfView = FOV;
 
-        string jsonPath = "Assets/Scripts/Navigation/locations.json";
-        string json = File.ReadAllText(jsonPath);
-
-        data = JObject.Parse(json);
+        TextAsset json = Resources.Load<TextAsset>("Locations/locations");
+        data = JObject.Parse(json.text);
 
         foreach (var image in data)
         {
             string key = image.Key;
-            string path = image.Value["path"].ToString();
+            string path = image.Value["states"]["main"]["path"].ToString();
 
             Material material = LoadMaterialFromPath(path);
             materials.Add(key, material);
-
         }
-    
+
+        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
+        string saveJson = File.ReadAllText(savePath);
+
+        saveData = JObject.Parse(saveJson);
+        currentImage = saveData["currentImage"].ToString();
+
         hotspotInstantiation(currentImage);
         setMaterial(currentImage);
     }
 
     void Update()
     {
-        if (!inventoryOpen)
-        {   
+
+        if (!inventoryOpen && !dialogueOpen)
+        {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 mouseOne = Mouse.current.position.ReadValue();
@@ -194,27 +373,19 @@ public class Click : MonoBehaviour
 
                     if (Physics.Raycast(ray, out RaycastHit hit))
                     {
-                        if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
+                        if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
                         {
-                            if (action.Split(":")[0] == "scene")
+                            foreach (var action in actions)
                             {
-                                Debug.Log("Loading scene: " + action.Split(":")[1]);
-                                SceneManager.LoadScene(action.Split(":")[1]);
-                                return;
-                            }
-                            else if (action.Split(":")[0] == "item")
-                            {
-                                inventory.add(action.Split(":")[1]);
-                            }
-                            else
-                            {
-                                currentImage = action;
-                                StartCoroutine(updateImage(zoomDuration, FOV, currentImage, hotspotActions));
+                                completeAction(action, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
                             }
                         }
                     }
                 }
             }
+
+            // Update currentImage from saveData everyframe
+            //currentImage = saveData["currentImage"].ToString();
 
             Vector2 scroll = Mouse.current.scroll.ReadValue();
 
@@ -242,7 +413,7 @@ public class Click : MonoBehaviour
         }
     }
 
-    private Material LoadMaterialFromPath(string path) 
+    private Material LoadMaterialFromPath(string path)
     {
         byte[] data = File.ReadAllBytes(path);
         Texture2D texture = new Texture2D(2, 2);

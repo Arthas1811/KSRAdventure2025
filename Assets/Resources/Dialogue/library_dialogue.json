@@ -1,0 +1,29 @@
+{
+  "id": "library dialogue",
+  "nodes": [
+    {
+      "id": 1,
+      "speaker": "Noemi",
+      "text": "Brauchst du etwas?",
+      "choices": [
+        { "text": "Ja. Was muss ich machen?", "next": 2 },
+        { "text": "Nein. Tschau.", "next": -1 }
+      ]
+    },
+    {
+      "id": 2,
+      "speaker": "Noemi",
+      "text": "Schau dich um und absolviere das erste Minigame.",
+      "choices": [
+        { "text": "Hä, wieso?", "next": 3 },
+        { "text": "Oke, adje.", "next": -1 }
+      ]
+    },
+    {
+      "id": 3,
+      "speaker": "Noemi",
+      "text": "He! Sei nicht so frech. Geh jetzt!",
+      "next": -1
+    }
+  ]
+}

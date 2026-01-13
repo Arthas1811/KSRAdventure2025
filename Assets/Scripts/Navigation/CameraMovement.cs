@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        if (!main.inventoryOpen) {
+        if (!main.inventoryOpen && !main.dialogueOpen) {
             if (Mouse.current != null) {
                 if (Mouse.current.leftButton.isPressed) {
                     Vector2 mouse = Mouse.current.delta.ReadValue();
