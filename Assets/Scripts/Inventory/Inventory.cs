@@ -3,18 +3,16 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 
 public class Inventory : MonoBehaviour
-{
-    private JObject saveData;
+{   
+    JObject saveData;
     private string[] allItems;
+
+    public SaveDataManager saveDataManager;
 
     void Start()
     {
-        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
-        string saveJson = File.ReadAllText(savePath);
-
-        saveData = JObject.Parse(saveJson);
+        saveData = saveDataManager.readData();
         allItems = saveData["itemsOwned"].ToObject<string[]>();
-
 
         foreach (var id in allItems)
         {
@@ -33,16 +31,8 @@ public class Inventory : MonoBehaviour
         {
             itemsArray.Add(id);
             saveData["itemsOwned"] = itemsArray;
-            saveDataInFile(saveData);
+            saveDataManager.saveData(saveData);
         }
 
     }
-
-    void saveDataInFile(JObject saveData)
-    {
-        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
-        string saveJson = saveData.ToString();
-        File.WriteAllText(savePath, saveJson);
-    }
-
 }
