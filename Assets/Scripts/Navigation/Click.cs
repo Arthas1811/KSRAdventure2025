@@ -141,7 +141,7 @@ public class Click : MonoBehaviour
 
     void updateState(string action, string currentImage)
     {
-        //string path = action.Replace("states:", "");
+        action = action.Replace("data:", "");
 
         string[] parts = action.Split(':');
 
@@ -294,9 +294,17 @@ public class Click : MonoBehaviour
         }
         else if (action.Split(":")[0] == "item")
         {
-            inventory.add(action.Split(":")[1]);
+            if (action.Split(":")[1] == "add")
+            {
+                inventory.add(action.Split(":")[2]);
+            }
+            else if (action.Split(":")[1] == "remove")
+            {
+                inventory.remove(action.Split(":")[2]);
+            }
+            
         }
-        else if (action.Split(":")[0] == "states")
+        else if (action.Split(":")[0] == "data")
         {
             updateState(action, currentImage);
         }
@@ -316,7 +324,13 @@ public class Click : MonoBehaviour
 
             foreach (var state in states)
             {
-                if (state.Key == "main") continue;
+                if (state.Key == "main")
+                {
+                    if (!checkRequirements(state.Value["requirements"].ToObject<string[]>()))
+                    {
+                        return;
+                    }
+                }
 
                 if (checkRequirements(state.Value["requirements"].ToObject<string[]>()))
                 {

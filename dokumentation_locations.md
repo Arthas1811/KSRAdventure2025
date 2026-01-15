@@ -1,303 +1,252 @@
 # Documentation Json
+## Note
+Before taking a look at this, read [this](documentation_save_file.md) dokumentation first.
 ## Json Structure
-The [locations.json](/Assets/Resources/Locations/locations.json) file in this case is used to build up the whole navigation system and link images to one another. Jsons are mostly used to store data as it is in this case.
+The [locations.json](/Assets/Resources/Locations/locations.json) file in thicase is used to build up the whole navigation system and link images to one another. Jsons are mostly used to store data as it is in this case.
+### 1. Simplified structure
+If you were to simplify the whole structure it would look like this:
+```json
+{
+    "image_one": {
+        "button_one": "image_two"
+    },
+    "image_two": {
+        "button_one": "image_one",
+        "button_two": "image_three"
+    },
+    "image_three": {
+        "button_one": "image_two",
+        "button_two": "image_four"
+    },
+    "image_four": {
+        "button_one": "image_three"
+    }
+}
+```
+In this case each image would have one or two buttons leading to the next image. Images in this case are the locations where you can go. Here for example you could go from "image_one" to "image_two" using "button_one". When you're at image two you could take either button one back to the first image or the second button leading to the next (the third) image.
 
-The Json Structure is built as following. **"image_name"** at the beginning should be replaced wkth the name of the image file. The **"path"** should contain the path to the image. In this structure, **"costumHotspots"** was used as the definition of an area one clicks to complete an action (like switching to the next image, starting a minigame, adding an Item to the inventory, etc.).
+
+The real Json Structure is a little more complicated and will be looked at in more detail later.
+
+### 2. Split structure of one image
+Looking at the structure of just one image it would overall look like this:
+```json
+"image_name": {
+    "states": {},
+    "customHotspots": []
+}
+```
+"image_name" should be replaced with the name of the image/location.
+
+The first definition "states" lets an image have different states (for example: if a location can have a door closed/open, lights on/off it needs different images for the different states which are stored in states).
+### 2.1 States structure
+The states on top is empty (should not be empty):
+```json
+"states": {}
+```
+After editing, the structure inside "states" should look like somewhat like this:
+```json
+    "states": {
+        "main": {
+            "requirements": [],
+            "path": "path_to_main_image"
+        },
+        "lightOn": {
+            "requirements": ["requirement_one"],
+            "path": "path_to"
+        }
+    },
+```
+
+the "main" part in states has two definitions: "requirements" and "path".
+"requirements" should be the requirements which have to be filled that this location can be accessed and "path" must be set to the path of the image for the **main state** of the image.
+
+If a image has more than one state (for example light on and light off) this specific state needs to be added. In this case the state "lightOn" was added and it also contains the requirements and the path to the image with the lights on (or off, depending on which the main state of the image is).
+### 2.1.1 requirements
+the list "requirements" in a specific state can be filled with one or more requirements.
+possible requirements are:
+
+check for item:
+```json
+"item:item_id:true"
+```
+
+which checks if an item is owned or not (true if it has to be owned and false if not)
+
+check for state:
+```json
+"states:start:openDoor:true"
+```
+
+which goes into the save file and looks if the value is equal to the last element of the requirement which would be "true" here. This would be what gets checked:
+```json
+{
+  "currentImage": "start",
+  "itemsOwned": [
+    "frog",
+    "glycerin",
+    "redbull",
+    "redbull"
+  ],
+  "states": {
+    "start": {
+      "openDoor": true <--------
+    },
+    "image_two": {
+      "lightOn": false
+    }
+  }
+}
+```
+### 2.2 Custom hotspots structure
+The states on top is empty (should also not be empty):
+```json
+"customHotspots": []
+```
+After editing, the structure inside "customHotspots" should look like somewhat like this:
+```json
+"customHotspots": [
+    {
+        "actions": ["action_one", "action_two"],
+        "requirements": [],
+        "polygonString": "polygon_string"
+    },
+    {
+        "actions": ["action_one", "action_two"],
+        "requirements": ["requirements"],
+        "polygonString": "polygon_string"
+    }
+]
+```
+Each segment represents one button (hotspot) which can be pressed to preform an action.
+
+### 2.2.1 Possible actions
+The list "actions" can contain unlimited actions. These actions will be preformed on button press.
+possible actions are:
+
+navigation:
+```json
+"image_name"
+```
+If the action is just set to an image name, the button will lead to the defined image and will switch on button press.
+
+items:
+```json
+"item:add:item_id"
+```
+If you want a button to add or remove an item to the inventory you first need to do "item" then ":" and following either "add" or "remove" with another ":" and then finally the item you want to add (Note: it has to be the item id and not the item name)
+
+dialogues:
+```json
+"dialogue:dialogue_name"
+```
+if you want to start a dialogue on button press, write "dialogue" at the beginning followed by ":" and then the dialogue name at the end.
+
+change states:
+```json
+"data:states:start:openDoor:false"
+```
+to change a state (a variable in the save file) you first have to write "data:" to indicate that you want to change data in the save file and then the path to the variable
+
+the example above would change the variable "openDoor" to false in the save file:
+```json
+{
+  "currentImage": "start",
+  "itemsOwned": [
+    "frog",
+    "glycerin",
+    "redbull",
+    "redbull"
+  ],
+  "states": {
+    "start": {
+      "openDoor": true <-------- would be changed to false
+    },
+    "image_two": {
+      "lightOn": false
+    }
+  }
+}
+```
+### 2.2.2 possible requirements
+The requirements list in costum hotspots are the requirements which have to be met that the button press will complete the given actions. Possible requirements are the same as in 2.1.1 requirements.
+
+ ### 2.2.3 Polygonstring
+The "polygonString" contains a string containing all corners (points added on a area/button/hotspot on the website which is mentioned later) the button has. It defines how the buttons shape is. The string is built like this (below is a polygonstring with example values):
+```json
+"polygonString": "0.041254125412541254,0.6328382838283828;0.13366336633663367,0.5932343234323432;0.13036303630363036,0.4744224422442245;0.03135313531353135,0.5008250825082508"
+```
+
+The numbers don't have to have this many digits after the comma but it's nice to have :). One corner of a button consits of two coordinates (x and y on the flat 360 image) these coordinates are formatted like this: x,y (split by a comma) and corners are split with ";" -> x,y;x,y;x,y (this would be for a triangle with three corners)
+### 3. Complete structure of one image
+If you would now put everything from above together, you would get something that would look like this:
 ```json
 "image_name": {
     "states": {
         "main": {
             "requirements": [],
-            "path": "Assets/Images/Navigation/image_name.jpg"
+            "path": "path_to_main_image"
         },
         "lightOn": {
-            "requirements": ["states:start:light:true"],
-            "path": "Assets/Images/Navigation/image_name_different_state.jpg"
+            "requirements": ["requirement_one"],
+            "path": "path_to_state_image"
         }
     },
     "customHotspots": [
         {
-            "actions": [
-                "next_image_name",
-                "item:redbull",
-                "dialogue:library_dialogue",
-                "states:start:openDoor:true"
-            ],
-            "requirements": ["item:redbull:true", "states:start:openDoor:true"],
+            "actions": ["action_one", "action_two"],
+            "requirements": [],
             "polygonString": "polygon_string"
         },
         {
-            "actions": [
-                "next_image_name"
-            ],
-            "requirements": [],
-            "polygonString": "0.041254125412541254,0.6328382838283828;0.13366336633663367,0.5932343234323432;0.13036303630363036,0.4744224422442245;0.03135313531353135,0.5008250825082508"
-        },
+            "actions": ["action_one", "action_two"],
+            "requirements": ["requirement_one", "requirement_two"],
+            "polygonString": "polygon_string"
+        }
     ]
 }
 ```
-The first definition "states" lets and image have different states (for example: if a location can have a door closed/open, lights on/off it needs different images for the different states). The "main" state is the state in which the location is in when you first enter it. In a state, there are two things to be defined: "requirements" and "path":
-```json
-"requirements": ["requirement_one", "requirement_two"],
-"path": "path_to_image_state"
-```
-The to be completed actions of a specific hotspot are defined as **"actions"**. These actions will be completed when clicking on the Hotspot (button) and can contain the image name (to switch to the next image):
-```json
-"actions": [
-    "next_image_name"
-]
-```
-a unity scene name (to switch to the named scene like a minigame or a cutscene): 
-```json
-"actions": [
-    "scene:scene_name"
-]
-```
-an item ID (to add an item to the inventory):
-```json
-"actions": [
-    "item:item_ID"
-]
-```
-a dialogue (to start a defined dialogue):
-```json
-"actions": [
-    "dialogue:dialogue_name"
-]
-```
-or a state (to change a state in the save file which are checked by the above named requirements).
+### 4. Complete structure
+The structure above is just for one image/location, now if you want multiple images/locations you need to duplicate the structure above and edit it so it fits for the second image/location
 
-### Json generator:
-Using the [Json generator](https://lesieber.github.io/hotspots-website) you can effortlessly create a json code with the above mentioned structure for a given image.
-
-To use it, either drag and drop or upload an image. The input field at the top is the image name and will be autofilled on uploading an image but can be edited if needed. After uploading and image, click the **"new area"** button to create an area which can be clicked later ingame (to complete an action which was mentioned above). Click on the image to add points/dots (the corners of the desired area). The corners/dots/points have to be added/clicked **CLOCKWISE** to ensure that the area generates correctly when playing the game. When you're finished with the area, click on the input field named **"action"**. Enter either the image name to which the area should lead to or a unity scene name (in the above mentioned syntax with: **"scene:scene_name"**). After completing the area, click **"finish area"**, to finish the area. If you want to add more areas, press **"new area"** again and repeat the process. As soon as all desired areas have been created, click **"generate code"** to get the output. Either select and copy the code or just press **"copy code"** to simply copy the code
-### Adding the code to the file:
-To add the generated code to the [final file](/Assets/Scripts/locations.json), open the file and paste the code into the document. To add more code snippets you have to put a comma at the end (to seperate them) as following:
+the final json (without "states" and "costumHotpots" filled with data) would look something like this:
 ```json
 {
-    "image_name": {
-        "path": "Assets/Images/Navigation/image_name.jpg",
-        "costumHotspots": [
-            {
-                "action": "2",
-                "polygonString": "0.47452445652173914,0.6022418478260869;0.5322690217391305,0.6059782608695652;0.5407608695652174,0.37024456521739135;0.47927989130434784,0.3627717391304348"
-            }
-        ]
+    "image_one_name": {
+        "states": {},
+        "customHotspots": []
+    },
+    "image_two_name": {
+        "states": {},
+        "customHotspots": []
+    },
+    "image_three_name": {
+        "states": {},
+        "customHotspots": []
+    }
+}
+```
+unlimited locations/images can be added in this format.
+
+
+## Json generator:
+Using the [Json generator](https://lesieber.github.io/hotspots-website) you can effortlessly create the json code (for one image) with the above mentioned structure.
+
+To use it, either drag and drop or upload an image. The input field at the top is the image name and will be autofilled on uploading an image but can be edited if needed.</br>
+After uploading an image, click the **"new area"** button to create an area (hotspot/button) which can be clicked later ingame. Click on the image to add points (the corners of the desired area).</br> The corners/dots/points have to be added/clicked **CLOCKWISE** to ensure that the area generates correctly when playing the game. When you're finished with the area, click on the input field named **"action"**. Enter an action from **2.2.1 Possible actions**. After adding one action another action field appears (to add more actions) but can be ignored if only one action is needed. After completing the area, click **"finish area"**. If you want to add more areas, press **"new area"** and repeat the process. As soon as all desired areas have been created, click **"generate code"** to get the output.
+
+ Either select and copy the code or just press **"copy code"** to simply copy the code
+## Adding the code to the file:
+To add the generated code to the [final file](/Assets/Resources/Locations/locations.json), open the file and paste the code into the document. To add more code snippets you have to put a comma at the end (to seperate them) as following:
+```json
+{
+    "image_one_name": {
+        "states": {},
+        "customHotspots":[]
     }, <-------
-        "image_name": {
-        "path": "Assets/Images/Navigation/image_name.jpg",
-        "costumHotspots": [
-            {
-                "action": "2",
-                "polygonString": "0.47452445652173914,0.6022418478260869;0.5322690217391305,0.6059782608695652;0.5407608695652174,0.37024456521739135;0.47927989130434784,0.3627717391304348"
-            }
-        ]
+    "image_two_name": {
+        "states": {},
+        "customHotspots":[]
     }
 }
 ```
-## Main Code
-You can find the entire code to view and edit [here](/Assets/Scripts/Click.cs).  
-#### Split up and explained code:
-Imports:
-```cs
-using UnityEngine;
-using UnityEngine.InputSystem;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
-```
-class start:
-```cs
-public class Click : MonoBehaviour {
-
-    //define variables
-    public Renderer sphere;
-    private Dictionary<string, Material> materials = new Dictionary<string, Material>();
-    private int currentImage = 1;
-    public GameObject hotspotPrefab;
-    public GameObject polygonPrefab;
-    private JObject data;
-    private Dictionary<GameObject, string> hotspotActions = new Dictionary<GameObject, string>();
-    private List<GameObject> polygons = new List<GameObject>();
-```
-Function to instantiate the hotspots:
-```cs
-    void hotspotInstantiation(int currentImage) {
-
-        //read json
-        JArray costumHotspots = (JArray)data[currentImage.ToString()]["costumHotspots"];
-
-        //iterate through the hotspots (areas to click)
-        foreach (var costumHotspot in costumHotspots)
-        {
-            //assign actions and coordinates of polygons
-            string action = costumHotspot["action"].ToString();
-            var polygonCoordiantes = costumHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
-
-            //generate x y and z coordiantes on the sphere using latitude and longitude
-            var vectors = new List<Vector3>();
-            foreach (var coordinates in polygonCoordiantes)
-            {
-                float u = coordinates.x;
-                float v = coordinates.y;
-                float longitude = u * 2f * Mathf.PI;
-                float latitude = (1f - v) * Mathf.PI;
-                float x = 70f * Mathf.Sin(latitude) * Mathf.Cos(longitude) * -1f;
-                float y = 70f * Mathf.Cos(latitude);
-                float z = 70f * Mathf.Sin(latitude) * Mathf.Sin(longitude);
-
-                vectors.Add(new Vector3(x, y, z));
-            }
-
-            //create meshtriangles for costum polygons
-            int[] triangles = new int[(vectors.Count - 2) * 3];
-            for (int i = 0; i < vectors.Count - 2; i++)
-            {
-                triangles[i * 3] = 0;
-                triangles[i * 3 + 1] = i + 1;
-                triangles[i * 3 + 2] = i + 2;
-            }
-
-            Mesh mesh = new Mesh { name = "mesh", vertices = vectors.ToArray(), triangles = triangles, uv = polygonCoordiantes.ToArray() };
-            mesh.RecalculateNormals();
-
-            //create polygon
-            GameObject polygonObject = Instantiate(polygonPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
-            polygonObject.GetComponent<MeshFilter>().sharedMesh = mesh;
-
-            //render polygon
-            MeshRenderer meshRenderer = polygonObject.GetComponent<MeshRenderer>();
-            Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-            material.SetColor("_BaseColor", new Color(1, 0, 0, 0.4f));
-            material.SetFloat("_Surface", 1);
-            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-
-            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            material.SetInt("_ZWrite", 0);
-            material.SetOverrideTag("RenderType", "Transparent");
-            
-            meshRenderer.sharedMaterial = material;
-
-            MeshCollider meshCollider = polygonObject.GetComponent<MeshCollider>();
-            meshCollider.sharedMesh = mesh;
-            meshCollider.convex = true;
-
-            polygons.Add(polygonObject);
-
-            if (int.TryParse(action, out _))
-            {
-                hotspotActions[polygonObject] = action;
-            }
-        }
-    }
-```
-function to set material (image) on the sphere
-```cs
-    void setMaterial(int currentImage)
-    {
-        sphere.material = materials[currentImage.ToString()];
-    }
-```
-function to destroy polygons on switching images
-```cs
-    void hotspotDestroy(IEnumerable<GameObject> hotspots)
-    {
-        foreach (var hotspot in hotspots)
-        {
-            Destroy(hotspot);
-        }
-
-        foreach (var polygon in polygons)
-        {
-            Destroy(polygon);
-        }
-
-        polygons.Clear();
-
-    }
-```
-function which runs on scene load
-```cs
-    void Start()
-    {
-        //load json
-        string jsonPath = "Assets/Scripts/locations.json";
-        string json = File.ReadAllText(jsonPath);
-
-        data = JObject.Parse(json);
-
-        //create materials from images 
-        foreach (var image in data)
-        {
-            string key = image.Key;
-            string path = image.Value["path"].ToString();
-
-            Material material = LoadMaterialFromPath(path);
-            materials.Add(key, material);
-
-        }
-
-        //first instantiation (loading hotspots and material)
-        hotspotInstantiation(currentImage);
-        setMaterial(currentImage);
-    }
-```
-function which runs every frame (handling almost everything and calling functions)
-```cs
-    void Update()
-    {
-        //check for mouse press
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            //create a ray
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            //check if ray collides
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if (hotspotActions.TryGetValue(hit.collider.gameObject, out string action))
-                {
-                    //check if action is scene switch (for minigames, cutscenes or other scene switches) or not
-                    if (action.split(":")[0] != "scene")
-                    {
-                        //switch to image if the given action is not a scene switch
-                        currentImage = int.Parse(action);
-                    }
-                    else
-                    {
-                        //load new scene if the action is a scene switch
-                        SceneManager.LoadScene(action);
-                        return;
-                    }
-                    //instantiate hotspots and materials
-                    hotspotDestroy(hotspotActions.Keys.ToList());
-                    hotspotActions.Clear();
-                    hotspotInstantiation(currentImage);
-                    setMaterial(currentImage);
-                }
-            }
-        }
-
-    }
-```
-function to load material
-```cs
-    private Material LoadMaterialFromPath(string path) 
-    {
-        byte[] data = File.ReadAllBytes(path);
-        Texture2D texture = new Texture2D(2, 2);
-        texture.LoadImage(data);
-
-        Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-        material.mainTexture = texture;
-
-        return material;
-    }
-}
-
-```
-
