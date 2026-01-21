@@ -1,0 +1,17 @@
+{
+    "1": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Images/Navigation/main_hall/1.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": ["location:start:6"],
+                "requirements": [],
+                "polygonString": "0.275,0.5615866388308977;0.27578125,0.6252609603340292;0.3296875,0.6315240083507307;0.33125,0.5501043841336117"
+            }
+        ]
+    }
+}

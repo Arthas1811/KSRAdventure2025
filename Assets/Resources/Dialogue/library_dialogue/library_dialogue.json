@@ -5,6 +5,7 @@
       "id": 1,
       "speaker": "Noemi",
       "text": "Brauchst du etwas?",
+      "img_path": "Dialogue/library_dialogue/girl",
       "choices": [
         { "text": "Ja. Was muss ich machen?", "next": 2 },
         { "text": "Nein. Tschau.", "next": -1 }
@@ -14,6 +15,7 @@
       "id": 2,
       "speaker": "Noemi",
       "text": "Schau dich um und absolviere das erste Minigame.",
+      "img_path": "Dialogue/library_dialogue/happy",
       "choices": [
         { "text": "Hä, wieso?", "next": 3 },
         { "text": "Oke, adje.", "next": -1 }
@@ -23,6 +25,7 @@
       "id": 3,
       "speaker": "Noemi",
       "text": "He! Sei nicht so frech. Geh jetzt!",
+      "img_path": "Dialogue/library_dialogue/angry",
       "next": -1
     }
   ]

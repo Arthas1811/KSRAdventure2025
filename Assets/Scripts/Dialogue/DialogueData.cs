@@ -21,6 +21,7 @@ public class DialogueNode
     public string text;
     public List<DialogueChoice> choices;
     public int next;
+    public string img_path;
 }
 
 [System.Serializable]

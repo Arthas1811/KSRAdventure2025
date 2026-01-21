@@ -26,6 +26,12 @@ public class InventoryState : MonoBehaviour
             receivedItems.Add(id);
     }
 
+    public void RemoveItem(string id)
+    {
+        if (receivedItems.Contains(id))
+            receivedItems.Remove(id);
+    }
+
     public IEnumerable<string> GetReceivedItems()
     {
         return receivedItems;

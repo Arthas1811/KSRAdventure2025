@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 
 public class Inventory : MonoBehaviour
-{   
+{
     JObject saveData;
     public SaveDataManager saveDataManager;
     private string[] allItems;
@@ -33,5 +33,17 @@ public class Inventory : MonoBehaviour
             saveDataManager.saveData(saveData);
         }
 
+    }
+    public void remove(string id)
+    {
+        InventoryState.Instance.RemoveItem(id);
+        Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
+        JArray itemsArray = (JArray)saveData["itemsOwned"];
+        if (itemsArray.Contains(id))
+        {
+            itemsArray.Remove(id);
+            saveData["itemsOwned"] = itemsArray;
+            saveDataManager.saveData(saveData);
+        }
     }
 }

@@ -170,13 +170,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 62014b7c4a9243c44bbfbfd5e54b39ae, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1584,7 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f64fd245bb62d4439d957746848d207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
-  saveDataManager: {fileID: 0}
+  saveDataManager: {fileID: 1018678388}
 --- !u!1 &930668583
 GameObject:
   m_ObjectHideFlags: 0
@@ -2169,6 +2169,7 @@ MonoBehaviour:
   skipButton: {fileID: 1015972831}
   continueIndicator: {fileID: 1361732462}
   typeSpeed: 0.03
+  portraitImage: {fileID: 39875455}
 --- !u!1 &1344165820
 GameObject:
   m_ObjectHideFlags: 0

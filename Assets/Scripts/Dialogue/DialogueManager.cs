@@ -32,7 +32,7 @@ public class DialogueManager : MonoBehaviour
     {
         main.dialogueOpen = true;
 
-        TextAsset jsonFile = Resources.Load<TextAsset>("Dialogue/" + fileName);
+        TextAsset jsonFile = Resources.Load<TextAsset>("Dialogue/library_dialogue/" + fileName);
         if (jsonFile == null)
         {
             Debug.LogError("Dialogue file not found: " + fileName);
@@ -58,7 +58,6 @@ public class DialogueManager : MonoBehaviour
 
         GoToNode(currentDialogue.nodes[0].id);
     }
-
 
     public void GoToNode(int id)
     {

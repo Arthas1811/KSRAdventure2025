@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
 
 public class Click : MonoBehaviour
 {
@@ -313,6 +314,15 @@ public class Click : MonoBehaviour
             DialogueManager.Instance.StartDialogue(action.Split(":")[1]);
             return;
         }
+        else if (action.StartsWith("location:"))
+        {
+            string[] parts = action.Split(':');
+            string locationName = parts[1];
+            string entryImage = parts.Length >= 3 ? parts[2] : null;
+
+            LoadLocation(locationName, entryImage);
+            return;
+        }
         else
         {
             saveData["currentImage"] = action;
@@ -346,26 +356,55 @@ public class Click : MonoBehaviour
     {
         cam.fieldOfView = FOV;
 
-        TextAsset json = Resources.Load<TextAsset>("Locations/locations");
+        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
+        string saveJson = File.ReadAllText(savePath);
+        saveData = JObject.Parse(saveJson);
+
+        string locationName = saveData.ContainsKey("currentLocation")
+            ? saveData["currentLocation"].ToString()
+            : "start";
+
+        string entryImage = saveData.ContainsKey("currentImage")
+            ? saveData["currentImage"].ToString()
+            : null;
+
+        LoadLocation(locationName, entryImage);
+    }
+
+    void LoadLocation(string locationName, string entryImage = null)
+    {
+        TextAsset json = Resources.Load<TextAsset>($"Locations/{locationName}");
+        if (json == null)
+        {
+            Debug.LogError($"Location JSON not found: {locationName}");
+            return;
+        }
+
         data = JObject.Parse(json.text);
 
+        materials.Clear();
         foreach (var image in data)
         {
             string key = image.Key;
             string path = image.Value["states"]["main"]["path"].ToString();
-
-            Material material = LoadMaterialFromPath(path);
-            materials.Add(key, material);
+            materials[key] = LoadMaterialFromPath(path);
         }
 
-        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
-        string saveJson = File.ReadAllText(savePath);
+        if (!string.IsNullOrEmpty(entryImage) && data[entryImage] != null)
+            currentImage = entryImage;
+        else
+            currentImage = data.Properties().First().Name;
 
-        saveData = JObject.Parse(saveJson);
-        currentImage = saveData["currentImage"].ToString();
+        hotspotDestroy(hotspotActions.Keys.ToList());
+        hotspotActions.Clear();
+        hotspotRequirements.Clear();
 
         hotspotInstantiation(currentImage);
         setMaterial(currentImage);
+
+        saveData["currentLocation"] = locationName;
+        saveData["currentImage"] = currentImage;
+        saveDataInFile(saveData);
     }
 
     void Update()

@@ -24,6 +24,8 @@ public class DialogueUI : MonoBehaviour
 
     private DialogueNode currentNode;
 
+    public Image portraitImage;
+
     void Awake()
     {
         skipButton.onClick.AddListener(OnSkipPressed);
@@ -59,6 +61,23 @@ public class DialogueUI : MonoBehaviour
         continueIndicator.SetActive(false);
 
         speakerText.text = node.speaker;
+
+        // image handling
+        if (!string.IsNullOrEmpty(node.img_path))
+        {
+            Sprite loadedSprite = Resources.Load<Sprite>(node.img_path);
+
+            if (loadedSprite != null)
+            {
+                portraitImage.sprite = loadedSprite;
+                portraitImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("Could not load sprite at path: " + node.img_path);
+            }
+        }
+
 
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);

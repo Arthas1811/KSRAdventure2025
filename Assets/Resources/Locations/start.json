@@ -3,11 +3,11 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Images/Navigation/1.jpg"
+                "path": "Assets/Images/Navigation/start/1.jpg"
             },
             "openDoor": {
                 "requirements": ["states:start:openDoor:true"],
-                "path": "Assets/Images/Navigation/6.jpg"
+                "path": "Assets/Images/Navigation/start/6.jpg"
             }
         },
         "customHotspots": [
@@ -35,7 +35,7 @@
             {
                 "actions": ["dialogue:library_dialogue"],
                 "requirements": [],
-                "polygonString": "0.15098505434782608,0.5033967391304348; 0.16593070652173914,0.5033967391304348; 0.16593070652173914,0.4765625; 0.15098505434782608,0.4765625"
+                "polygonString": "0.15098505434782608,0.5016983695652174;0.16508152173913043,0.5016983695652174;0.16694972826086957,0.4765625;0.1520040760869565,0.4731657608695652"
             }
         ]
     },
@@ -43,7 +43,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Images/Navigation/2.jpg"
+                "path": "Assets/Images/Navigation/start/2.jpg"
             }
         },
         "hotspots": [],
@@ -68,7 +68,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Images/Navigation/3.jpg"
+                "path": "Assets/Images/Navigation/start/3.jpg"
             }
         },
         "customHotspots": [
@@ -99,7 +99,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Images/Navigation/4.jpg"
+                "path": "Assets/Images/Navigation/start/4.jpg"
             }
         },
         "customHotspots": [
@@ -123,7 +123,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Images/Navigation/5.jpg"
+                "path": "Assets/Images/Navigation/start/5.jpg"
             }
         },
         "customHotspots": [
@@ -147,7 +147,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Images/Navigation/6.jpg"
+                "path": "Assets/Images/Navigation/start/6.jpg"
             }
         },
         "customHotspots": [
@@ -164,6 +164,13 @@
                 ],
                 "requirements": [],
                 "polygonString": "0.042798913043478264,0.5264945652173914;0.10852581521739131,0.5193614130434783;0.10665760869565218,0.4307065217391305;0.042798913043478264,0.4330842391304348"
+            },
+            {
+                "actions": [
+                    "location:main_hall:1"
+                ],
+                "requirements": [],
+                "polygonString": "0.42306385869565216,0.5968070652173914;0.4779211956521739,0.5866168478260869;0.4779211956521739,0.3783967391304348;0.42595108695652173,0.3682065217391305"
             }
         ]
     },
@@ -171,7 +178,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Images/Navigation/7.jpg"
+                "path": "Assets/Images/Navigation/start/7.jpg"
             }
         },
         "customHotspots": [

@@ -1,5 +1,5 @@
 {
-  "currentImage": "7",
+  "currentImage": "start",
   "itemsOwned": [
     "frog",
     "glycerin"
@@ -8,5 +8,6 @@
     "start": {
       "openDoor": false
     }
-  }
+  },
+  "currentLocation": "start"
 }
