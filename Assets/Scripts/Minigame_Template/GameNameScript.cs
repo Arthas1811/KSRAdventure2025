@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using Newtonsoft.Json.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameNameScript : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class GameNameScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (true){// repace with actual if statement
+        if (true){// replace with actual if statement
             Win();
         }
         else
