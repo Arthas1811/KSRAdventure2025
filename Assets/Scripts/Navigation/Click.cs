@@ -323,6 +323,20 @@ public class Click : MonoBehaviour
             LoadLocation(locationName, entryImage);
             return;
         }
+        else if (action.StartsWith("sfx:"))
+        {
+            string clipName = action.Split(':')[1];
+            AudioClip clip = LoadAudioClip($"Audio/SFX/{clipName}");
+            AudioManager.Instance.PlaySFX(clip);
+            return;
+        }
+        else if (action.StartsWith("music:"))
+        {
+            string clipName = action.Split(':')[1];
+            AudioClip clip = LoadAudioClip($"Audio/Music/{clipName}");
+            AudioManager.Instance.PlayMusic(clip);
+            return;
+        }
         else
         {
             saveData["currentImage"] = action;
@@ -382,9 +396,21 @@ public class Click : MonoBehaviour
 
         data = JObject.Parse(json.text);
 
+        if (data["meta"]?["music"] != null)
+        {
+            string musicName = data["meta"]["music"].ToString();
+            AudioClip clip = LoadAudioClip($"Audio/{musicName}");
+            AudioManager.Instance.PlayMusic(clip);
+        }
+        else
+        {
+            AudioManager.Instance.PlayMusic(null);
+        }
+
         materials.Clear();
         foreach (var image in data)
         {
+            if (image.Key == "meta") { continue; }
             string key = image.Key;
             string path = image.Value["states"]["main"]["path"].ToString();
             materials[key] = LoadMaterialFromPath(path);
@@ -477,4 +503,9 @@ public class Click : MonoBehaviour
 
         return material;
     }
+    private AudioClip LoadAudioClip(string path)
+    {
+        return Resources.Load<AudioClip>(path);
+    }
+
 }
