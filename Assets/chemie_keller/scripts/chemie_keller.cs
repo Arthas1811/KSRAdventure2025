@@ -17,6 +17,7 @@ public class chemie_keller : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI cText;
     public TextMeshProUGUI winText;
+    public GameObject return_button;
 
     private Vector3 originalScale;
     private Vector3 originalPosition;
@@ -45,6 +46,7 @@ public class chemie_keller : MonoBehaviour
 
         if (cText != null) cText.gameObject.SetActive(false);
         if (winText != null) winText.gameObject.SetActive(false);
+        if (return_button != null) return_button.gameObject.SetActive(false);
     }
 
     void Update()
@@ -83,10 +85,14 @@ public class chemie_keller : MonoBehaviour
             if (winText != null)
             {
                 winText.gameObject.SetActive(true);
-                if (11 <= c && c <= 13)
+                if (11 <= c && c <= 13){
                     winText.text = "WOW! You (almost) hit the perfect amount";
-                else
+                    return_button.gameObject.SetActive(true);
+                }
+                else{
                     winText.text = "You screwed up too much. Unacceptable.";
+                    return_button.gameObject.SetActive(true);
+                }
             }
         }
     }
