@@ -373,7 +373,7 @@ switches to scene `chemie_keller`
 "actions": ["cutscene:intro.mp4"]
 ```
 
-switches to cutscene `intro.mp4`
+switches to cutscene: `intro.mp4`
 
 **Note**:
 - It switches to a different scene to play the cutscene but the scene already has a skip button and a continue button.
