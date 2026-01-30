@@ -337,6 +337,12 @@ public class Click : MonoBehaviour
             AudioManager.Instance.PlayMusic(clip);
             return;
         }
+        else if (action.StartsWith("cutscene:"))
+        {
+            string videoName = action.Split(':')[1];
+            openCutscene($"Assets/Videos/Cutscenes/{videoName}");
+            return;
+        }
         else
         {
             saveData["currentImage"] = action;
@@ -506,6 +512,12 @@ public class Click : MonoBehaviour
     private AudioClip LoadAudioClip(string path)
     {
         return Resources.Load<AudioClip>(path);
+    }
+
+    public void openCutscene(string videoPath)
+    {
+        SceneData.VideoPath = videoPath;
+        SceneManager.LoadScene("cutscenes");
     }
 
 }

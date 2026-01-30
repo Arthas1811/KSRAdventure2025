@@ -347,7 +347,7 @@ Effect on save file:
 ```
 
 **Parameters:**
-- `scene_name`: The image of the scene you want to switch to (could be a minigame, cutscene or any othere scene in unity...)
+- `scene_name`: The name of the scene you want to switch to (could be a minigame or any other scene...)
 
 **Example**:
 ```json
@@ -357,6 +357,33 @@ Effect on save file:
 switches to scene `chemie_keller`
 
 ---
+
+#### Start a cutscene/open cutscene scene
+
+**Syntax:**
+```json
+"cutscene:cutscene_filename"
+```
+
+**Parameters:**
+- `cutscene_filename`: The filename (with extension like `.mp4`) of the cutscene you want to switch to
+
+**Example**:
+```json
+"actions": ["cutscene:intro.mp4"]
+```
+
+switches to cutscene `intro.mp4`
+
+**Note**:
+- It switches to a different scene to play the cutscene but the scene already has a skip button and a continue button.
+- There is only one scene (for all cutscenes) because it has a videoplayer which can be assigned with different videos (it plays the video from the given path as soon as it opens). The result is that you don't have to struggle with creating new scenes for each new cutscene.
+- **IMPORTANT:** The video must be in the Cutscenes folder located in `Assets/Videos/Cutscenes`.
+
+
+
+---
+
 #### Multiple Actions Example
 
 Actions execute in order:

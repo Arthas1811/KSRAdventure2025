@@ -2,8 +2,7 @@
   "currentImage": "start",
   "itemsOwned": [
     "frog",
-    "glycerin",
-    "redbull"
+    "glycerin"
   ],
   "states": {
     "start": {
