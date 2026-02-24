@@ -8,11 +8,19 @@ public class CameraMovement : MonoBehaviour
     public float y = 0f;
     public Click main;
 
+    public Key MoveForwardKey = Key.W;
+    public Key MoveBackKey = Key.S;
+    public Key MoveRightKey = Key.D;
+    public Key MoveLeftKey = Key.A;
+
     void Update()
     {
-        if (!main.inventoryOpen && !main.dialogueOpen) {
-            if (Mouse.current != null) {
-                if (Mouse.current.leftButton.isPressed) {
+        if (!main.inventoryOpen && !main.dialogueOpen)
+        {
+            if (Mouse.current != null)
+            {
+                if (Mouse.current.leftButton.isPressed)
+                {
                     Vector2 mouse = Mouse.current.delta.ReadValue();
 
                     x -= mouse.y * sensitivity;
@@ -23,6 +31,30 @@ public class CameraMovement : MonoBehaviour
                     transform.localRotation = Quaternion.Euler(-x, -y, 0f);
                 }
             }
+        }
+        if (Keyboard.current != null && Keyboard.current[MoveForwardKey].isPressed)
+        {
+            x += 1;
+            x = Mathf.Clamp(x, -90f, 90f);
+            transform.localRotation = Quaternion.Euler(-x, -y, 0f);
+        }
+        if (Keyboard.current != null && Keyboard.current[MoveBackKey].isPressed)
+        {
+            x -= 1;
+            x = Mathf.Clamp(x, -90f, 90f);
+            transform.localRotation = Quaternion.Euler(-x, -y, 0f);
+        }
+        if (Keyboard.current != null && Keyboard.current[MoveRightKey].isPressed)
+        {
+            y -= 1;
+            x = Mathf.Clamp(x, -90f, 90f);
+            transform.localRotation = Quaternion.Euler(-x, -y, 0f);
+        }
+        if (Keyboard.current != null && Keyboard.current[MoveLeftKey].isPressed)
+        {
+            y += 1;
+            x = Mathf.Clamp(x, -90f, 90f);
+            transform.localRotation = Quaternion.Euler(-x, -y, 0f);
         }
     }
 

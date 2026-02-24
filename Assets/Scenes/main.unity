@@ -3569,6 +3569,12 @@ MonoBehaviour:
   inventory: {fileID: 893870734}
   inventoryOpen: 0
   dialogueOpen: 0
+  hoverCursorTexture: {fileID: 2800000, guid: 655b66dc98c9fb347992636a3666d61e, type: 3}
+  hoverCursorHotspot: {x: 0, y: 0}
+  forceSoftwareCursor: 1
+  polygonToggleKey: 22
+  showPolygons: 0
+  visiblePolygonAlpha: 0.35
   cameraMovement: {fileID: 330585550}
 --- !u!1 &2129646884
 GameObject:
