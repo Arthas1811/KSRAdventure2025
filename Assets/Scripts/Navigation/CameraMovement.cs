@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class CameraMovement : MonoBehaviour
 {
     public float sensitivity = 0.2f;
-    private float x = 0f;
-    private float y = 0f;
+    public float x = 0f;
+    public float y = 0f;
     public Click main;
 
     void Update()
@@ -24,5 +24,15 @@ public class CameraMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void setNewRotation(float newX, float newY) {
+        x = newX;
+        y = newY;
+        transform.localRotation = Quaternion.Euler(-x, -y, 0f);
+    }
+
+    public void setNewFOV(float newFOV) {
+        Camera.main.fieldOfView = newFOV;
     }
 }

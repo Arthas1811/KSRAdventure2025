@@ -1057,6 +1057,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivity: 0.5
+  x: 0
+  y: 0
   main: {fileID: 1912445399}
 --- !u!1 &410087039
 GameObject:
@@ -3567,6 +3569,7 @@ MonoBehaviour:
   inventory: {fileID: 893870734}
   inventoryOpen: 0
   dialogueOpen: 0
+  cameraMovement: {fileID: 330585550}
 --- !u!1 &2129646884
 GameObject:
   m_ObjectHideFlags: 0

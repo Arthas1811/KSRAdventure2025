@@ -83,7 +83,10 @@ States allow a single "image" to display different images based on game conditio
 "states": {
   "main": {
     "requirements": [],
-    "path": "Assets/Images/Navigation/start/1.jpg"
+    "path": "Assets/Images/Navigation/start/1.jpg",
+    "x": -90,
+    "y": 0,
+    "fov": 40
   },
   "lightOn": {
     "requirements": ["states:start:lightOn:true"],
@@ -96,6 +99,12 @@ States allow a single "image" to display different images based on game conditio
 Every image must have a `"main"` state:
 - **`"requirements"`**: An array of conditions that must be met to display this state (empty `[]` means always available)
 - **`"path"`**: The file path to the image for this state
+- **`"x"`**: The rotation of the image on the x axis (on image enter) -> if not needed can be left out
+- **`"y"`**: The rotation of the image on the y axis (on image enter) -> if not needed can be left out
+- **`"fov"`**: The zoom on image enter (fov) -> if not needed can be left out
+
+
+
 
 #### Additional States
 You can add multiple states for different conditions:

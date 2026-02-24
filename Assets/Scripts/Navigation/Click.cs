@@ -30,6 +30,8 @@ public class Click : MonoBehaviour
     public bool inventoryOpen = false;
     public bool dialogueOpen = false;
 
+    public CameraMovement cameraMovement;
+
     void hotspotInstantiation(string currentImage)
     {
         JArray customHotspots = (JArray)data[currentImage]["customHotspots"];
@@ -343,34 +345,42 @@ public class Click : MonoBehaviour
             openCutscene($"Assets/Videos/Cutscenes/{videoName}");
             return;
         }
-        else
+    else 
+    {
+        currentImage = action; 
+        saveData["currentImage"] = currentImage;
+        saveDataInFile(saveData);
+
+        var states = data[currentImage]["states"] as JObject;
+        JToken activeState = states["main"];
+
+        foreach (var state in states)
         {
-            saveData["currentImage"] = action;
-            saveDataInFile(saveData);
-            currentImage = action;
-
-            var states = data[currentImage]["states"] as JObject;
-            string bestPath = states["main"]["path"].ToString();
-
-            foreach (var state in states)
+            if (state.Key == "main") continue;
+            if (checkRequirements(state.Value["requirements"]?.ToObject<string[]>()))
             {
-                if (state.Key == "main")
-                {
-                    if (!checkRequirements(state.Value["requirements"].ToObject<string[]>()))
-                    {
-                        return;
-                    }
-                }
-
-                if (checkRequirements(state.Value["requirements"].ToObject<string[]>()))
-                {
-                    bestPath = state.Value["path"].ToString();
-                }
+                activeState = state.Value;
             }
-
-            materials[currentImage] = LoadMaterialFromPath(bestPath);
-            StartCoroutine(updateImage(zoomDuration, FOV, currentImage, hotspotActions, hotspotRequirements));
         }
+
+        float finalX = activeState["x"] != null ? activeState["x"].ToObject<float>() : cameraMovement.x;
+        float finalY = activeState["y"] != null ? activeState["y"].ToObject<float>() : cameraMovement.y;
+        cameraMovement.setNewRotation(Mathf.Clamp(finalX, -90f, 90f), finalY);
+
+        if (activeState["fov"] != null)
+        {
+            this.FOV = activeState["fov"].ToObject<float>();
+            cameraMovement.setNewFOV(this.FOV); 
+        }
+
+        string bestPath = activeState["path"].ToString();
+        sphere.material = LoadMaterialFromPath(bestPath);
+        
+        hotspotDestroy(hotspotActions.Keys.ToList());
+        hotspotActions.Clear();
+        hotspotRequirements.Clear();
+        hotspotInstantiation(currentImage);
+    }
     }
     void Start()
     {
@@ -519,5 +529,4 @@ public class Click : MonoBehaviour
         SceneData.VideoPath = videoPath;
         SceneManager.LoadScene("cutscenes");
     }
-
 }
