@@ -363,9 +363,11 @@ public class Click : MonoBehaviour
             }
         }
 
-        float finalX = activeState["x"] != null ? activeState["x"].ToObject<float>() : cameraMovement.x;
-        float finalY = activeState["y"] != null ? activeState["y"].ToObject<float>() : cameraMovement.y;
-        cameraMovement.setNewRotation(Mathf.Clamp(finalX, -90f, 90f), finalY);
+        float finalY = activeState["x"] != null ? activeState["x"].ToObject<float>() : cameraMovement.x;
+        float finalX = activeState["y"] != null ? activeState["y"].ToObject<float>() : cameraMovement.y;
+        if (activeState["x"] != null || activeState["y"] != null ){
+            cameraMovement.setNewRotation(Mathf.Clamp(finalX, -90f, 90f), finalY);
+        }
 
         if (activeState["fov"] != null)
         {

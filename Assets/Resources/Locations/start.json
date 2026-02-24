@@ -5,8 +5,8 @@
                 "requirements": [],
                 "path": "Assets/Images/Navigation/start/1.jpg",
                 "info": "normal comments with '//' are not permitted in JSON files which is why i added this. if you dont want to change one (or multiple) of the rotations (x, y) or zoom, just don't add them to the keys (here i just set y to 0 so you know the key exists but if you wouldn't want to chagne it then just remove the entire y key). the values for x and y are in degrees and the FOV is in degrees as well. the camera will transition to the new FOV and rotation when you enter the location and when you click on a hotspot that changes the state. if you want to have different camera settings for different states, just add the keys to the respective state and they will be applied when that state is active.",
-                "x": -90,
-                "y": 0,
+                "x": 0,
+                "y": -90,
                 "fov": 40
             },
             "openDoor": {
