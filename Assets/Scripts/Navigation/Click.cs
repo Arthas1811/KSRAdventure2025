@@ -31,6 +31,10 @@ public class Click : MonoBehaviour
     public bool dialogueOpen = false;
     public Texture2D hoverCursorTexture;
     public Vector2 hoverCursorHotspot = Vector2.zero;
+    public bool forceSoftwareCursor = true;
+    public Key polygonToggleKey = Key.H;
+    public bool showPolygons = false;
+    [Range(0f, 1f)] public float visiblePolygonAlpha = 0.35f;
 
     private bool isHoveringPolygon = false;
 
@@ -78,7 +82,7 @@ public class Click : MonoBehaviour
 
             MeshRenderer meshRenderer = polygonObject.GetComponent<MeshRenderer>();
             Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-            material.SetColor("_BaseColor", new Color(1, 1, 1, 0f));
+            material.SetColor("_BaseColor", new Color(1, 1, 1, showPolygons ? visiblePolygonAlpha : 0f));
             material.SetFloat("_Surface", 1);
             material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
             material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
@@ -390,6 +394,9 @@ public class Click : MonoBehaviour
     }
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         cam.fieldOfView = FOV;
 
         string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
@@ -457,6 +464,12 @@ public class Click : MonoBehaviour
 
     void Update()
     {
+        if (Keyboard.current != null && Keyboard.current[polygonToggleKey].wasPressedThisFrame)
+        {
+            showPolygons = !showPolygons;
+            UpdateAllPolygonVisuals();
+        }
+
         UpdateHoverCursor();
 
         if (!inventoryOpen && !dialogueOpen)
@@ -524,7 +537,17 @@ public class Click : MonoBehaviour
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        bool hoveringPolygon = Physics.Raycast(ray, out RaycastHit hit) && hotspotActions.ContainsKey(hit.collider.gameObject);
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+        bool hoveringPolygon = false;
+        foreach (var hit in hits)
+        {
+            if (hotspotActions.ContainsKey(hit.collider.gameObject))
+            {
+                hoveringPolygon = true;
+                break;
+            }
+        }
+
         SetHoverCursor(hoveringPolygon);
     }
 
@@ -536,14 +559,37 @@ public class Click : MonoBehaviour
         }
 
         isHoveringPolygon = hoveringPolygon;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
         if (isHoveringPolygon && hoverCursorTexture != null)
         {
-            Cursor.SetCursor(hoverCursorTexture, hoverCursorHotspot, CursorMode.Auto);
+            Cursor.SetCursor(hoverCursorTexture, hoverCursorHotspot, forceSoftwareCursor ? CursorMode.ForceSoftware : CursorMode.Auto);
         }
         else
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
+    }
+
+    private void UpdateAllPolygonVisuals()
+    {
+        foreach (var polygon in polygons)
+        {
+            if (polygon == null)
+            {
+                continue;
+            }
+
+            MeshRenderer meshRenderer = polygon.GetComponent<MeshRenderer>();
+            if (meshRenderer == null || meshRenderer.sharedMaterial == null)
+            {
+                continue;
+            }
+
+            Color currentColor = meshRenderer.sharedMaterial.GetColor("_BaseColor");
+            float alpha = showPolygons ? visiblePolygonAlpha : 0f;
+            meshRenderer.sharedMaterial.SetColor("_BaseColor", new Color(currentColor.r, currentColor.g, currentColor.b, alpha));
         }
     }
 
