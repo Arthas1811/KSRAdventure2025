@@ -29,6 +29,10 @@ public class Click : MonoBehaviour
     public Inventory inventory;
     public bool inventoryOpen = false;
     public bool dialogueOpen = false;
+    public Texture2D hoverCursorTexture;
+    public Vector2 hoverCursorHotspot = Vector2.zero;
+
+    private bool isHoveringPolygon = false;
 
     public CameraMovement cameraMovement;
 
@@ -74,7 +78,7 @@ public class Click : MonoBehaviour
 
             MeshRenderer meshRenderer = polygonObject.GetComponent<MeshRenderer>();
             Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-            material.SetColor("_BaseColor", new Color(1, 0, 0, 0.4f));
+            material.SetColor("_BaseColor", new Color(1, 1, 1, 0f));
             material.SetFloat("_Surface", 1);
             material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
             material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
@@ -453,6 +457,7 @@ public class Click : MonoBehaviour
 
     void Update()
     {
+        UpdateHoverCursor();
 
         if (!inventoryOpen && !dialogueOpen)
         {
@@ -507,6 +512,38 @@ public class Click : MonoBehaviour
             //     button.transform.position = new Vector3(0f, -10f, -25f);
             //     button.transform.rotation = Quaternion.Euler(0, 0, 0);
             // }
+        }
+    }
+
+    private void UpdateHoverCursor()
+    {
+        if (inventoryOpen || dialogueOpen)
+        {
+            SetHoverCursor(false);
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        bool hoveringPolygon = Physics.Raycast(ray, out RaycastHit hit) && hotspotActions.ContainsKey(hit.collider.gameObject);
+        SetHoverCursor(hoveringPolygon);
+    }
+
+    private void SetHoverCursor(bool hoveringPolygon)
+    {
+        if (hoveringPolygon == isHoveringPolygon)
+        {
+            return;
+        }
+
+        isHoveringPolygon = hoveringPolygon;
+
+        if (isHoveringPolygon && hoverCursorTexture != null)
+        {
+            Cursor.SetCursor(hoverCursorTexture, hoverCursorHotspot, CursorMode.Auto);
+        }
+        else
+        {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
     }
 
