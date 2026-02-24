@@ -1,13 +1,17 @@
 {
-  "currentImage": "6",
+  "currentImage": "1",
   "itemsOwned": [
     "frog",
-    "glycerin"
+    "glycerin",
+    "redbull",
+    "redbull",
+    "redbull",
+    "redbull"
   ],
   "states": {
     "start": {
       "openDoor": false
     }
   },
-  "currentLocation": "start"
+  "currentLocation": "main_hall"
 }

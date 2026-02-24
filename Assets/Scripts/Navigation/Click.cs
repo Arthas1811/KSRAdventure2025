@@ -34,6 +34,7 @@ public class Click : MonoBehaviour
     public bool forceSoftwareCursor = true;
     public Key polygonToggleKey = Key.H;
     public bool showPolygons = false;
+    public Key MoveForwardKey  = Key.UpArrow;
     [Range(0f, 1f)] public float visiblePolygonAlpha = 0.35f;
 
     private bool isHoveringPolygon = false;
@@ -464,6 +465,21 @@ public class Click : MonoBehaviour
 
     void Update()
     {
+        if (Keyboard.current != null && Keyboard.current[MoveForwardKey].wasPressedThisFrame)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
+                {
+                    foreach (var action in actions)
+                    {
+                        completeAction(action, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
+                    }
+                }
+            }
+        }
         if (Keyboard.current != null && Keyboard.current[polygonToggleKey].wasPressedThisFrame)
         {
             showPolygons = !showPolygons;

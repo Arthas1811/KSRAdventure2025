@@ -8,8 +8,8 @@ public class CameraMovement : MonoBehaviour
     public float y = 0f;
     public Click main;
 
-    public Key MoveForwardKey = Key.W;
-    public Key MoveBackKey = Key.S;
+    public Key MoveUpwardsKey = Key.W;
+    public Key MoveDownwardsKey = Key.S;
     public Key MoveRightKey = Key.D;
     public Key MoveLeftKey = Key.A;
 
@@ -32,13 +32,13 @@ public class CameraMovement : MonoBehaviour
                 }
             }
         }
-        if (Keyboard.current != null && Keyboard.current[MoveForwardKey].isPressed)
+        if (Keyboard.current != null && Keyboard.current[MoveUpwardsKey].isPressed)
         {
             x += 1;
             x = Mathf.Clamp(x, -90f, 90f);
             transform.localRotation = Quaternion.Euler(-x, -y, 0f);
         }
-        if (Keyboard.current != null && Keyboard.current[MoveBackKey].isPressed)
+        if (Keyboard.current != null && Keyboard.current[MoveDownwardsKey].isPressed)
         {
             x -= 1;
             x = Mathf.Clamp(x, -90f, 90f);
