@@ -1,8 +1,9 @@
 {
-  "currentImage": "1",
+  "currentImage": "start",
   "itemsOwned": [
     "frog",
     "glycerin",
+    "redbull",
     "redbull",
     "redbull",
     "redbull",
@@ -13,5 +14,5 @@
       "openDoor": false
     }
   },
-  "currentLocation": "main_hall"
+  "currentLocation": "start"
 }

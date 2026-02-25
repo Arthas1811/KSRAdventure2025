@@ -465,11 +465,13 @@ public class Click : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current != null && Keyboard.current[MoveForwardKey].wasPressedThisFrame)
+        if (!inventoryOpen && !dialogueOpen && Keyboard.current != null && Keyboard.current[MoveForwardKey].wasPressedThisFrame)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+            Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+            RaycastHit[] hits = Physics.RaycastAll(ray);
 
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            foreach (var hit in hits)
             {
                 if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
                 {
@@ -477,6 +479,8 @@ public class Click : MonoBehaviour
                     {
                         completeAction(action, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
                     }
+
+                    break;
                 }
             }
         }
