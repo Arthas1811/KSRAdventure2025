@@ -583,7 +583,7 @@ public class Click : MonoBehaviour
 
     private void UpdateHoverCursor()
     {
-        if (inventoryOpen || dialogueOpen)
+        if (inventoryOpen || dialogueOpen || imageOpen)
         {
             SetHoverCursor(false);
             return;
