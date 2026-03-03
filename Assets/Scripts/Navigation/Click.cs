@@ -412,6 +412,7 @@ public class Click : MonoBehaviour
     }
     void Start()
     {
+        uiImage.gameObject.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
