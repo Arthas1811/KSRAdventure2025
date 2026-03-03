@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class Click : MonoBehaviour
 {
@@ -40,7 +41,17 @@ public class Click : MonoBehaviour
     private bool isHoveringPolygon = false;
 
     public CameraMovement cameraMovement;
-
+    public Image uiImage;
+    void openImage(string imagePath)
+    {
+        uiImage.gameObject.SetActive(true);
+        uiImage.preserveAspect = true;
+        byte[] data = File.ReadAllBytes(imagePath);
+        Texture2D texture = new Texture2D(2, 2);
+        texture.LoadImage(data);
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+        uiImage.sprite = sprite;
+    }
     void hotspotInstantiation(string currentImage)
     {
         JArray customHotspots = (JArray)data[currentImage]["customHotspots"];
@@ -354,44 +365,50 @@ public class Click : MonoBehaviour
             openCutscene($"Assets/Videos/Cutscenes/{videoName}");
             return;
         }
-    else 
-    {
-        currentImage = action; 
-        saveData["currentImage"] = currentImage;
-        saveDataInFile(saveData);
-
-        var states = data[currentImage]["states"] as JObject;
-        JToken activeState = states["main"];
-
-        foreach (var state in states)
+        else if (action.StartsWith("image:"))
         {
-            if (state.Key == "main") continue;
-            if (checkRequirements(state.Value["requirements"]?.ToObject<string[]>()))
+            string imageName = action.Split(':')[1];
+            openImage($"Assets/Images/Images/{imageName}");
+            return;
+        }
+        else 
+        {
+            currentImage = action; 
+            saveData["currentImage"] = currentImage;
+            saveDataInFile(saveData);
+
+            var states = data[currentImage]["states"] as JObject;
+            JToken activeState = states["main"];
+
+            foreach (var state in states)
             {
-                activeState = state.Value;
+                if (state.Key == "main") continue;
+                if (checkRequirements(state.Value["requirements"]?.ToObject<string[]>()))
+                {
+                    activeState = state.Value;
+                }
             }
-        }
 
-        float finalY = activeState["x"] != null ? activeState["x"].ToObject<float>() : cameraMovement.x;
-        float finalX = activeState["y"] != null ? activeState["y"].ToObject<float>() : cameraMovement.y;
-        if (activeState["x"] != null || activeState["y"] != null ){
-            cameraMovement.setNewRotation(Mathf.Clamp(finalX, -90f, 90f), finalY);
-        }
+            float finalY = activeState["x"] != null ? activeState["x"].ToObject<float>() : cameraMovement.x;
+            float finalX = activeState["y"] != null ? activeState["y"].ToObject<float>() : cameraMovement.y;
+            if (activeState["x"] != null || activeState["y"] != null ){
+                cameraMovement.setNewRotation(Mathf.Clamp(finalX, -90f, 90f), finalY);
+            }
 
-        if (activeState["fov"] != null)
-        {
-            this.FOV = activeState["fov"].ToObject<float>();
-            cameraMovement.setNewFOV(this.FOV); 
-        }
+            if (activeState["fov"] != null)
+            {
+                this.FOV = activeState["fov"].ToObject<float>();
+                cameraMovement.setNewFOV(this.FOV); 
+            }
 
-        string bestPath = activeState["path"].ToString();
-        sphere.material = LoadMaterialFromPath(bestPath);
-        
-        hotspotDestroy(hotspotActions.Keys.ToList());
-        hotspotActions.Clear();
-        hotspotRequirements.Clear();
-        hotspotInstantiation(currentImage);
-    }
+            string bestPath = activeState["path"].ToString();
+            sphere.material = LoadMaterialFromPath(bestPath);
+            
+            hotspotDestroy(hotspotActions.Keys.ToList());
+            hotspotActions.Clear();
+            hotspotRequirements.Clear();
+            hotspotInstantiation(currentImage);
+        }
     }
     void Start()
     {
