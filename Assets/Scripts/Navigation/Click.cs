@@ -42,15 +42,27 @@ public class Click : MonoBehaviour
 
     public CameraMovement cameraMovement;
     public Image uiImage;
+    public bool imageOpen = false;
+    public GameObject closeImageButton;
     void openImage(string imagePath)
     {
+        imageOpen = true;
         uiImage.gameObject.SetActive(true);
+        closeImageButton.SetActive(true);
         uiImage.preserveAspect = true;
         byte[] data = File.ReadAllBytes(imagePath);
         Texture2D texture = new Texture2D(2, 2);
         texture.LoadImage(data);
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         uiImage.sprite = sprite;
+        Debug.Log("Opened image: " + imagePath);
+    }
+    public void closeImage()
+    {
+        imageOpen = false;
+        uiImage.gameObject.SetActive(false);
+        closeImageButton.SetActive(false);
+        uiImage.sprite = null;
     }
     void hotspotInstantiation(string currentImage)
     {
@@ -362,11 +374,13 @@ public class Click : MonoBehaviour
         else if (action.StartsWith("cutscene:"))
         {
             string videoName = action.Split(':')[1];
+            // change path to resources
             openCutscene($"Assets/Videos/Cutscenes/{videoName}");
             return;
         }
         else if (action.StartsWith("image:"))
         {
+            // change path to resources
             string imageName = action.Split(':')[1];
             openImage($"Assets/Images/Images/{imageName}");
             return;
@@ -413,6 +427,7 @@ public class Click : MonoBehaviour
     void Start()
     {
         uiImage.gameObject.SetActive(false);
+        closeImageButton.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
@@ -483,7 +498,7 @@ public class Click : MonoBehaviour
 
     void Update()
     {
-        if (!inventoryOpen && !dialogueOpen && Keyboard.current != null && Keyboard.current[MoveForwardKey].wasPressedThisFrame)
+        if (!inventoryOpen && !imageOpen && !dialogueOpen && Keyboard.current != null && Keyboard.current[MoveForwardKey].wasPressedThisFrame)
         {
             Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
             Ray ray = Camera.main.ScreenPointToRay(screenCenter);
@@ -510,7 +525,7 @@ public class Click : MonoBehaviour
 
         UpdateHoverCursor();
 
-        if (!inventoryOpen && !dialogueOpen)
+        if (!inventoryOpen && !dialogueOpen && !imageOpen)
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {

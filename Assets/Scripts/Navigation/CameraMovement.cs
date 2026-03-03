@@ -15,7 +15,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        if (!main.inventoryOpen && !main.dialogueOpen)
+        if (!main.inventoryOpen && !main.dialogueOpen && !main.imageOpen)
         {
             if (Mouse.current != null)
             {
