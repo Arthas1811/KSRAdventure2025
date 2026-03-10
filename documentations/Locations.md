@@ -3,8 +3,8 @@
 ## Note
 
 Before reading this document, make sure you've read:
-1. [General Navigation Documentation](documentation_general_navigation.md)
-2. [Save File Documentation](documentation_save_file.md)
+1. [General Navigation Documentation](GeneralNavigation.md)
+2. [Save File Documentation](SaveFile.md)
 
 ## Purpose
 

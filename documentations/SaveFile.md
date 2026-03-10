@@ -4,7 +4,7 @@
 ## Note
 
 Before reading this document, read
-[General Navigation](documentation_general_navigation.md).
+[General Navigation](GeneralNavigation.md).
 
 
 ## Purpose of the Save File

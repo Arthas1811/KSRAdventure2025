@@ -29,5 +29,5 @@ All navigation data is defined in **JSON files**.
 
 Please read the documentations (the ones revolving around navigation) in the following order (after reading this one):
 
-1. [Save File Documentation](documentation_save_file.md)  
-2. [Location / JSON Structure Documentation](dokumentation_locations.md)
+1. [Save File Documentation](SaveFile.md)  
+2. [Location / JSON Structure Documentation](Locations.md)

@@ -1,6 +1,7 @@
 # Minigame Documentation
 This documentation explains the basics of the minigame template.
-
+## Template Script
+The template script can be found [Here](/Assets/Scripts/MinigameTemplate/GameNameScript.cs).
 ## End Game on Win
 To end the game on a win, call the win function.
 
@@ -50,7 +51,7 @@ e.g. ```inventory.add("redbull")```
 If a game state needs to be changed, e.g. a door needs to open after a won minigame.
 
 ### Add a New Game State
-See saveDataDocumentation script ...
+See [saveDataDocumentation](SaveFile.md) script ...
 
 ### Access/ Change a Game State
 To change an already defined game state use ```saveData["states"]["example_image"]["example_state_name"] = true;```
