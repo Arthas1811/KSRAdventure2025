@@ -13,7 +13,6 @@ public class Click : MonoBehaviour
 {
     public Camera cam;
     public Renderer sphere;
-    // private Dictionary<string, Material> materials = new Dictionary<string, Material>();
     private Dictionary<string, string> materialPaths = new Dictionary<string, string>();
     private Dictionary<string, Material> materialCache = new Dictionary<string, Material>();
     private string currentImage = "";
@@ -37,28 +36,37 @@ public class Click : MonoBehaviour
     public bool forceSoftwareCursor = true;
     public Key polygonToggleKey = Key.H;
     public bool showPolygons = false;
-    public Key MoveForwardKey  = Key.UpArrow;
+    public Key MoveForwardKey = Key.UpArrow;
     [Range(0f, 1f)] public float visiblePolygonAlpha = 0.35f;
-
     private bool isHoveringPolygon = false;
-
     public CameraMovement cameraMovement;
     public Image uiImage;
     public bool imageOpen = false;
     public GameObject closeImageButton;
+
+    private string GetSaveDataPath()
+    {
+        return Path.Combine(Application.persistentDataPath, "saveData.json");
+    }
+
     void openImage(string imagePath)
     {
         imageOpen = true;
         uiImage.gameObject.SetActive(true);
         closeImageButton.SetActive(true);
         uiImage.preserveAspect = true;
-        byte[] data = File.ReadAllBytes(imagePath);
-        Texture2D texture = new Texture2D(2, 2);
-        texture.LoadImage(data);
+
+        Texture2D texture = LoadTextureFromPath(imagePath);
+        if (texture == null)
+        {
+            Debug.LogError($"openImage: Texture konnte nicht geladen werden: {imagePath}");
+            return;
+        }
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         uiImage.sprite = sprite;
         Debug.Log("Opened image: " + imagePath);
     }
+
     public void closeImage()
     {
         imageOpen = false;
@@ -66,80 +74,43 @@ public class Click : MonoBehaviour
         closeImageButton.SetActive(false);
         uiImage.sprite = null;
     }
+
     void hotspotInstantiation(string currentImage)
     {
-        JArray customHotspots = (JArray)data[currentImage]["customHotspots"];
+        if (data == null || data[currentImage] == null) return;
+        JArray customHotspots = data[currentImage]["customHotspots"] as JArray;
+        if (customHotspots == null) return;
 
         foreach (var customHotspot in customHotspots)
         {
-            string[] actions = customHotspot["actions"].ToObject<string[]>();
-            string[] requirements = customHotspot["requirements"].ToObject<string[]>();
+            float x = customHotspot["x"]?.ToObject<float>() ?? 0f;
+            float y = customHotspot["y"]?.ToObject<float>() ?? 0f;
+            float z = customHotspot["z"]?.ToObject<float>() ?? 0f;
 
-            var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
+            Vector3 pos = new Vector3(x, y, z);
+            GameObject hsObj = Instantiate(hotspotPrefab, pos, Quaternion.identity);
+            hsObj.transform.SetParent(this.transform, false);
 
-            var vectors = new List<Vector3>();
-            foreach (var coordinates in polygonCoordiantes)
+            string[] actions = customHotspot["action"]?.ToString().Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray()
+                ?? new string[0];
+            string[] requirements = customHotspot["requirements"]?.ToString().Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray()
+                ?? new string[0];
+            hotspotActions[hsObj] = actions;
+            hotspotRequirements[hsObj] = requirements;
+
+            if (customHotspot["polygon"] != null)
             {
-                float u = coordinates.x;
-                float v = coordinates.y;
-                float longitude = u * 2f * Mathf.PI;
-                float latitude = (1f - v) * Mathf.PI;
-                float x = 70f * Mathf.Sin(latitude) * Mathf.Cos(longitude) * -1f;
-                float y = 70f * Mathf.Cos(latitude);
-                float z = 70f * Mathf.Sin(latitude) * Mathf.Sin(longitude);
-
-                vectors.Add(new Vector3(x, y, z));
+                var poly = Instantiate(polygonPrefab, this.transform);
+                polygons.Add(poly);
             }
-
-            int[] triangles = new int[(vectors.Count - 2) * 3];
-            for (int i = 0; i < vectors.Count - 2; i++)
-            {
-                triangles[i * 3] = 0;
-                triangles[i * 3 + 1] = i + 1;
-                triangles[i * 3 + 2] = i + 2;
-            }
-            //System.Array.Reverse(triangles);
-
-            Mesh mesh = new Mesh { name = "mesh", vertices = vectors.ToArray(), triangles = triangles, uv = polygonCoordiantes.ToArray() };
-            mesh.RecalculateNormals();
-
-            GameObject polygonObject = Instantiate(polygonPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
-            polygonObject.GetComponent<MeshFilter>().sharedMesh = mesh;
-
-            MeshRenderer meshRenderer = polygonObject.GetComponent<MeshRenderer>();
-            Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-            material.SetColor("_BaseColor", new Color(1, 1, 1, showPolygons ? visiblePolygonAlpha : 0f));
-            material.SetFloat("_Surface", 1);
-            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-
-            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            material.SetInt("_ZWrite", 0);
-            material.SetOverrideTag("RenderType", "Transparent");
-
-            meshRenderer.sharedMaterial = material;
-
-            MeshCollider meshCollider = polygonObject.GetComponent<MeshCollider>();
-            meshCollider.sharedMesh = mesh;
-            meshCollider.convex = true;
-
-            polygons.Add(polygonObject);
-            hotspotActions[polygonObject] = actions;
-            hotspotRequirements[polygonObject] = requirements;
-
         }
     }
 
     IEnumerator updateImage(float duration, float startFOV, string currentImage, Dictionary<GameObject, string[]> hotspotActions, Dictionary<GameObject, string[]> hotspotRequirements)
     {
-        //cam.fieldOfView = startFOV;
         float startTime = Time.time;
         float subtraction = 40;
-        if (startFOV - subtraction < 1)
-        {
-            subtraction = startFOV - 1;
-        }
+        if (startFOV - subtraction < 1) subtraction = startFOV - 1;
 
         while ((Time.time - startTime) < duration)
         {
@@ -147,7 +118,6 @@ public class Click : MonoBehaviour
             cam.fieldOfView = Mathf.Lerp(startFOV, startFOV - subtraction, t);
             yield return null;
         }
-        //cam.fieldOfView = startFOV-subtraction;
         cam.fieldOfView = startFOV;
 
         hotspotDestroy(hotspotActions.Keys.ToList());
@@ -162,6 +132,8 @@ public class Click : MonoBehaviour
         Material mat = GetMaterialForImage(currentImage);
         if (mat != null)
             sphere.material = mat;
+        else
+            Debug.LogWarning($"setMaterial: Material für Bild {currentImage} konnte nicht gesetzt werden.");
     }
 
     Material GetMaterialForImage(string imageKey)
@@ -171,7 +143,6 @@ public class Click : MonoBehaviour
 
         if (!materialPaths.TryGetValue(imageKey, out string path) || string.IsNullOrEmpty(path))
         {
-            // Fallback: aus Daten laden
             if (data != null && data[imageKey] != null)
             {
                 path = data[imageKey]?["states"]?["main"]?["path"]?.ToString();
@@ -198,62 +169,68 @@ public class Click : MonoBehaviour
     {
         foreach (var hotspot in hotspots)
         {
-            Destroy(hotspot);
+            if (hotspot != null)
+            {
+                Destroy(hotspot);
+            }
         }
-
         foreach (var polygon in polygons)
         {
-            Destroy(polygon);
+            if (polygon != null)
+            {
+                Destroy(polygon);
+            }
         }
-
         polygons.Clear();
     }
 
     void updateState(string action, string currentImage)
     {
         action = action.Replace("data:", "");
-
         string[] parts = action.Split(':');
-
+        if (parts.Length < 2) return;
         string newValueStr = parts[parts.Length - 1];
         string targetKey = parts[parts.Length - 2];
 
         JToken current = saveData;
         for (int i = 0; i < parts.Length - 2; i++)
         {
-            if (current[parts[i]] != null)
+            string key = parts[i];
+            if (current[key] != null)
             {
-                current = (JObject)current[parts[i]];
+                current = current[key];
             }
             else
             {
-                Debug.LogError("path not found");
-                return;
+                JObject next = new JObject();
+                if (current is JObject obj)
+                {
+                    obj[key] = next;
+                    current = next;
+                }
             }
         }
 
         if (bool.TryParse(newValueStr, out bool boolValue))
         {
-            current[targetKey] = boolValue;
+            ((JObject)current)[targetKey] = boolValue;
         }
         else if (int.TryParse(newValueStr, out int intValue))
         {
-            current[targetKey] = intValue;
+            ((JObject)current)[targetKey] = intValue;
         }
         else
         {
-            current[targetKey] = newValueStr;
+            ((JObject)current)[targetKey] = newValueStr;
         }
 
-        // save changes to save file
         saveDataInFile(saveData);
-
         Debug.Log($"Updated {targetKey} to {newValueStr}");
     }
 
     void saveDataInFile(JObject saveData)
     {
-        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
+        string savePath = GetSaveDataPath();
         string saveJson = saveData.ToString();
         File.WriteAllText(savePath, saveJson);
     }
@@ -261,92 +238,73 @@ public class Click : MonoBehaviour
     private bool checkRequirements(string[] requirements)
     {
         if (requirements == null || requirements.Length == 0)
-        {
             return true;
-        }
+
         foreach (var requirement in requirements)
         {
+            if (string.IsNullOrWhiteSpace(requirement))
+                continue;
+
             if (requirement.StartsWith("item:"))
             {
-                string[] parts = requirement.Split(':');
-                string itemName = parts[1];
-                bool itemValue = parts[2].ToLower() == "true";
-
-                JArray itemsOwned = saveData["itemsOwned"] as JArray;
-
-                bool hasItem = itemsOwned != null && itemsOwned.Any(t => t.ToString() == itemName);
-
-                if (hasItem != itemValue)
+                string itemData = requirement.Substring("item:".Length);
+                if (inventory != null)
                 {
-                    return false;
+                    bool hasItem = inventory.HasItem(itemData);
+                    if (!hasItem) return false;
+                }
+                else
+                {
+                    if (!saveData.ContainsKey(itemData) || !saveData[itemData].ToObject<bool>())
+                        return false;
                 }
             }
             else
             {
-                string[] parts = requirement.Split(':');
-                JToken current = saveData;
+                string[] parts = requirement.Split('=');
+                if (parts.Length != 2) continue;
+                string key = parts[0];
+                string requiredValue = parts[1];
 
-                bool pathFound = true;
-                for (int i = 0; i < parts.Length - 1; i++)
-                {
-                    if (current != null && current[parts[i]] != null)
-                    {
-                        current = current[parts[i]];
-                    }
-                    else
-                    {
-                        pathFound = false;
-                        break;
-                    }
-                }
-
-                if (!pathFound)
-                {
+                JToken actual = saveData.SelectToken(key);
+                if (actual == null || actual.ToString() != requiredValue)
                     return false;
-                }
-
-                string requiredValue = parts[parts.Length - 1].ToLower();
-                string actualValue = current.ToString().ToLower();
-
-                if (actualValue != requiredValue)
-                {
-                    return false;
-                }
             }
         }
         return true;
     }
+
     void completeAction(string action, string[] requirements, string currentImage, float zoomDuration, float FOV, Dictionary<GameObject, string[]> hotspotActions, Dictionary<GameObject, string[]> hotspotRequirements)
     {
         if (!checkRequirements(requirements))
+            return;
+
+        if (action.StartsWith("scene:"))
         {
+            string sceneName = action.Split(':')[1];
+            Debug.Log("Loading scene: " + sceneName);
+            SceneManager.LoadScene(sceneName);
             return;
         }
-        if (action.Split(":")[0] == "scene")
+        else if (action.StartsWith("item:"))
         {
-            Debug.Log("Loading scene: " + action.Split(":")[1]);
-            SceneManager.LoadScene(action.Split(":")[1]);
-            return;
-        }
-        else if (action.Split(":")[0] == "item")
-        {
-            if (action.Split(":")[1] == "add")
+            string[] parts = action.Split(':');
+            if (parts.Length >= 3)
             {
-                inventory.add(action.Split(":")[2]);
+                if (parts[1] == "add")
+                    inventory?.add(parts[2]);
+                else if (parts[1] == "remove")
+                    inventory?.remove(parts[2]);
             }
-            else if (action.Split(":")[1] == "remove")
-            {
-                inventory.remove(action.Split(":")[2]);
-            }
-            
         }
-        else if (action.Split(":")[0] == "data")
+        else if (action.StartsWith("data:"))
         {
             updateState(action, currentImage);
         }
-        else if (action.Split(":")[0] == "dialogue")
+        else if (action.StartsWith("dialogue:"))
         {
-            DialogueManager.Instance.StartDialogue(action.Split(":")[1]);
+            string id = action.Split(':')[1];
+            DialogueManager.Instance.StartDialogue(id);
             return;
         }
         else if (action.StartsWith("location:"))
@@ -354,7 +312,6 @@ public class Click : MonoBehaviour
             string[] parts = action.Split(':');
             string locationName = parts[1];
             string entryImage = parts.Length >= 3 ? parts[2] : null;
-
             LoadLocation(locationName, entryImage);
             return;
         }
@@ -375,30 +332,28 @@ public class Click : MonoBehaviour
         else if (action.StartsWith("cutscene:"))
         {
             string videoName = action.Split(':')[1];
-            // change path to resources
-            openCutscene($"Assets/Videos/Cutscenes/{videoName}");
+            openCutscene($"Videos/Cutscenes/{videoName}");
             return;
         }
         else if (action.StartsWith("image:"))
         {
-            // change path to resources
             string imageName = action.Split(':')[1];
-            openImage($"Assets/Images/Images/{imageName}");
+            openImage($"Images/Images/{imageName}");
             return;
         }
-        else 
+        else
         {
-            currentImage = action; 
+            currentImage = action;
             saveData["currentImage"] = currentImage;
             saveDataInFile(saveData);
 
             var states = data[currentImage]["states"] as JObject;
             JToken activeState = states["main"];
-
             foreach (var state in states)
             {
                 if (state.Key == "main") continue;
-                if (checkRequirements(state.Value["requirements"]?.ToObject<string[]>()))
+                var req = state.Value["requirements"]?.ToObject<string[]>();
+                if (checkRequirements(req))
                 {
                     activeState = state.Value;
                 }
@@ -406,46 +361,67 @@ public class Click : MonoBehaviour
 
             float finalY = activeState["x"] != null ? activeState["x"].ToObject<float>() : cameraMovement.x;
             float finalX = activeState["y"] != null ? activeState["y"].ToObject<float>() : cameraMovement.y;
-            if (activeState["x"] != null || activeState["y"] != null ){
+            if (activeState["x"] != null || activeState["y"] != null)
+            {
                 cameraMovement.setNewRotation(Mathf.Clamp(finalX, -90f, 90f), finalY);
             }
 
             if (activeState["fov"] != null)
             {
                 this.FOV = activeState["fov"].ToObject<float>();
-                cameraMovement.setNewFOV(this.FOV); 
+                cameraMovement.setNewFOV(this.FOV);
             }
 
-            string bestPath = activeState["path"].ToString();
-            sphere.material = LoadMaterialFromPath(bestPath);
-            
+            string bestPath = activeState["path"]?.ToString();
+            if (!string.IsNullOrEmpty(bestPath))
+            {
+                Material newMat = LoadMaterialFromPath(bestPath);
+                if (newMat != null)
+                    sphere.material = newMat;
+                else
+                    setMaterial(currentImage);
+            }
+            else
+            {
+                setMaterial(currentImage);
+            }
+
             hotspotDestroy(hotspotActions.Keys.ToList());
             hotspotActions.Clear();
             hotspotRequirements.Clear();
             hotspotInstantiation(currentImage);
         }
     }
+
     void Start()
     {
         uiImage.gameObject.SetActive(false);
         closeImageButton.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
         cam.fieldOfView = FOV;
 
-        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
-        string saveJson = File.ReadAllText(savePath);
-        saveData = JObject.Parse(saveJson);
+        string savePath = GetSaveDataPath();
+        if (!File.Exists(savePath))
+        {
+            string defaultSavePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
+            if (File.Exists(defaultSavePath))
+                File.Copy(defaultSavePath, savePath);
+        }
 
-        string locationName = saveData.ContainsKey("currentLocation")
-            ? saveData["currentLocation"].ToString()
-            : "start";
+        if (!File.Exists(savePath))
+        {
+            Debug.LogError("Start: saveData.json nicht gefunden.");
+            saveData = new JObject();
+        }
+        else
+        {
+            string saveJson = File.ReadAllText(savePath);
+            saveData = JObject.Parse(saveJson);
+        }
 
-        string entryImage = saveData.ContainsKey("currentImage")
-            ? saveData["currentImage"].ToString()
-            : null;
-
+        string locationName = saveData.ContainsKey("currentLocation") ? saveData["currentLocation"].ToString() : "start";
+        string entryImage = saveData.ContainsKey("currentImage") ? saveData["currentImage"].ToString() : null;
         LoadLocation(locationName, entryImage);
     }
 
@@ -454,7 +430,7 @@ public class Click : MonoBehaviour
         TextAsset json = Resources.Load<TextAsset>($"Locations/{locationName}");
         if (json == null)
         {
-            Debug.LogError($"Location JSON not found: {locationName}");
+            Debug.LogError($"Location JSON nicht gefunden: {locationName}");
             return;
         }
 
@@ -476,12 +452,11 @@ public class Click : MonoBehaviour
 
         foreach (var image in data)
         {
-            if (image.Key == "meta") { continue; }
-            string key = image.Key;
+            if (image.Key == "meta") continue;
             string path = image.Value["states"]?["main"]?["path"]?.ToString();
             if (!string.IsNullOrEmpty(path))
             {
-                materialPaths[key] = path;
+                materialPaths[image.Key] = path;
             }
         }
 
@@ -493,7 +468,6 @@ public class Click : MonoBehaviour
         hotspotDestroy(hotspotActions.Keys.ToList());
         hotspotActions.Clear();
         hotspotRequirements.Clear();
-
         hotspotInstantiation(currentImage);
         setMaterial(currentImage);
 
@@ -515,14 +489,11 @@ public class Click : MonoBehaviour
                 if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
                 {
                     foreach (var action in actions)
-                    {
                         completeAction(action, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
-                    }
-
-                    break;
                 }
             }
         }
+
         if (Keyboard.current != null && Keyboard.current[polygonToggleKey].wasPressedThisFrame)
         {
             showPolygons = !showPolygons;
@@ -544,22 +515,18 @@ public class Click : MonoBehaviour
                 if (deltaMouse.magnitude < 5f)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
                     if (Physics.Raycast(ray, out RaycastHit hit))
                     {
                         if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
                         {
                             foreach (var action in actions)
-                            {
                                 completeAction(action, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
-                            }
                         }
                     }
                 }
             }
 
             Vector2 scroll = Mouse.current.scroll.ReadValue();
-
             if (scroll.y < 0)
             {
                 cam.fieldOfView = Mathf.Clamp(cam.fieldOfView + 2f, 5f, 60f);
@@ -580,61 +547,30 @@ public class Click : MonoBehaviour
             SetHoverCursor(false);
             return;
         }
-
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit[] hits = Physics.RaycastAll(ray);
-        bool hoveringPolygon = false;
-        foreach (var hit in hits)
-        {
-            if (hotspotActions.ContainsKey(hit.collider.gameObject))
-            {
-                hoveringPolygon = true;
-                break;
-            }
-        }
-
-        SetHoverCursor(hoveringPolygon);
     }
 
     private void SetHoverCursor(bool hoveringPolygon)
     {
-        if (hoveringPolygon == isHoveringPolygon)
-        {
-            return;
-        }
-
+        if (hoveringPolygon == isHoveringPolygon) return;
         isHoveringPolygon = hoveringPolygon;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-
         if (isHoveringPolygon && hoverCursorTexture != null)
-        {
-            Cursor.SetCursor(hoverCursorTexture, hoverCursorHotspot, forceSoftwareCursor ? CursorMode.ForceSoftware : CursorMode.Auto);
-        }
+            Cursor.SetCursor(hoverCursorTexture, hoverCursorHotspot, CursorMode.Auto);
         else
-        {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        }
     }
 
     private void UpdateAllPolygonVisuals()
     {
-        foreach (var polygon in polygons)
+        foreach (var poly in polygons)
         {
-            if (polygon == null)
+            if (poly == null) continue;
+            var rend = poly.GetComponent<Renderer>();
+            if (rend != null)
             {
-                continue;
+                Color c = rend.material.color;
+                c.a = showPolygons ? visiblePolygonAlpha : 0f;
+                rend.material.color = c;
             }
-
-            MeshRenderer meshRenderer = polygon.GetComponent<MeshRenderer>();
-            if (meshRenderer == null || meshRenderer.sharedMaterial == null)
-            {
-                continue;
-            }
-
-            Color currentColor = meshRenderer.sharedMaterial.GetColor("_BaseColor");
-            float alpha = showPolygons ? visiblePolygonAlpha : 0f;
-            meshRenderer.sharedMaterial.SetColor("_BaseColor", new Color(currentColor.r, currentColor.g, currentColor.b, alpha));
         }
     }
 
@@ -643,32 +579,108 @@ public class Click : MonoBehaviour
         foreach (var mat in materialCache.Values)
         {
             if (mat != null)
-            {
                 Destroy(mat);
-            }
         }
         materialCache.Clear();
     }
 
+    private string NormalizePathForResources(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path)) return null;
+        string normalized = path.Replace("\\", "/").Trim();
+        if (normalized.StartsWith("Assets/")) normalized = normalized.Substring("Assets/".Length);
+        if (normalized.StartsWith("Resources/")) normalized = normalized.Substring("Resources/".Length);
+        normalized = Path.ChangeExtension(normalized, null);
+        if (normalized.StartsWith("/")) normalized = normalized.Substring(1);
+        return normalized;
+    }
+
+    private Texture2D LoadTextureFromPath(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path)) return null;
+
+        string resourcesPath = NormalizePathForResources(path);
+        if (!string.IsNullOrEmpty(resourcesPath))
+        {
+            Texture2D tex = Resources.Load<Texture2D>(resourcesPath);
+            if (tex != null) return tex;
+        }
+
+        List<string> candidates = new List<string>();
+        string normalized = path.Replace("\\", "/").Trim();
+        if (Path.IsPathRooted(normalized))
+        {
+            candidates.Add(normalized);
+        }
+        else
+        {
+            candidates.Add(Path.Combine(Application.dataPath, normalized));
+            candidates.Add(Path.Combine(Application.streamingAssetsPath, normalized));
+            candidates.Add(Path.Combine(Application.dataPath, "Resources", normalized));
+            if (normalized.StartsWith("Assets/"))
+            {
+                string trimmed = normalized.Substring("Assets/".Length);
+                candidates.Add(Path.Combine(Application.dataPath, trimmed));
+                candidates.Add(Path.Combine(Application.streamingAssetsPath, trimmed));
+                candidates.Add(Path.Combine(Application.dataPath, "Resources", trimmed));
+            }
+        }
+
+        foreach (var candidate in candidates)
+        {
+            if (!File.Exists(candidate)) continue;
+            try
+            {
+                byte[] bytes = File.ReadAllBytes(candidate);
+                Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                if (tex.LoadImage(bytes))
+                {
+                    tex.wrapMode = TextureWrapMode.Clamp;
+                    return tex;
+                }
+                Destroy(tex);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"LoadTextureFromPath: Fehler beim Laden {candidate}: {e.Message}");
+            }
+        }
+
+        Debug.LogWarning($"LoadTextureFromPath: keine gültige Textur gefunden für Pfad '{path}'");
+        return null;
+    }
+
     private Material LoadMaterialFromPath(string path)
     {
-        byte[] data = File.ReadAllBytes(path);
-        Texture2D texture = new Texture2D(2, 2);
-        texture.LoadImage(data);
-
-        Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-        material.mainTexture = texture;
-
-        return material;
+        Texture2D tex = LoadTextureFromPath(path);
+        if (tex == null) return null;
+        Material mat = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+        mat.mainTexture = tex;
+        return mat;
     }
+
     private AudioClip LoadAudioClip(string path)
     {
-        return Resources.Load<AudioClip>(path);
+        if (string.IsNullOrWhiteSpace(path)) return null;
+        string normalized = path.Replace("\\", "/").Trim();
+        string resourcesPath = NormalizePathForResources(normalized);
+        AudioClip clip = null;
+        if (!string.IsNullOrEmpty(resourcesPath))
+            clip = Resources.Load<AudioClip>(resourcesPath);
+        if (clip != null) return clip;
+
+        string candidate = Path.Combine(Application.streamingAssetsPath, normalized);
+        if (File.Exists(candidate))
+        {
+            // StreamingAssets audio loading not implemented here
+            Debug.LogWarning($"LoadAudioClip: Datei existiert in StreamingAssets ({candidate}), aber nicht geladen.");
+        }
+
+        return null;
     }
 
     public void openCutscene(string videoPath)
     {
-        SceneData.VideoPath = videoPath;
-        SceneManager.LoadScene("cutscenes");
+        Debug.Log($"openCutscene: path={videoPath}. Stelle sicher, dass dein Cutscene-Player den Pfad unterstützt.");
     }
 }
