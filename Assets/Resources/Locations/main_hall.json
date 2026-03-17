@@ -6,7 +6,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Images/Navigation/main_hall/1.jpg"
+                "path": "Assets/Resources/Images//Navigation/main_hall/1.jpg"
             }
         },
         "customHotspots": [

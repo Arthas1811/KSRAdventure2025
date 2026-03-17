@@ -376,14 +376,14 @@ public class Click : MonoBehaviour
         {
             string videoName = action.Split(':')[1];
             // change path to resources
-            openCutscene($"Assets/Videos/Cutscenes/{videoName}");
+            openCutscene($"Assets/Resources/Videos/Cutscenes/{videoName}");
             return;
         }
         else if (action.StartsWith("image:"))
         {
             // change path to resources
             string imageName = action.Split(':')[1];
-            openImage($"Assets/Images/Images/{imageName}");
+            openImage($"Assets/Resources/Images/Images/{imageName}");
             return;
         }
         else 
