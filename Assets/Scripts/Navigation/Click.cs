@@ -13,7 +13,9 @@ public class Click : MonoBehaviour
 {
     public Camera cam;
     public Renderer sphere;
-    private Dictionary<string, Material> materials = new Dictionary<string, Material>();
+    // private Dictionary<string, Material> materials = new Dictionary<string, Material>();
+    private Dictionary<string, string> materialPaths = new Dictionary<string, string>();
+    private Dictionary<string, Material> materialCache = new Dictionary<string, Material>();
     private string currentImage = "";
     public GameObject hotspotPrefab;
     public GameObject polygonPrefab;
@@ -157,8 +159,41 @@ public class Click : MonoBehaviour
 
     void setMaterial(string currentImage)
     {
-        sphere.material = materials[currentImage];
+        Material mat = GetMaterialForImage(currentImage);
+        if (mat != null)
+            sphere.material = mat;
     }
+
+    Material GetMaterialForImage(string imageKey)
+    {
+        if (string.IsNullOrEmpty(imageKey))
+            return null;
+
+        if (!materialPaths.TryGetValue(imageKey, out string path) || string.IsNullOrEmpty(path))
+        {
+            // Fallback: aus Daten laden
+            if (data != null && data[imageKey] != null)
+            {
+                path = data[imageKey]?["states"]?["main"]?["path"]?.ToString();
+                if (!string.IsNullOrEmpty(path))
+                {
+                    materialPaths[imageKey] = path;
+                }
+            }
+        }
+
+        if (string.IsNullOrEmpty(path))
+            return null;
+
+        if (materialCache.TryGetValue(path, out Material mat))
+            return mat;
+
+        mat = LoadMaterialFromPath(path);
+        if (mat != null)
+            materialCache[path] = mat;
+        return mat;
+    }
+
     void hotspotDestroy(IEnumerable<GameObject> hotspots)
     {
         foreach (var hotspot in hotspots)
@@ -213,41 +248,7 @@ public class Click : MonoBehaviour
         // save changes to save file
         saveDataInFile(saveData);
 
-        // setMaterial(currentImage);
-        // hotspotDestroy(hotspotActions.Keys.ToList());
-        // hotspotActions.Clear();
-        // hotspotInstantiation(currentImage);
-
         Debug.Log($"Updated {targetKey} to {newValueStr}");
-
-        // foreach (var img in data)
-        // {
-        //     if (img.Key == image)
-        //     {
-        //         foreach (var imgstate in img.Value["states"])
-        //         {
-        //             if (imgstate["action"].ToString() == state.ToString())
-        //             {
-
-        //                 imgstate["active"] = !imgstate["active"].ToObject<bool>();
-        //             }
-        //             if (imgstate["active"].ToObject<bool>())
-        //             {
-        //                 string key = img.Key + ":" + imgstate["action"].ToString();
-        //                 string path = imgstate["path"].ToString();
-        //                 Material material = LoadMaterialFromPath(path);
-        //                 materials[key] = material;
-        //             }
-        //             if (currentImage == img.Key)
-        //             {
-        //                 hotspotDestroy(hotspotActions.Keys.ToList());
-        //                 hotspotActions.Clear();
-        //                 setMaterial(currentImage);
-        //                 hotspotInstantiation(currentImage);
-        //             }
-        //         }
-        //     }
-        // }
     }
 
     void saveDataInFile(JObject saveData)
@@ -470,13 +471,18 @@ public class Click : MonoBehaviour
             AudioManager.Instance.PlayMusic(null);
         }
 
-        materials.Clear();
+        ClearMaterialCache();
+        materialPaths.Clear();
+
         foreach (var image in data)
         {
             if (image.Key == "meta") { continue; }
             string key = image.Key;
-            string path = image.Value["states"]["main"]["path"].ToString();
-            materials[key] = LoadMaterialFromPath(path);
+            string path = image.Value["states"]?["main"]?["path"]?.ToString();
+            if (!string.IsNullOrEmpty(path))
+            {
+                materialPaths[key] = path;
+            }
         }
 
         if (!string.IsNullOrEmpty(entryImage) && data[entryImage] != null)
@@ -552,9 +558,6 @@ public class Click : MonoBehaviour
                 }
             }
 
-            // Update currentImage from saveData everyframe
-            //currentImage = saveData["currentImage"].ToString();
-
             Vector2 scroll = Mouse.current.scroll.ReadValue();
 
             if (scroll.y < 0)
@@ -567,17 +570,6 @@ public class Click : MonoBehaviour
                 cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - 2f, 5f, 60f);
                 FOV = cam.fieldOfView;
             }
-            // if (using1) {
-            //     sphere.material = material2;
-            //     button.transform.position = new Vector3(0f, -10f, 25f);
-            //     button.transform.rotation = Quaternion.Euler(0, 0, 0);
-            // }
-
-            // else if (!using1) {
-            //     sphere.material = material1;
-            //     button.transform.position = new Vector3(0f, -10f, -25f);
-            //     button.transform.rotation = Quaternion.Euler(0, 0, 0);
-            // }
         }
     }
 
@@ -644,6 +636,18 @@ public class Click : MonoBehaviour
             float alpha = showPolygons ? visiblePolygonAlpha : 0f;
             meshRenderer.sharedMaterial.SetColor("_BaseColor", new Color(currentColor.r, currentColor.g, currentColor.b, alpha));
         }
+    }
+
+    private void ClearMaterialCache()
+    {
+        foreach (var mat in materialCache.Values)
+        {
+            if (mat != null)
+            {
+                Destroy(mat);
+            }
+        }
+        materialCache.Clear();
     }
 
     private Material LoadMaterialFromPath(string path)
