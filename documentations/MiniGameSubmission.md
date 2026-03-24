@@ -20,11 +20,11 @@ MiniGameName/
 │   │   └── ImageOne.png        ← placeholder name (replace with actual image name, e.g. "Door")
 │   ├── SoundEffects/
 │   │   └── SoundOne.mp3        ← placeholder name (replace with actual sound name, e.g. "OpenDoor")
+│   ├── Scripts/
+│   │   └── MiniGameName.cs
+│   ├── Scenes/
+│   │   └── MiniGameName.unity
 │   └── …                       ← (add more folders for other asset categories if needed)
 │       └── …
-├── Scripts/
-│   └── MiniGameName.cs
-├── Scenes/
-│   └── MiniGameName.unity
 └── Documentation.md             ← Contains instructions on how everything works
 ```
