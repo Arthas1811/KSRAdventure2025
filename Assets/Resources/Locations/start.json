@@ -11,7 +11,7 @@
             },
             "openDoor": {
                 "requirements": ["states:start:openDoor:true"],
-                "path": "Assets/Resources/Images/$/Navigation/start/6.jpg"
+                "path": "Assets/Resources/Images/Navigation/start/6.jpg"
             }
         },
         "customHotspots": [
@@ -55,7 +55,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Resources/Images//Navigation/start/2.jpg"
+                "path": "Assets/Resources/Images/Navigation/start/2.jpg"
             }
         },
         "hotspots": [],
@@ -80,7 +80,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Resources/Images//Navigation/start/3.jpg"
+                "path": "Assets/Resources/Images/Navigation/start/3.jpg"
             }
         },
         "customHotspots": [
@@ -111,7 +111,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Resources/Images//Navigation/start/4.jpg"
+                "path": "Assets/Resources/Images/Navigation/start/4.jpg"
             }
         },
         "customHotspots": [
@@ -135,7 +135,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Resources/Images//Navigation/start/5.jpg"
+                "path": "Assets/Resources/Images/Navigation/start/5.jpg"
             }
         },
         "customHotspots": [
@@ -159,7 +159,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Resources/Images//Navigation/start/6.jpg"
+                "path": "Assets/Resources/Images/Navigation/start/6.jpg"
             }
         },
         "customHotspots": [
@@ -190,7 +190,7 @@
         "states": {
             "main": {
                 "requirements": [],
-                "path": "Assets/Resources/Images//Navigation/start/7.jpg"
+                "path": "Assets/Resources/Images/Navigation/start/7.jpg"
             }
         },
         "customHotspots": [

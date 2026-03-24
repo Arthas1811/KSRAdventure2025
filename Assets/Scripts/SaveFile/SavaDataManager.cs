@@ -4,20 +4,27 @@ using System.IO;
 
 public class SaveDataManager : MonoBehaviour
 {
+    private static string SaveFilePath => Path.Combine(Application.persistentDataPath, "saveData.json");
+
     public JObject readData()
     {
-        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
-        string saveJson = File.ReadAllText(savePath);
-        return JObject.Parse(saveJson);
+        if (File.Exists(SaveFilePath))
+        {
+            return JObject.Parse(File.ReadAllText(SaveFilePath));
+        }
+
+        // First launch: copy default from Resources
+        TextAsset defaultSave = Resources.Load<TextAsset>("SaveFile/saveData");
+        if (defaultSave == null)
+        {
+            Debug.LogError("Default saveData not found at Resources/SaveFile/saveData.json");
+            return new JObject();
+        }
+        return JObject.Parse(defaultSave.text);
     }
+
     public void saveData(JObject saveData)
     {
-        string savePath = Path.Combine(Application.dataPath, "Scripts/SaveFile/saveData.json");
-        string saveJson = saveData.ToString();
-        File.WriteAllText(savePath, saveJson);
+        File.WriteAllText(SaveFilePath, saveData.ToString());
     }
-
 }
-
-
-
