@@ -125,8 +125,10 @@ public class Click : MonoBehaviour
             polygonObject.GetComponent<MeshFilter>().sharedMesh = mesh;
 
             MeshRenderer meshRenderer = polygonObject.GetComponent<MeshRenderer>();
-            Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-            material.SetColor("_BaseColor", new Color(1, 1, 1, showPolygons ? visiblePolygonAlpha : 0f));
+            Material basePolygonMat = Resources.Load<Material>("Materials/PolygonTemplate");
+            Material material = basePolygonMat != null ? new Material(basePolygonMat) : new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+            
+            material.SetColor("_BaseColor", new Color(1f, 1f, 1f, showPolygons ? visiblePolygonAlpha : 0f));
             material.SetFloat("_Surface", 1);
             material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
             material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
@@ -594,6 +596,13 @@ public class Click : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
+    private void OnDisable()
+    {
+        // reset curosr on scenen change
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        isHoveringPolygon = false;
+    }
+
     private void UpdateAllPolygonVisuals()
     {
         foreach (var polygon in polygons)
@@ -602,9 +611,8 @@ public class Click : MonoBehaviour
             MeshRenderer meshRenderer = polygon.GetComponent<MeshRenderer>();
             if (meshRenderer == null || meshRenderer.sharedMaterial == null) continue;
 
-            Color currentColor = meshRenderer.sharedMaterial.GetColor("_BaseColor");
             float alpha = showPolygons ? visiblePolygonAlpha : 0f;
-            meshRenderer.sharedMaterial.SetColor("_BaseColor", new Color(currentColor.r, currentColor.g, currentColor.b, alpha));
+            meshRenderer.sharedMaterial.SetColor("_BaseColor", new Color(1f, 1f, 1f, alpha));
         }
     }
 
@@ -636,7 +644,8 @@ public class Click : MonoBehaviour
             return null;
         }
 
-        Material material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+        Material baseSphereMat = Resources.Load<Material>("Materials/SphereTemplate");
+        Material material = baseSphereMat != null ? new Material(baseSphereMat) : new Material(Shader.Find("Universal Render Pipeline/Unlit"));
         material.mainTexture = texture;
         return material;
     }
