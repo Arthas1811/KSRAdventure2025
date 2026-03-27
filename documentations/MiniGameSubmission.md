@@ -9,7 +9,7 @@
 - Canvases should be put to "Scale with screen size" so it scales accordingly
 - The aspect ratio of your minigame should be 16:9 and "Low resolution aspect Ratios" should be turned off
 
-`Use the template mentioned in the [Minigame documentation](MiniGames.md)
+Use the template mentioned in the [Minigame documentation](MiniGames.md)
 
 
 ## Folder Structure
