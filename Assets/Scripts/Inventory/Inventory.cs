@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviour
     {
         InventoryState.Instance.ReceiveItem(id);
         Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
+        saveData = saveDataManager.readData(); // ensure we use the latest file state
         JArray itemsArray = (JArray)saveData["itemsOwned"];
         if (!itemsArray.Contains(id))
         {
@@ -38,6 +39,7 @@ public class Inventory : MonoBehaviour
     {
         InventoryState.Instance.RemoveItem(id);
         Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
+        saveData = saveDataManager.readData(); // ensure we use the latest file state
         JArray itemsArray = (JArray)saveData["itemsOwned"];
         if (itemsArray.Contains(id))
         {

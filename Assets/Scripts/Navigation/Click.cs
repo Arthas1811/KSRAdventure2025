@@ -330,6 +330,9 @@ public class Click : MonoBehaviour
                 inventory.add(action.Split(":")[2]);
             else if (action.Split(":")[1] == "remove")
                 inventory.remove(action.Split(":")[2]);
+            
+            if (File.Exists(SaveFilePath))
+                saveData = JObject.Parse(File.ReadAllText(SaveFilePath));
         }
         else if (action.Split(":")[0] == "data")
         {
