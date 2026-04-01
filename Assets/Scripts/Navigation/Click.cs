@@ -51,11 +51,9 @@ public class Click : MonoBehaviour
 
     void openImage(string resourceName)
     {
-        // Strip full path prefix if present
         if (resourceName.StartsWith("Assets/Resources/"))
             resourceName = resourceName.Substring("Assets/Resources/".Length);
         
-        // Strip extension if present
         int dotIndex = resourceName.LastIndexOf('.');
         if (dotIndex >= 0)
             resourceName = resourceName.Substring(0, dotIndex);
@@ -234,7 +232,21 @@ public class Click : MonoBehaviour
             }
         }
 
-        if (bool.TryParse(newValueStr, out bool boolValue))
+        if (newValueStr == "++")
+        {
+            if (current[targetKey] != null && int.TryParse(current[targetKey].ToString(), out int currentValue))
+                current[targetKey] = currentValue + 1;
+            else
+                current[targetKey] = 1;
+        }
+        else if (newValueStr == "--")
+        {
+            if (current[targetKey] != null && int.TryParse(current[targetKey].ToString(), out int currentValue))
+                current[targetKey] = currentValue - 1;
+            else
+                current[targetKey] = -1;
+        }
+        else if (bool.TryParse(newValueStr, out bool boolValue))
             current[targetKey] = boolValue;
         else if (int.TryParse(newValueStr, out int intValue))
             current[targetKey] = intValue;
@@ -367,6 +379,12 @@ public class Click : MonoBehaviour
         }
         else
         {
+            if (data[action] == null)
+            {
+                Debug.LogError($"Action '{action}' is either malformed (missing a valid prefix like 'data:') or refers to a missing image.");
+                return;
+            }
+
             currentImage = action;
             saveData["currentImage"] = currentImage;
             saveDataInFile(saveData);

@@ -323,11 +323,15 @@ Switches to the `"main_hall"` area and displays image `"1"` in the main_hall.
 **Parameters:**
 - `image_name`: The image identifier in the save file
 - `variable_name`: The variable to modify
-- `new_value`: The value to set (can be `true`, `false`, or any other value)
+- `new_value`: The value to set (can be `true`, `false`, an integer, any other value, or `++`/`--` to increment/decrement an existing numeric value)
 
-**Example:**
+**Examples:**
 ```json
 "actions": ["data:states:start:openDoor:true"]
+```
+
+```json
+"actions": ["data:states:start:clicks:++"]
 ```
 
 Effect on save file:

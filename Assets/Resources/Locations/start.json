@@ -32,14 +32,15 @@
             {
                 "actions": [
                     "item:add:redbull",
-                    "image:note.png"
+                    "image:note.png",
+                    "data:states:start:numberOfRedbulls:++"
                 ],
                 "requirements": [],
                 "polygonString": "0.041254125412541254,0.6328382838283828;0.13366336633663367,0.5932343234323432;0.13036303630363036,0.4744224422442245;0.03135313531353135,0.5008250825082508"
             },
             {
                 "actions": [
-                    "states:start:openDoor:true"
+                    "data:states:start:openDoor:true"
                 ],
                 "requirements": ["item:redbull:true"],
                 "polygonString": "0.5676567656765676,0.9201732673267327;0.6584158415841584,0.9300742574257426;0.6567656765676567,0.8409653465346535;0.5594059405940595,0.843440594059406"
