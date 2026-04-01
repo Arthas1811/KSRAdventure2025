@@ -22,6 +22,7 @@ public class Click : MonoBehaviour
     private JObject saveData;
     private Dictionary<GameObject, string[]> hotspotActions = new Dictionary<GameObject, string[]>();
     private Dictionary<GameObject, string[]> hotspotRequirements = new Dictionary<GameObject, string[]>();
+    private HashSet<GameObject> hiddenHotspots = new HashSet<GameObject>();
     private List<GameObject> polygons = new List<GameObject>();
     private Vector2 mouseOne;
     private Vector2 mouseTwo;
@@ -92,6 +93,7 @@ public class Click : MonoBehaviour
         {
             string[] actions = customHotspot["actions"].ToObject<string[]>();
             string[] requirements = customHotspot["requirements"].ToObject<string[]>();
+            bool isHidden = customHotspot["hidden"] != null && customHotspot["hidden"].ToObject<bool>();
 
             var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
 
@@ -143,6 +145,7 @@ public class Click : MonoBehaviour
             polygons.Add(polygonObject);
             hotspotActions[polygonObject] = actions;
             hotspotRequirements[polygonObject] = requirements;
+            if (isHidden) hiddenHotspots.Add(polygonObject);
         }
     }
 
@@ -211,6 +214,7 @@ public class Click : MonoBehaviour
             Destroy(polygon);
 
         polygons.Clear();
+        hiddenHotspots.Clear();
     }
 
     void updateState(string action, string currentImage)
@@ -592,7 +596,7 @@ public class Click : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            if (hotspotActions.ContainsKey(hit.collider.gameObject))
+            if (hotspotActions.ContainsKey(hit.collider.gameObject) && !hiddenHotspots.Contains(hit.collider.gameObject))
             {
                 hoveringPolygon = true;
                 break;
