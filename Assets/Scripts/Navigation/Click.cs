@@ -13,7 +13,6 @@ public class Click : MonoBehaviour
 {
     public Camera cam;
     public Renderer sphere;
-    private Dictionary<string, string> materialPaths = new Dictionary<string, string>();
     private Dictionary<string, Material> materialCache = new Dictionary<string, Material>();
     private string currentImage = "";
     public GameObject hotspotPrefab;
@@ -23,6 +22,7 @@ public class Click : MonoBehaviour
     private Dictionary<GameObject, string[]> hotspotActions = new Dictionary<GameObject, string[]>();
     private Dictionary<GameObject, string[]> hotspotRequirements = new Dictionary<GameObject, string[]>();
     private HashSet<GameObject> hiddenHotspots = new HashSet<GameObject>();
+    private HashSet<GameObject> alwaysVisiblePolygons = new HashSet<GameObject>();
     private List<GameObject> polygons = new List<GameObject>();
     private Vector2 mouseOne;
     private Vector2 mouseTwo;
@@ -94,6 +94,7 @@ public class Click : MonoBehaviour
             string[] actions = customHotspot["actions"].ToObject<string[]>();
             string[] requirements = customHotspot["requirements"].ToObject<string[]>();
             bool isHidden = customHotspot["hidden"] != null && customHotspot["hidden"].ToObject<bool>();
+            bool isAlwaysVisible = customHotspot["alwaysVisible"] != null && customHotspot["alwaysVisible"].ToObject<bool>();
 
             var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
 
@@ -128,7 +129,7 @@ public class Click : MonoBehaviour
             Material basePolygonMat = Resources.Load<Material>("Materials/PolygonTemplate");
             Material material = basePolygonMat != null ? new Material(basePolygonMat) : new Material(Shader.Find("Universal Render Pipeline/Unlit"));
             
-            material.SetColor("_BaseColor", new Color(1f, 1f, 1f, showPolygons ? visiblePolygonAlpha : 0f));
+            material.SetColor("_BaseColor", new Color(1f, 1f, 1f, (showPolygons || isAlwaysVisible) ? visiblePolygonAlpha : 0f));
             material.SetFloat("_Surface", 1);
             material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
             material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
@@ -146,6 +147,7 @@ public class Click : MonoBehaviour
             hotspotActions[polygonObject] = actions;
             hotspotRequirements[polygonObject] = requirements;
             if (isHidden) hiddenHotspots.Add(polygonObject);
+            if (isAlwaysVisible) alwaysVisiblePolygons.Add(polygonObject);
         }
     }
 
@@ -180,18 +182,22 @@ public class Click : MonoBehaviour
 
     Material GetMaterialForImage(string imageKey)
     {
-        if (string.IsNullOrEmpty(imageKey))
+        if (string.IsNullOrEmpty(imageKey) || data == null || data[imageKey] == null)
             return null;
 
-        if (!materialPaths.TryGetValue(imageKey, out string path) || string.IsNullOrEmpty(path))
+        var states = data[imageKey]["states"] as JObject;
+        if (states == null) return null;
+
+        JToken activeState = states["main"];
+
+        foreach (var state in states)
         {
-            if (data != null && data[imageKey] != null)
-            {
-                path = data[imageKey]?["states"]?["main"]?["path"]?.ToString();
-                if (!string.IsNullOrEmpty(path))
-                    materialPaths[imageKey] = path;
-            }
+            if (state.Key == "main") continue;
+            if (checkRequirements(state.Value["requirements"]?.ToObject<string[]>()))
+                activeState = state.Value;
         }
+
+        string path = activeState["path"]?.ToString();
 
         if (string.IsNullOrEmpty(path))
             return null;
@@ -215,6 +221,7 @@ public class Click : MonoBehaviour
 
         polygons.Clear();
         hiddenHotspots.Clear();
+        alwaysVisiblePolygons.Clear();
     }
 
     void updateState(string action, string currentImage)
@@ -435,8 +442,6 @@ public class Click : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         cam.fieldOfView = FOV;
 
-        // Try to load existing save from persistentDataPath first,
-        // then fall back to the default bundled in Resources
         string saveJson;
         if (File.Exists(SaveFilePath))
         {
@@ -490,16 +495,6 @@ public class Click : MonoBehaviour
         }
 
         ClearMaterialCache();
-        materialPaths.Clear();
-
-        foreach (var image in data)
-        {
-            if (image.Key == "meta") continue;
-            string key = image.Key;
-            string path = image.Value["states"]?["main"]?["path"]?.ToString();
-            if (!string.IsNullOrEmpty(path))
-                materialPaths[key] = path;
-        }
 
         if (!string.IsNullOrEmpty(entryImage) && data[entryImage] != null)
             currentImage = entryImage;
@@ -636,7 +631,8 @@ public class Click : MonoBehaviour
             MeshRenderer meshRenderer = polygon.GetComponent<MeshRenderer>();
             if (meshRenderer == null || meshRenderer.sharedMaterial == null) continue;
 
-            float alpha = showPolygons ? visiblePolygonAlpha : 0f;
+            bool isAlwaysVisible = alwaysVisiblePolygons.Contains(polygon);
+            float alpha = (showPolygons || isAlwaysVisible) ? visiblePolygonAlpha : 0f;
             meshRenderer.sharedMaterial.SetColor("_BaseColor", new Color(1f, 1f, 1f, alpha));
         }
     }
