@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/cutscenes.unity
     guid: 97f7ea4b498a34601893d7d5a3a199f2
+  - enabled: 1
+    path: Assets/MiniGames/HoleInWall/Assets/Scenes/HoleInWall.unity
+    guid: df4574187b3b9434a95405868bdb8d60
+  - enabled: 1
+    path: Assets/MiniGames/minigamename/Assets/Scenes/CodingMinigame.unity
+    guid: 45dbb172d6563a24197bff5edc0eb56e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -5,12 +5,11 @@ using System.IO;
 public class Inventory : MonoBehaviour
 {
     JObject saveData;
-    public SaveDataManager saveDataManager;
     private string[] allItems;
 
     void Start()
     {
-        saveData = saveDataManager.readData();
+        saveData = SaveDataManager.Instance.readData();
         allItems = saveData["itemsOwned"].ToObject<string[]>();
 
         foreach (var id in allItems)
@@ -25,13 +24,13 @@ public class Inventory : MonoBehaviour
     {
         InventoryState.Instance.ReceiveItem(id);
         Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
-        saveData = saveDataManager.readData(); // ensure we use the latest file state
+        saveData = SaveDataManager.Instance.readData(); // ensure we use the latest file state
         JArray itemsArray = (JArray)saveData["itemsOwned"];
         if (!itemsArray.Contains(id))
         {
             itemsArray.Add(id);
             saveData["itemsOwned"] = itemsArray;
-            saveDataManager.saveData(saveData);
+            SaveDataManager.Instance.saveData(saveData);
         }
 
     }
@@ -39,13 +38,13 @@ public class Inventory : MonoBehaviour
     {
         InventoryState.Instance.RemoveItem(id);
         Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
-        saveData = saveDataManager.readData(); // ensure we use the latest file state
+        saveData = SaveDataManager.Instance.readData(); // ensure we use the latest file state
         JArray itemsArray = (JArray)saveData["itemsOwned"];
         if (itemsArray.Contains(id))
         {
             itemsArray.Remove(id);
             saveData["itemsOwned"] = itemsArray;
-            saveDataManager.saveData(saveData);
+            SaveDataManager.Instance.saveData(saveData);
         }
     }
 }

@@ -36,7 +36,7 @@ public class GameNameScript : MonoBehaviour
         saveData["states"]["start"]["openDoor"] = true; // start -> place,
         saveDataManager.saveData(saveData);
  
-        //switch scene
+        // switch scene 
         SceneManager.LoadScene("main");
     }
  

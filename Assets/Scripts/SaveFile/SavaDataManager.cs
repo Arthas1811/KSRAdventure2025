@@ -4,7 +4,21 @@ using System.IO;
 
 public class SaveDataManager : MonoBehaviour
 {
+    public static SaveDataManager Instance { get; private set; }
+
     private static string SaveFilePath => Path.Combine(Application.persistentDataPath, "saveData.json");
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     public JObject readData()
     {
