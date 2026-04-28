@@ -4,8 +4,22 @@ using System.IO;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory Instance { get; private set; }
+
     JObject saveData;
     private string[] allItems;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
@@ -17,13 +31,13 @@ public class Inventory : MonoBehaviour
             InventoryState.Instance.ReceiveItem(id);
         }
 
-        Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
+        RefreshInventoryUI();
     }
 
     public void add(string id)
     {
         InventoryState.Instance.ReceiveItem(id);
-        Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
+        RefreshInventoryUI();
         saveData = SaveDataManager.Instance.readData(); // ensure we use the latest file state
         JArray itemsArray = (JArray)saveData["itemsOwned"];
         if (!itemsArray.Contains(id))
@@ -37,7 +51,7 @@ public class Inventory : MonoBehaviour
     public void remove(string id)
     {
         InventoryState.Instance.RemoveItem(id);
-        Object.FindAnyObjectByType<InventoryManager>().UpdateInventoryUI();
+        RefreshInventoryUI();
         saveData = SaveDataManager.Instance.readData(); // ensure we use the latest file state
         JArray itemsArray = (JArray)saveData["itemsOwned"];
         if (itemsArray.Contains(id))
@@ -46,5 +60,12 @@ public class Inventory : MonoBehaviour
             saveData["itemsOwned"] = itemsArray;
             SaveDataManager.Instance.saveData(saveData);
         }
+    }
+
+    private void RefreshInventoryUI()
+    {
+        InventoryManager inventoryManager = Object.FindAnyObjectByType<InventoryManager>();
+        if (inventoryManager != null)
+            inventoryManager.UpdateInventoryUI();
     }
 }

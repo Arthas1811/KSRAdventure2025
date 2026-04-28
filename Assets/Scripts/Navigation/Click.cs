@@ -47,6 +47,11 @@ public class Click : MonoBehaviour
     public bool imageOpen = false;
     public GameObject closeImageButton;
 
+    void Awake()
+    {
+        inventory = Inventory.Instance;
+    }
+
     // Returns the path where saveData.json is written at runtime (writable in builds)
     private string SaveFilePath => Path.Combine(Application.persistentDataPath, "saveData.json");
 
@@ -337,10 +342,11 @@ public class Click : MonoBehaviour
         }
         else if (action.Split(":")[0] == "item")
         {
+            Inventory currentInventory = inventory != null ? inventory : Inventory.Instance;
             if (action.Split(":")[1] == "add")
-                inventory.add(action.Split(":")[2]);
+                currentInventory?.add(action.Split(":")[2]);
             else if (action.Split(":")[1] == "remove")
-                inventory.remove(action.Split(":")[2]);
+                currentInventory?.remove(action.Split(":")[2]);
             
             if (File.Exists(SaveFilePath))
                 saveData = JObject.Parse(File.ReadAllText(SaveFilePath));
