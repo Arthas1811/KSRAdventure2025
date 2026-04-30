@@ -52,7 +52,6 @@ public class Click : MonoBehaviour
         inventory = Inventory.Instance;
     }
 
-    // Returns the path where saveData.json is written at runtime (writable in builds)
     private string SaveFilePath => Path.Combine(Application.persistentDataPath, "saveData.json");
 
     void openImage(string resourceName)
@@ -64,7 +63,6 @@ public class Click : MonoBehaviour
         if (dotIndex >= 0)
             resourceName = resourceName.Substring(0, dotIndex);
 
-        // If no folder specified, assume Images/Images/
         if (!resourceName.Contains("/"))
             resourceName = "Images/Images/" + resourceName;
 
@@ -275,7 +273,6 @@ public class Click : MonoBehaviour
 
     void saveDataInFile(JObject saveData)
     {
-        // Application.persistentDataPath is writable in all builds (unlike dataPath)
         string saveJson = saveData.ToString();
         File.WriteAllText(SaveFilePath, saveJson);
     }
@@ -371,7 +368,6 @@ public class Click : MonoBehaviour
         else if (action.StartsWith("sfx:"))
         {
             string clipName = action.Split(':')[1];
-            // Loads from Resources/Audio/SFX/<clipName>
             AudioClip clip = LoadAudioClip($"Audio/SFX/{clipName}");
             AudioManager.Instance.PlaySFX(clip);
             return;
@@ -379,7 +375,6 @@ public class Click : MonoBehaviour
         else if (action.StartsWith("music:"))
         {
             string clipName = action.Split(':')[1];
-            // Loads from Resources/Audio/Music/<clipName>
             AudioClip clip = LoadAudioClip($"Audio/Music/{clipName}");
             AudioManager.Instance.PlayMusic(clip);
             return;
@@ -387,7 +382,6 @@ public class Click : MonoBehaviour
         else if (action.StartsWith("cutscene:"))
         {
             string videoName = action.Split(':')[1];
-            // Pass a Resources-relative path; the cutscene scene loads it via Resources.Load<VideoClip>
             openCutscene($"Videos/Cutscenes/{videoName}");
             return;
         }
@@ -479,7 +473,7 @@ public class Click : MonoBehaviour
 
     void LoadLocation(string locationName, string entryImage = null)
     {
-        // Loads from Resources/Locations/<locationName>.json
+        // load from resources...
         TextAsset json = Resources.Load<TextAsset>($"Locations/{locationName}");
         if (json == null)
         {
