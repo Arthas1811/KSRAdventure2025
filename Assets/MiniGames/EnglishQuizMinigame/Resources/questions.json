@@ -1,0 +1,79 @@
+{
+  "questions": [
+    {
+      "question": "Which sentence is grammatically correct?",
+      "answers": ["She don't like coffee.", "She doesn't likes coffee.", "She doesn't like coffee.", "She not like coffee."],
+      "correctIndex": 2
+    },
+    {
+      "question": "Choose the correct past tense of 'go'.",
+      "answers": ["goed", "goes", "gone", "went"],
+      "correctIndex": 3
+    },
+    {
+      "question": "What is the correct comparative form of 'good'?",
+      "answers": ["gooder", "more good", "better", "best"],
+      "correctIndex": 2
+    },
+    {
+      "question": "Which word is a conjunction?",
+      "answers": ["quickly", "although", "house", "blue"],
+      "correctIndex": 1
+    },
+    {
+      "question": "Which article is correct? '_ umbrella is on the table.'",
+      "answers": ["A", "An", "The a", "Some"],
+      "correctIndex": 1
+    },
+    {
+      "question": "Which sentence uses the Present Perfect correctly?",
+      "answers": ["I have went to the shop.", "I went to the shop.", "I has gone to the shop.", "I have gone to the shop."],
+      "correctIndex": 3
+    },
+    {
+      "question": "Choose the correct passive: 'The cake ___ by Mary.'",
+      "answers": ["was baked", "were baked", "has bake", "is baking"],
+      "correctIndex": 0
+    },
+    {
+      "question": "Translate to English: 'Schmetterling'",
+      "answers": ["Dragonfly", "Butterfly", "Bumblebee", "Moth"],
+      "correctIndex": 1
+    },
+    {
+      "question": "Translate to English: 'Libelle'",
+      "answers": ["Firefly", "Libella", "Dragonfly", "Hornet"],
+      "correctIndex": 2
+    },
+    {
+      "question": "Translate to English: 'Seekuh'",
+      "answers": ["Manatee", "Sea Cow", "Walrus", "Arctic Cow"],
+      "correctIndex": 0
+    },
+    {
+      "question": "Translate to English: 'Seeschwein'",
+      "answers": ["Guinea Seal", "Capybara", "Platypus", "Water Pig"],
+      "correctIndex": 1
+    },
+    {
+      "question": "Translate to English: 'Künstliche Intelligenz'",
+      "answers": ["Special Smartness", "Artificial Intelligence", "MOMMY", "Me"],
+      "correctIndex": 1
+    },
+    {
+      "question": "Translate to English: 'Robbe'",
+      "answers": ["Seal", "Robber", "Squid", "Sea Lion"],
+      "correctIndex": 0
+    },
+    {
+      "question": "What is the past participle of 'kneel'?",
+      "answers": ["knead", "kneld", "knelt", "knealt"],
+      "correctIndex": 2
+    },
+    {
+      "question": "Which word is an adverb?",
+      "answers": ["happy", "happily", "happiness", "happier"],
+      "correctIndex": 1
+    }
+  ]
+}
