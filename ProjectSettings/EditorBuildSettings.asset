@@ -12,20 +12,29 @@ EditorBuildSettings:
     path: Assets/Scenes/one.unity
     guid: b0fdeb59379ef4bd38fd8f01c5819e7c
   - enabled: 1
-    path: Assets/MiniGames/Coding/Assets/Scenes/CodingMinigame.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
     path: Assets/Scenes/cutscenes.unity
     guid: 97f7ea4b498a34601893d7d5a3a199f2
-  - enabled: 0
-    path: Assets/MiniGames/HoleInWall/Assets/Scenes/HoleInWall.unity
-    guid: df4574187b3b9434a95405868bdb8d60
-  - enabled: 0
-    path: Assets/MiniGames/minigamename/Assets/Scenes/CodingMinigame.unity
-    guid: 45dbb172d6563a24197bff5edc0eb56e
   - enabled: 1
-    path: Assets/MiniGames/Coding/Assets/Scenes/CodingMinigame.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/MiniGames/CodingMinigame/Assets/Scenes/CodingMinigame.unity
+    guid: 893eee6ac14a2bc47ba8df0f6215468a
+  - enabled: 1
+    path: Assets/MiniGames/DoorHingesMinigame/Assets/Scenes/DoorHingesMinigame.unity
+    guid: b28d4644d2fa5764daa9df0d6f1831ca
+  - enabled: 1
+    path: Assets/MiniGames/EnglishQuizMinigame/Scenes/EnglishQuizMinigame.unity
+    guid: d3249339cad142f40b7f8c98597b80a6
+  - enabled: 1
+    path: Assets/MiniGames/HeatingValvesMinigame/Assets/Scenes/HeatingValvesMinigame.unity
+    guid: 54d799adb9bad684fb8900f40a7eee74
+  - enabled: 1
+    path: Assets/MiniGames/JackBlackMinigame/Assets/Scenes/JackBlackMinigame.unity
+    guid: 304e4688d6ee66f488b3818eb35c5d6d
+  - enabled: 1
+    path: Assets/MiniGames/ServerDestructionMinigame/Assets/Scenes/ServerDestructionMinigame.unity
+    guid: af1941af76ab54342a63f2bb4e5e2630
+  - enabled: 1
+    path: Assets/MiniGames/ServerDestructionMinigame2/Assets/Scenes/ServerDestructionMinigame2.unity
+    guid: b13318f7def6740439433d46312cf10f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

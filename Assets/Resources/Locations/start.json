@@ -10,7 +10,9 @@
                 "fov": 40
             },
             "openDoor": {
-                "requirements": ["states:start:openDoor:true"],
+                "requirements": [
+                    "states:start:openDoor:true"
+                ],
                 "path": "Assets/Resources/Images/Navigation/start/6.jpg"
             }
         },
@@ -44,11 +46,15 @@
                 "actions": [
                     "data:states:start:openDoor:true"
                 ],
-                "requirements": ["item:redbull:true"],
+                "requirements": [
+                    "item:redbull:true"
+                ],
                 "polygonString": "0.5676567656765676,0.9201732673267327;0.6584158415841584,0.9300742574257426;0.6567656765676567,0.8409653465346535;0.5594059405940595,0.843440594059406"
             },
             {
-                "actions": ["dialogue:library_dialogue"],
+                "actions": [
+                    "dialogue:library_dialogue"
+                ],
                 "requirements": [],
                 "polygonString": "0.15098505434782608,0.5016983695652174;0.16508152173913043,0.5016983695652174;0.16694972826086957,0.4765625;0.1520040760869565,0.4731657608695652"
             }
@@ -182,7 +188,8 @@
             },
             {
                 "actions": [
-                    "sfx:opening_door", "location:main_hall:1"
+                    "sfx:opening_door",
+                    "location:main_hall:1"
                 ],
                 "requirements": [],
                 "polygonString": "0.42306385869565216,0.5968070652173914;0.4779211956521739,0.5866168478260869;0.4779211956521739,0.3783967391304348;0.42595108695652173,0.3682065217391305"
@@ -199,25 +206,110 @@
         "customHotspots": [
             {
                 "actions": [
-                    "3"
-                ],
-                "requirements": [],
-                "polygonString": "0.8277853260869565,0.5852581521739131;0.09137228260869565,0.5889945652173914;0.09918478260869565,0.3226902173913043;0.8277853260869565,0.3420516304347826"
-            },
-            {
-                "actions": [
-                    "6"
-                ],
-                "requirements": [],
-                "polygonString": "0.4400475543478261,0.5237771739130435;0.5852581521739131,0.5285326086956521;0.5913722826086957,0.42051630434782605;0.44429347826086957,0.3923233695652174"
-            },
-            {
-                "actions": [
                     "scene:CodingMinigame"
                 ],
                 "requirements": [],
-                "polygonString": "0.5627062706270627,0.7367986798679869;0.5957095709570958,0.8589108910891089;0.7029702970297029,0.7599009900990099;0.636963696369637,0.6872937293729373"
+                "polygonString": "0.02,0.653;0.07393,0.653;0.07393,0.369;0.02,0.369"
+            },
+            {
+                "actions": [
+                    "scene:ConstructionMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.08472,0.653;0.13865,0.653;0.13865,0.369;0.08472,0.369"
+            },
+            {
+                "actions": [
+                    "scene:DoorHingesMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.14944,0.653;0.20337,0.653;0.20337,0.369;0.14944,0.369"
+            },
+            {
+                "actions": [
+                    "scene:EnglishQuizMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.21416,0.653;0.26809,0.653;0.26809,0.369;0.21416,0.369"
+            },
+            {
+                "actions": [
+                    "scene:HeatingValvesMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.27888,0.653;0.33281,0.653;0.33281,0.369;0.27888,0.369"
+            },
+            {
+                "actions": [
+                    "scene:JackBlackMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.3436,0.653;0.39753,0.653;0.39753,0.369;0.3436,0.369"
+            },
+            {
+                "actions": [
+                    "scene:PianoMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.40831,0.653;0.46224,0.653;0.46224,0.369;0.40831,0.369"
+            },
+            {
+                "actions": [
+                    "scene:ServerDestructionMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.47303,0.653;0.52696,0.653;0.52696,0.369;0.47303,0.369"
+            },
+            {
+                "actions": [
+                    "scene:ServerDestructionMinigame2"
+                ],
+                "requirements": [],
+                "polygonString": "0.53775,0.653;0.59168,0.653;0.59168,0.369;0.53775,0.369"
             }
+            // ,
+            // {
+            //     "actions": [
+            //         "scene:not_defined"
+            //     ],
+            //     "requirements": [],
+            //     "polygonString": "0.60247,0.653;0.6564,0.653;0.6564,0.369;0.60247,0.369"
+            // },
+            // {
+            //     "actions": [
+            //         "scene:not_defined"
+            //     ],
+            //     "requirements": [],
+            //     "polygonString": "0.66719,0.653;0.72112,0.653;0.72112,0.369;0.66719,0.369"
+            // },
+            // {
+            //     "actions": [
+            //         "scene:not_defined"
+            //     ],
+            //     "requirements": [],
+            //     "polygonString": "0.73191,0.653;0.78584,0.653;0.78584,0.369;0.73191,0.369"
+            // },
+            // {
+            //     "actions": [
+            //         "scene:not_defined"
+            //     ],
+            //     "requirements": [],
+            //     "polygonString": "0.79663,0.653;0.85056,0.653;0.85056,0.369;0.79663,0.369"
+            // },
+            // {
+            //     "actions": [
+            //         "scene:not_defined"
+            //     ],
+            //     "requirements": [],
+            //     "polygonString": "0.86135,0.653;0.91528,0.653;0.91528,0.369;0.86135,0.369"
+            // },
+            // {
+            //     "actions": [
+            //         "scene:not_defined"
+            //     ],
+            //     "requirements": [],
+            //     "polygonString": "0.92607,0.653;0.98,0.653;0.98,0.369;0.92607,0.369"
+            // }
         ]
     }
 }

@@ -3,8 +3,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Net.Security;
-//S using Newtonsoft.Json.Linq;
-//S using UnityEngine.SceneManagement;
+using Newtonsoft.Json.Linq;
+using UnityEngine.SceneManagement;
 
 public class Server2 : MonoBehaviour
 {
@@ -81,7 +81,7 @@ public class Server2 : MonoBehaviour
             //S Inventory.Instance.add("redbull");
             //S saveData["states"]["start"]["openDoor"] = true;
             //S saveDataManager.Instance.saveData(saveData);
-            //S SceneManager.LoadScene("main");
+            SceneManager.LoadScene("main");
         }
     }
 

@@ -2,8 +2,19 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - CodeBlock
+  - Barrier
+  - 1
+  - Goal
+  - 3
+  - 2
+  - 4
+  - eins
+  - 5
+  - zwei
+  - CodeBlockClone
   layers:
   - Default
   - TransparentFX
@@ -50,27 +61,3 @@ TagManager:
   - Light Layer 5
   - Light Layer 6
   - Light Layer 7
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 

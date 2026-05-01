@@ -190,7 +190,7 @@ public class EnglishQuiz : MonoBehaviour
 
     public void BackToMain()
     {
-        SceneManager.LoadScene("EnglishQuizMinigame");
+        SceneManager.LoadScene("main");
     }
 
     void UpdateScore()

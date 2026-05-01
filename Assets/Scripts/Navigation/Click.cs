@@ -144,7 +144,7 @@ public class Click : MonoBehaviour
 
             MeshCollider meshCollider = polygonObject.GetComponent<MeshCollider>();
             meshCollider.sharedMesh = mesh;
-            meshCollider.convex = true;
+            meshCollider.convex = false;
 
             polygons.Add(polygonObject);
             hotspotActions[polygonObject] = actions;
@@ -672,19 +672,16 @@ public class Click : MonoBehaviour
     }
     private AudioClip LoadAudioClip(string resourcePath)
     {
-        // resourcePath is Resources-relative, e.g. "Audio/SFX/door"
         return Resources.Load<AudioClip>(resourcePath);
     }
 
     public void openCutscene(string videoName)
     {
-        // Strip any full path prefixes, keep only the filename
         if (videoName.Contains("/"))
             videoName = videoName.Substring(videoName.LastIndexOf('/') + 1);
         if (videoName.Contains("\\"))
             videoName = videoName.Substring(videoName.LastIndexOf('\\') + 1);
 
-        // Strip extension if present
         int dotIndex = videoName.LastIndexOf('.');
         string nameOnly = dotIndex >= 0 ? videoName.Substring(0, dotIndex) : videoName;
 
