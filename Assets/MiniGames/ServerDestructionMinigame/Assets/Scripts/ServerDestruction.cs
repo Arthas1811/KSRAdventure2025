@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -103,5 +104,7 @@ public class ServerDestruction : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         winScreen.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("main");
     }
 }
