@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MiniGames/EnglishQuizMinigame/Scenes/EnglishQuizMinigame.unity
     guid: d3249339cad142f40b7f8c98597b80a6
-  - enabled: 1
+  - enabled: 0
     path: Assets/MiniGames/HeatingValvesMinigame/Assets/Scenes/HeatingValvesMinigame.unity
     guid: 54d799adb9bad684fb8900f40a7eee74
   - enabled: 1

@@ -7,7 +7,8 @@
   "states": {
     "start": {
       "openDoor": false,
-      "numberOfRedbulls": 0
+      "numberOfRedbulls": 0,
+      "specialstate" : "||"
     }
   },
   "currentLocation": "start"

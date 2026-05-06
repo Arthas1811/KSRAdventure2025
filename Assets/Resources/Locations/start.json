@@ -208,7 +208,14 @@
                 "actions": [
                     "scene:CodingMinigame"
                 ],
-                "requirements": [],
+                "requirements": ["item:redbull:false"],
+                "polygonString": "0.02,0.653;0.07393,0.653;0.07393,0.369;0.02,0.369"
+            },
+            {
+                "actions": [
+                    "scene:CodingMinigame"
+                ],
+                "requirements": ["item:redbull:false"],
                 "polygonString": "0.02,0.653;0.07393,0.653;0.07393,0.369;0.02,0.369"
             },
             {

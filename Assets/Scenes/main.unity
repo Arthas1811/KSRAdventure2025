@@ -1184,7 +1184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &410087040
 Light:
   m_ObjectHideFlags: 0
@@ -1859,7 +1859,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f64fd245bb62d4439d957746848d207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
-  saveDataManager: {fileID: 1018678388}
 --- !u!1 &930668583
 GameObject:
   m_ObjectHideFlags: 0
@@ -2854,7 +2853,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 20.00003, y: 25}
+  m_AnchoredPosition: {x: 20, y: 25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1361732464
@@ -3729,7 +3728,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f64fd245bb62d4439d957746848d207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GiveItemOnStart
-  saveDataManager: {fileID: 1018678388}
 --- !u!114 &1654473767
 MonoBehaviour:
   m_ObjectHideFlags: 0

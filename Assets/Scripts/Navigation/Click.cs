@@ -319,8 +319,27 @@ public class Click : MonoBehaviour
                 string requiredValue = parts[parts.Length - 1].ToLower();
                 string actualValue = current.ToString().ToLower();
 
-                if (actualValue != requiredValue)
-                    return false;
+                try //to fix maybe  // not sure if this works but well see
+                {
+                    int rValue = int.Parse(requiredValue);
+                    int aValue = int.Parse(actualValue);
+                    if (aValue >= rValue)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch
+                {
+                    if (actualValue != requiredValue)
+                    {
+                        return false;
+                    }
+                }
+
             }
         }
         return true;
@@ -520,6 +539,7 @@ public class Click : MonoBehaviour
             Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
             Ray ray = Camera.main.ScreenPointToRay(screenCenter);
             RaycastHit[] hits = Physics.RaycastAll(ray);
+            Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
             foreach (var hit in hits)
             {
@@ -527,7 +547,7 @@ public class Click : MonoBehaviour
                 {
                     foreach (var action in actions)
                         completeAction(action, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
-                    break;
+                    break; // only act on the nearest matching hotspot
                 }
             }
         }
@@ -552,8 +572,14 @@ public class Click : MonoBehaviour
                 if (deltaMouse.magnitude < 5f)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-                    if (Physics.Raycast(ray, out RaycastHit hit))
+                    RaycastHit[] hits = Physics.RaycastAll(ray);
+                    Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+                    foreach (var hit in hits)
                     {
+                        if (hiddenHotspots.Contains(hit.collider.gameObject))
+                            continue;
+
                         if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
                         {
                             foreach (var action in actions)
@@ -587,6 +613,7 @@ public class Click : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit[] hits = Physics.RaycastAll(ray);
+        Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
         bool hoveringPolygon = false;
 
         foreach (var hit in hits)
