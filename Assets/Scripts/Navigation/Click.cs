@@ -46,6 +46,9 @@ public class Click : MonoBehaviour
     public Image uiImage;
     public bool imageOpen = false;
     public GameObject closeImageButton;
+    public GameObject saveStringUi;
+
+    public bool saveStringUIOpen = false;
 
     void Awake()
     {
@@ -534,7 +537,7 @@ public class Click : MonoBehaviour
 
     void Update()
     {
-        if (!inventoryOpen && !imageOpen && !dialogueOpen && Keyboard.current != null && Keyboard.current[MoveForwardKey].wasPressedThisFrame)
+        if (!saveStringUIOpen && !inventoryOpen && !imageOpen && !dialogueOpen && Keyboard.current != null && Keyboard.current[MoveForwardKey].wasPressedThisFrame)
         {
             Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
             Ray ray = Camera.main.ScreenPointToRay(screenCenter);
@@ -560,7 +563,7 @@ public class Click : MonoBehaviour
 
         UpdateHoverCursor();
 
-        if (!inventoryOpen && !dialogueOpen && !imageOpen)
+        if (!saveStringUIOpen && !inventoryOpen && !dialogueOpen && !imageOpen)
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
                 mouseOne = Mouse.current.position.ReadValue();
@@ -605,7 +608,7 @@ public class Click : MonoBehaviour
 
     private void UpdateHoverCursor()
     {
-        if (inventoryOpen || dialogueOpen || imageOpen)
+        if (inventoryOpen || dialogueOpen || imageOpen || saveStringUIOpen)
         {
             SetHoverCursor(false);
             return;
@@ -700,6 +703,19 @@ public class Click : MonoBehaviour
     private AudioClip LoadAudioClip(string resourcePath)
     {
         return Resources.Load<AudioClip>(resourcePath);
+    }
+
+    public void ToggleSaveStringUI()
+    {
+        saveStringUIOpen = !saveStringUIOpen;
+        if (saveStringUIOpen)
+        {
+            saveStringUi.SetActive(true);
+        }
+        else
+        {
+            saveStringUi.SetActive(false);
+        }
     }
 
     public void openCutscene(string videoName)
