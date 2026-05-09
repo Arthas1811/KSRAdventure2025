@@ -208,14 +208,7 @@
                 "actions": [
                     "scene:CodingMinigame"
                 ],
-                "requirements": ["item:redbull:false"],
-                "polygonString": "0.02,0.653;0.07393,0.653;0.07393,0.369;0.02,0.369"
-            },
-            {
-                "actions": [
-                    "scene:CodingMinigame"
-                ],
-                "requirements": ["item:redbull:false"],
+                "requirements": [],
                 "polygonString": "0.02,0.653;0.07393,0.653;0.07393,0.369;0.02,0.369"
             },
             {
@@ -273,15 +266,14 @@
                 ],
                 "requirements": [],
                 "polygonString": "0.53775,0.653;0.59168,0.653;0.59168,0.369;0.53775,0.369"
+            },
+            {
+                "actions": [
+                    "scene:AcidsMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.60247,0.653;0.6564,0.653;0.6564,0.369;0.60247,0.369"
             }
-            // ,
-            // {
-            //     "actions": [
-            //         "scene:not_defined"
-            //     ],
-            //     "requirements": [],
-            //     "polygonString": "0.60247,0.653;0.6564,0.653;0.6564,0.369;0.60247,0.369"
-            // },
             // {
             //     "actions": [
             //         "scene:not_defined"

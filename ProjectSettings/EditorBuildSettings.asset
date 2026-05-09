@@ -23,9 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MiniGames/EnglishQuizMinigame/Scenes/EnglishQuizMinigame.unity
     guid: d3249339cad142f40b7f8c98597b80a6
-  - enabled: 0
-    path: Assets/MiniGames/HeatingValvesMinigame/Assets/Scenes/HeatingValvesMinigame.unity
-    guid: 54d799adb9bad684fb8900f40a7eee74
   - enabled: 1
     path: Assets/MiniGames/JackBlackMinigame/Assets/Scenes/JackBlackMinigame.unity
     guid: 304e4688d6ee66f488b3818eb35c5d6d
@@ -38,6 +35,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MiniGames/PianoMinigame/Scenes/PianoMinigame.unity
     guid: 26debd484da2a6647afeaa8afd2860db
+  - enabled: 1
+    path: Assets/MiniGames/AcidsMinigame/Assets/Scenes/AcidsMinigame.unity
+    guid: 65d33375598af16479fc712041c38b0d
+  - enabled: 1
+    path: Assets/MiniGames/ConstructionMinigame/Assets/Scenes/ConstructionMinigame.unity
+    guid: ea8e1ffebced65946bf50c90c91cd846
+  - enabled: 1
+    path: Assets/MiniGames/HeatingValvesMinigame/Assets/Scenes/HeatingValvesMinigame.unity
+    guid: 48147fa2a535d4b4597346f3bbce91dc
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
