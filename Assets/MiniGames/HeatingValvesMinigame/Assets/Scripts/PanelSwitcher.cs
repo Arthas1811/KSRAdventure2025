@@ -8,6 +8,7 @@ public class PanelSwitcher : MonoBehaviour
 
     public GameObject oldPanel;
     public GameObject oldPanel2;
+    public GameObject Temp;
     public GameObject newPanel;
 
     private bool alreadySwitched = false;
@@ -54,7 +55,9 @@ public class PanelSwitcher : MonoBehaviour
         if (newPanel != null)
         {
             newPanel.SetActive(true);
+            Temp.SetActive(true);
         }
+
 
 
         Debug.Log("Panel gewechselt.");
