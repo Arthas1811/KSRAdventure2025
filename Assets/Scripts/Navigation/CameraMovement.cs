@@ -31,30 +31,30 @@ public class CameraMovement : MonoBehaviour
                     transform.localRotation = Quaternion.Euler(-x, -y, 0f);
                 }
             }
-        }
-        if (Keyboard.current != null && Keyboard.current[MoveUpwardsKey].isPressed)
-        {
-            x += 0.5f;
-            x = Mathf.Clamp(x, -90f, 90f);
-            transform.localRotation = Quaternion.Euler(-x, -y, 0f);
-        }
-        if (Keyboard.current != null && Keyboard.current[MoveDownwardsKey].isPressed)
-        {
-            x -= 0.5f;
-            x = Mathf.Clamp(x, -90f, 90f);
-            transform.localRotation = Quaternion.Euler(-x, -y, 0f);
-        }
-        if (Keyboard.current != null && Keyboard.current[MoveRightKey].isPressed)
-        {
-            y -= 0.5f;
-            x = Mathf.Clamp(x, -90f, 90f);
-            transform.localRotation = Quaternion.Euler(-x, -y, 0f);
-        }
-        if (Keyboard.current != null && Keyboard.current[MoveLeftKey].isPressed)
-        {
-            y += 0.5f;
-            x = Mathf.Clamp(x, -90f, 90f);
-            transform.localRotation = Quaternion.Euler(-x, -y, 0f);
+            if (Keyboard.current != null && Keyboard.current[MoveUpwardsKey].isPressed)
+            {
+                x += 0.5f;
+                x = Mathf.Clamp(x, -90f, 90f);
+                transform.localRotation = Quaternion.Euler(-x, -y, 0f);
+            }
+            if (Keyboard.current != null && Keyboard.current[MoveDownwardsKey].isPressed)
+            {
+                x -= 0.5f;
+                x = Mathf.Clamp(x, -90f, 90f);
+                transform.localRotation = Quaternion.Euler(-x, -y, 0f);
+            }
+            if (Keyboard.current != null && Keyboard.current[MoveRightKey].isPressed)
+            {
+                y -= 0.5f;
+                x = Mathf.Clamp(x, -90f, 90f);
+                transform.localRotation = Quaternion.Euler(-x, -y, 0f);
+            }
+            if (Keyboard.current != null && Keyboard.current[MoveLeftKey].isPressed)
+            {
+                y += 0.5f;
+                x = Mathf.Clamp(x, -90f, 90f);
+                transform.localRotation = Quaternion.Euler(-x, -y, 0f);
+            }
         }
     }
 
