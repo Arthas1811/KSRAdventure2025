@@ -47,6 +47,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MiniGames/ConstructionMinigame/Assets/Scenes/Cutscenes.unity
     guid: 26903af8df8a74f429ccc771df8e10e9
+  - enabled: 1
+    path: Assets/MiniGames/WiringMinigame/Scenes/WiringMinigame.unity
+    guid: 61aa6bb56106e4a4dadb0e468efbaa4e
+  - enabled: 1
+    path: Assets/MiniGames/HoleInWallMinigame/Assets/Scenes/HoleInWallMinigame.unity
+    guid: a4ac794565b6a624f9368e3443b30a26
+  - enabled: 1
+    path: Assets/MiniGames/FireExtinguisherMinigame/Assets/Scenes/FireExtinguisherMinigame.unity
+    guid: 995d17af866da8d4a9833a0ac95da530
+  - enabled: 1
+    path: Assets/MiniGames/ConstructionMinigame/Assets/Scenes/Construction.unity
+    guid: 71af37f8c4c3e6947855fd9044459e19
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

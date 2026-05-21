@@ -273,28 +273,28 @@
                 ],
                 "requirements": [],
                 "polygonString": "0.60247,0.653;0.6564,0.653;0.6564,0.369;0.60247,0.369"
+            },
+            {
+                "actions": [
+                    "scene:HoleInWallMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.66719,0.653;0.72112,0.653;0.72112,0.369;0.66719,0.369"
+            },
+            {
+                "actions": [
+                    "scene:FireExtinguisherMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.73191,0.653;0.78584,0.653;0.78584,0.369;0.73191,0.369"
+            },
+            {
+                "actions": [
+                    "scene:WiringMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.79663,0.653;0.85056,0.653;0.85056,0.369;0.79663,0.369"
             }
-            // {
-            //     "actions": [
-            //         "scene:not_defined"
-            //     ],
-            //     "requirements": [],
-            //     "polygonString": "0.66719,0.653;0.72112,0.653;0.72112,0.369;0.66719,0.369"
-            // },
-            // {
-            //     "actions": [
-            //         "scene:not_defined"
-            //     ],
-            //     "requirements": [],
-            //     "polygonString": "0.73191,0.653;0.78584,0.653;0.78584,0.369;0.73191,0.369"
-            // },
-            // {
-            //     "actions": [
-            //         "scene:not_defined"
-            //     ],
-            //     "requirements": [],
-            //     "polygonString": "0.79663,0.653;0.85056,0.653;0.85056,0.369;0.79663,0.369"
-            // },
             // {
             //     "actions": [
             //         "scene:not_defined"
