@@ -145,7 +145,7 @@ public class Construction : MonoBehaviour
     
     void Win()
     {
-        //Inventory.Instance.add("plan"); 
+        Inventory.Instance.add("plan"); 
         OpenCutscene("FinishedGame");
     }
 
