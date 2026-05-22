@@ -40,13 +40,13 @@ EditorBuildSettings:
     guid: 65d33375598af16479fc712041c38b0d
   - enabled: 1
     path: Assets/MiniGames/ConstructionMinigame/Assets/Scenes/ConstructionMinigame.unity
-    guid: ea8e1ffebced65946bf50c90c91cd846
+    guid: 71af37f8c4c3e6947855fd9044459e19
   - enabled: 1
     path: Assets/MiniGames/HeatingValvesMinigame/Assets/Scenes/HeatingValvesMinigame.unity
     guid: 48147fa2a535d4b4597346f3bbce91dc
   - enabled: 1
     path: Assets/MiniGames/ConstructionMinigame/Assets/Scenes/Cutscenes.unity
-    guid: 26903af8df8a74f429ccc771df8e10e9
+    guid: 543311b45be891f46b18f0ec5ce15ca5
   - enabled: 1
     path: Assets/MiniGames/WiringMinigame/Scenes/WiringMinigame.unity
     guid: 61aa6bb56106e4a4dadb0e468efbaa4e
@@ -57,7 +57,7 @@ EditorBuildSettings:
     path: Assets/MiniGames/FireExtinguisherMinigame/Assets/Scenes/FireExtinguisherMinigame.unity
     guid: 995d17af866da8d4a9833a0ac95da530
   - enabled: 1
-    path: Assets/MiniGames/ConstructionMinigame/Assets/Scenes/Construction.unity
+    path: Assets/MiniGames/ConstructionMinigame/Assets/Scenes/ConstructionMinigame.unity
     guid: 71af37f8c4c3e6947855fd9044459e19
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
