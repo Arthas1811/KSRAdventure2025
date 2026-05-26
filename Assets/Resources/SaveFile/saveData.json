@@ -36,11 +36,6 @@
       "phoneDestroyed": false
     },
     "minigames": {
-      "info": "this is also used to for the sequential solving of the minigame",
-      "info0": "This has to be fixed as soon as the mingame names are fixed --> some minigames don't require an extra state, as they e.g. open a door",
-      "inf2": "Minigames that could have to have their own state: Johnny, Mirea, William, Rico, Kevin, Leon, Dylan",
-      "inf3": "Minigames where a state is not strictly necessary: Andrin, Leonardo",
-      "inf4": "Minigames that already have a state somewhere else: Darvin, Ivo, Joris, Lorenzo, Noemi",
       "holeInWallSaveString": "0|0000000000",
       "infoMinigameCompleted": false,
       "englishMinigameCompleted": false,
