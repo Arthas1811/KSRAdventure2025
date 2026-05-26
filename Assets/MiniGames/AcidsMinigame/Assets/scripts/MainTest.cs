@@ -1,6 +1,7 @@
 using UnityEditor.Overlays;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MainTest : MonoBehaviour
 {
@@ -174,5 +175,10 @@ public class MainTest : MonoBehaviour
         {
             err();
         }
+    }
+
+    public void ExitGame()
+    {
+        SceneManager.LoadScene("main");
     }
 }

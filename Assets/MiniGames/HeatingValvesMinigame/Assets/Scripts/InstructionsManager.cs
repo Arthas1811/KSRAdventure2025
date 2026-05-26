@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class InstructionsManager : MonoBehaviour
 {
@@ -49,6 +50,12 @@ public class InstructionsManager : MonoBehaviour
         {
             message3Sent = true;
             OnTextChanged?.Invoke("Victory!");
+            SceneManager.LoadScene("main");
         }
+    }
+
+    public void ExitGame()
+    {
+        SceneManager.LoadScene("main");
     }
 }
