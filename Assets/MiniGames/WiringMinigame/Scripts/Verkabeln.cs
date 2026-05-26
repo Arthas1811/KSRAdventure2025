@@ -18,8 +18,13 @@ public class Verkabeln : MonoBehaviour
     public GameObject purpleCable;
     public GameObject redCable;
     public GameObject yellowCable;
+
+    [Header("KSR Adventure Assignments")]
+    JObject saveData;
+    public SaveDataManager saveDataManager;
     void Start()
     {
+        saveData = SaveDataManager.Instance.readData();
         RandomizeCables();
         SetEndPosition();
         //CheckOrder();
@@ -34,9 +39,9 @@ public class Verkabeln : MonoBehaviour
     void RandomizeCables()
     {
         for (int i = 0; i < 6; i++)
-    {
-        GameState.cableOrder[i] = '\0';
-    }
+        {
+            GameState.cableOrder[i] = '\0';
+        }
         foreach (char colour in GameState.colours)
         {
             int position = UnityEngine.Random.Range(0, 6);
@@ -81,12 +86,12 @@ public class Verkabeln : MonoBehaviour
     {
         for (int position = 0; position < 6; position++)
         {
-            if (GameState.cableOrder[position] == 'B') {blueEnd.transform.position = new Vector3(5.5f, 4f - position * 1.5f, 0f);}
-            if (GameState.cableOrder[position] == 'G') {greenEnd.transform.position = new Vector3(5.4f, 4f - position * 1.5f, 0f);}
-            if (GameState.cableOrder[position] == 'O') {orangeEnd.transform.position = new Vector3(5.5f, 4f - position * 1.5f, 0f);}
-            if (GameState.cableOrder[position] == 'P') {purpleEnd.transform.position = new Vector3(5.5f, 4f - position * 1.5f, 0f);}
-            if (GameState.cableOrder[position] == 'R') {redEnd.transform.position = new Vector3(5.4f, 4f - position * 1.5f, 0f);}
-            if (GameState.cableOrder[position] == 'Y') {yellowEnd.transform.position = new Vector3(5.5f, 4f - position * 1.5f, 0f);}
+            if (GameState.cableOrder[position] == 'B') { blueEnd.transform.position = new Vector3(5.5f, 4f - position * 1.5f, 0f); }
+            if (GameState.cableOrder[position] == 'G') { greenEnd.transform.position = new Vector3(5.4f, 4f - position * 1.5f, 0f); }
+            if (GameState.cableOrder[position] == 'O') { orangeEnd.transform.position = new Vector3(5.5f, 4f - position * 1.5f, 0f); }
+            if (GameState.cableOrder[position] == 'P') { purpleEnd.transform.position = new Vector3(5.5f, 4f - position * 1.5f, 0f); }
+            if (GameState.cableOrder[position] == 'R') { redEnd.transform.position = new Vector3(5.4f, 4f - position * 1.5f, 0f); }
+            if (GameState.cableOrder[position] == 'Y') { yellowEnd.transform.position = new Vector3(5.5f, 4f - position * 1.5f, 0f); }
         }
     }
 
@@ -119,7 +124,14 @@ public class Verkabeln : MonoBehaviour
     void win()
     {
         Debug.Log("Win");
+        saveData["states"]["minigames"]["wiringMinigameCompleted"] = true;
+        saveData["states"]["basement"]["h013DoorOpen"] = true;
+        SaveDataManager.Instance.saveData(saveData);
         SceneManager.LoadScene("main");
     }
-    void lose(){Debug.Log("Lose");}
+    void lose()
+    {
+        Debug.Log("Lose");
+        SceneManager.LoadScene("main");
+    }
 }

@@ -20,8 +20,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private SoundManager soundManager;
 
+    [Header("KSR Adventure Assignments")]
+    JObject saveData;
+    public SaveDataManager saveDataManager;
+
     void Start()
     {
+        saveData = SaveDataManager.Instance.readData();
         winUI.SetActive(false);
         playerCollider = player.GetComponent<Collider2D>();
     }
@@ -35,11 +40,13 @@ public class GameManager : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (hitObject != null && hitObject.gameObject.CompareTag("CodeBlock")) {
+            if (hitObject != null && hitObject.gameObject.CompareTag("CodeBlock"))
+            {
                 isDragging = true;
                 codeBlock = Instantiate(hitObject.gameObject);
             }
-            else if (hitObject != null && hitObject.gameObject.CompareTag("CodeBlockClone")) {
+            else if (hitObject != null && hitObject.gameObject.CompareTag("CodeBlockClone"))
+            {
                 isDragging = true;
                 codeBlock = hitObject.gameObject;
             }
@@ -48,7 +55,8 @@ public class GameManager : MonoBehaviour
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             isDragging = false;
-            if (codeBlock != null) {
+            if (codeBlock != null)
+            {
                 codeBlock.transform.position = worldMousePosition; // to place where mouse is (wihtout z offset -> these are then below the one dragging)
                 if (codeBlocks.Contains(codeBlock))
                 {
@@ -71,7 +79,8 @@ public class GameManager : MonoBehaviour
                     if (pos.y <= codeBlocks.Count)
                     {
                         // positioning in list
-                        if (pos.y <= 3.75) {
+                        if (pos.y <= 3.75)
+                        {
                             codeBlocks.Insert(Mathf.RoundToInt(pos.y - 0.25f), codeBlock);
                         }
                         else
@@ -104,7 +113,8 @@ public class GameManager : MonoBehaviour
         pos.x = -2.85f;
         for (int i = 0; i < codeBlocks.Count; i++)
         {
-            if (!isDragging) {
+            if (!isDragging)
+            {
                 pos.y = -i + 3.5f;
                 pos.y *= 0.75f;
                 GameObject codeBlockClone = codeBlocks[i];
@@ -204,7 +214,7 @@ public class GameManager : MonoBehaviour
                     }
                     player.transform.position = new Vector3(5.25f, 0, 0);
                     player.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    currentLevel ++;
+                    currentLevel++;
                     updateLevel();
                     moveInterrupted = true;
                     yield break;
@@ -220,11 +230,11 @@ public class GameManager : MonoBehaviour
     private void updateLevel()
     {
         // set current level to active (using a parent object (levels) becuase else you couldnt find an inactive level)
-       Levels.transform.Find(currentLevel.ToString()).gameObject.SetActive(true);
-       if (currentLevel != 1)
+        Levels.transform.Find(currentLevel.ToString()).gameObject.SetActive(true);
+        if (currentLevel != 1)
         {
             // set past level to inactive
-            Levels.transform.Find((currentLevel-1).ToString()).gameObject.SetActive(false);
+            Levels.transform.Find((currentLevel - 1).ToString()).gameObject.SetActive(false);
         }
     }
 
@@ -239,6 +249,8 @@ public class GameManager : MonoBehaviour
 
     private void win()
     {
+        saveData["states"]["minigames"]["infoMinigameCompleted"] = true;
+        SaveDataManager.Instance.saveData(saveData);
         Levels.transform.Find("3").gameObject.SetActive(false);
         winUI.SetActive(true);
         mainUI.SetActive(false);

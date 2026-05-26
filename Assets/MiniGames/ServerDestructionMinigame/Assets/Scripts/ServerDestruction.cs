@@ -22,8 +22,13 @@ public class ServerDestruction : MonoBehaviour
     private string loesung1 = "Sicherung_156F2";
     private string loesung2 = "Sicherung_160F6";
 
+    [Header("KSR Adventure Assignments")]
+    JObject saveData;
+    public SaveDataManager saveDataManager;
+
     void Start()
     {
+        saveData = SaveDataManager.Instance.readData();
         winScreen.SetActive(false);
         tabellenPopup.SetActive(false);
 
@@ -105,6 +110,9 @@ public class ServerDestruction : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         winScreen.SetActive(true);
         yield return new WaitForSeconds(3f);
+        saveData["states"]["minigames"]["server1Destroyed"] = true;
+        saveData["states"]["basement"]["h022IsBurning"] = true;
+        SaveDataManager.Instance.saveData(saveData);
         SceneManager.LoadScene("main");
     }
 }

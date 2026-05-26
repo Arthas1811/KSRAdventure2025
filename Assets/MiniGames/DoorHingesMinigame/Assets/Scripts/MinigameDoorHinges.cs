@@ -22,9 +22,14 @@ public class MinigameDoorHinges : MonoBehaviour
     public GameObject ScrewIconTwo;
     public TextMeshProUGUI ScrewCounterText;
 
+    [Header("KSR Adventure Assignments")]
+    JObject saveData;
+    public SaveDataManager saveDataManager;
+
     //START
     void Start()
     {
+        saveData = SaveDataManager.Instance.readData();
         RemovedScrews = 0;
         ScrewCounterText.text = "0 / 2 screws";
 
@@ -70,6 +75,9 @@ public class MinigameDoorHinges : MonoBehaviour
     private void Win()
     {
         Debug.Log("Minigame won");
+        saveData["states"]["minigames"]["hingeMinigameCompleted"] = true;
+        saveData["states"]["basement"]["h010DoorOpen"] = true;
+        SaveDataManager.Instance.saveData(saveData);
         SceneManager.LoadScene("main");
     }
 

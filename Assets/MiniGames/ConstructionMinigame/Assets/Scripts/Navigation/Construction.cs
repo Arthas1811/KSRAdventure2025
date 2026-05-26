@@ -109,6 +109,7 @@ public class Construction : MonoBehaviour
     private float Z0PositionFloor = 1.4f;
     
     private JObject Data;
+    public SaveDataManager saveDataManager;
     private Dictionary<GameObject, string[]> HotspotActions = new Dictionary<GameObject, string[]>();
     private Dictionary<GameObject, string[]> HotspotRequirements = new Dictionary<GameObject, string[]>();
     private List<GameObject> Polygons = new List<GameObject>();
@@ -145,6 +146,8 @@ public class Construction : MonoBehaviour
     
     void Win()
     {
+        saveData["states"]["minigames"]["constructionMinigameCompleted"] = true;
+        SaveDataManager.Instance.saveData(saveData);
         //Inventory.Instance.add("plan"); 
         OpenCutscene("FinishedGame");
     }
@@ -335,6 +338,7 @@ public class Construction : MonoBehaviour
 
     void Start()
     {
+        saveData = SaveDataManager.Instance.readData();
         if (SceneTextures.Length > 0)
         {
             Sphere.material.mainTexture = SceneTextures[0];

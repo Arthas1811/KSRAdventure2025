@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 public class Server2 : MonoBehaviour
 {
     //SAVING
-    //S JObject saveData;
-    //S public SaveDataManager saveDataManager;
+    JObject saveData;
+    public SaveDataManager saveDataManager;
 
     public GameObject startGO;
     public GameObject endGO;
@@ -28,6 +28,7 @@ public class Server2 : MonoBehaviour
 
     void Start()
     {
+        saveData = SaveDataManager.Instance.readData();
         startGO.SetActive(false); // hides the circuit till toor is opened
         endGO.SetActive(false);
         particlesObj.SetActive(false);
@@ -81,6 +82,8 @@ public class Server2 : MonoBehaviour
             //S Inventory.Instance.add("redbull");
             //S saveData["states"]["start"]["openDoor"] = true;
             //S saveDataManager.Instance.saveData(saveData);
+            saveData["states"]["minigames"]["server2Destroyed"] = true;
+            SaveDataManager.Instance.saveData(saveData);
             SceneManager.LoadScene("main");
         }
     }

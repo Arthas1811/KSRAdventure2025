@@ -526,6 +526,7 @@ public class HoleInWall : MonoBehaviour
     void Win()
     {
         saveData["states"]["basement"]["h025HoleOpen"] = true;
+        saveData["states"]["minigames"]["holeCompleted"] = true;
         SaveDataManager.Instance.saveData(saveData);
 
         Quit();
@@ -535,7 +536,7 @@ public class HoleInWall : MonoBehaviour
     public void Quit()
     {
         string saveString = SaveString();
-         saveData["states"]["minigames"]["holeInWallSaveString"] = saveString;
+        saveData["states"]["minigames"]["holeInWallSaveString"] = saveString;
         SaveDataManager.Instance.saveData(saveData);
         Cursor.visible = true;
         hammerImage.gameObject.SetActive(false);

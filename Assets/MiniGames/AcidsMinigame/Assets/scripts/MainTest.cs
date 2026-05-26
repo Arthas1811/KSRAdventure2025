@@ -11,12 +11,15 @@ public class MainTest : MonoBehaviour
         Debug.LogWarning("Missing GameObject");
     }
 
-    //SaveData = SaveDataManager.Instance.readData();
+    [Header("KSR Adventure Assignments")]
+    JObject saveData;
+    public SaveDataManager saveDataManager;
+    public Inventory inventory;
 
     //gamestates
     public bool WaterUse, LithiumUse, FumeHUse, PvcUse, BurnerUse, BurnerLit, EmptyBeakerUse = false;
 
-    [Header("Swap Toggles")] 
+    [Header("Swap Toggles")]
     public GameObject objectToHide; // Slot 1
     public GameObject objectToShow; // Slot 2
 
@@ -37,6 +40,11 @@ public class MainTest : MonoBehaviour
     public AudioClip wrongSound;
     ////////////
     //Let inputs appear in inspector
+
+    void Start()
+    {
+        saveData = SaveDataManager.Instance.readData();
+    }
 
     public void TurnOnObject(GameObject target) //gameover einblenden
     {
@@ -141,7 +149,7 @@ public class MainTest : MonoBehaviour
         }
     }
 
-    public void PlayExplosionSound() 
+    public void PlayExplosionSound()
     {
         if (audioSource != null && breakSound != null)
         {
@@ -149,7 +157,7 @@ public class MainTest : MonoBehaviour
         }
         else
         {
-            err(); 
+            err();
         }
     }
 
@@ -179,6 +187,9 @@ public class MainTest : MonoBehaviour
 
     public void ExitGame()
     {
+        saveData["states"]["minigames"]["acidsMinigameCompleted"] = true;
+        Inventory.Instance.add("acid");
+        SaveDataManager.Instance.saveData(saveData);
         SceneManager.LoadScene("main");
     }
 }

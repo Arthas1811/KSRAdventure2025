@@ -14,6 +14,16 @@ public class InstructionsManager : MonoBehaviour
     private bool message2Sent = false;
     private bool message3Sent = false;
 
+    [Header("KSR Adventure Assignments")]
+    JObject saveData;
+    public SaveDataManager saveDataManager;
+
+
+    void Start()
+    {
+        saveData = SaveDataManager.Instance.readData();
+    }
+
     private void Awake()
     {
         Instance = this;
@@ -56,6 +66,7 @@ public class InstructionsManager : MonoBehaviour
 
     public void ExitGame()
     {
+        saveData["states"]["minigames"]["valvesMinigameCompleted"] = true;
         SceneManager.LoadScene("main");
     }
 }

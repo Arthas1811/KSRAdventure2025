@@ -42,8 +42,13 @@ public class EnglishQuiz : MonoBehaviour
     private int CurrentQuestion = 0;
     private int Points = 0;
 
+    [Header("KSR Adventure Assignments")]
+    JObject saveData;
+    public SaveDataManager saveDataManager;
+
     void Start()
     {
+        saveData = SaveDataManager.Instance.readData();
         if (AnswerButtons == null || AnswerButtons.Length != 4)
         {
             Debug.LogError("EnglishQuiz: Need exactly 4 answer buttons.");
@@ -177,6 +182,9 @@ public class EnglishQuiz : MonoBehaviour
         ResultsTitleText.text = "You passed!";
         ResultsSummaryText.text = "Score: " + Points + " / " + QuizData.questions.Length
                                 + "\nWell done!";
+        saveData["states"]["minigames"]["mailRecieved"] = true;
+        saveData["states"]["minigames"]["englishMinigameCompleted"] = true;
+        SaveDataManager.Instance.saveData(saveData);
     }
 
     void Lose()

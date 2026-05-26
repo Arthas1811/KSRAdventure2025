@@ -24,8 +24,13 @@ public class SequenceChecker : MonoBehaviour
     private int currentIndex = 0;
     private bool gameOver = false;
 
+    [Header("KSR Adventure Assignments")]
+    JObject saveData;
+    public SaveDataManager saveDataManager;
+
     void Start()
     {
+        saveData = SaveDataManager.Instance.readData();
         timeLeft = sequenceTime;
     }
 
@@ -49,7 +54,7 @@ public class SequenceChecker : MonoBehaviour
         }
 
         var kb = Keyboard.current;
-        if      (kb.wKey.wasPressedThisFrame) CheckInput("W");
+        if (kb.wKey.wasPressedThisFrame) CheckInput("W");
         else if (kb.aKey.wasPressedThisFrame) CheckInput("A");
         else if (kb.sKey.wasPressedThisFrame) CheckInput("S");
         else if (kb.dKey.wasPressedThisFrame) CheckInput("D");
@@ -103,6 +108,9 @@ public class SequenceChecker : MonoBehaviour
 
     void Quit()
     {
+        saveData["states"]["minigames"]["fireExtinguished"] = true;
+        saveData["states"]["basement"]["h025DoorOpen"] = true;
+        SaveDataManager.Instance.saveData(saveData);
         SceneManager.LoadScene("main");
     }
 }
