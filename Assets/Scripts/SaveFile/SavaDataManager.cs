@@ -1,12 +1,12 @@
 using UnityEngine;
 using Newtonsoft.Json.Linq;
-using System.IO;
+using AG_NameSpace;
 
 public class SaveDataManager : MonoBehaviour
 {
     public static SaveDataManager Instance { get; private set; }
 
-    private static string SaveFilePath => Path.Combine(Application.persistentDataPath, "saveData.json");
+    private JObject inMemorySaveData;
 
     private void Awake()
     {
@@ -22,23 +22,47 @@ public class SaveDataManager : MonoBehaviour
 
     public JObject readData()
     {
-        if (File.Exists(SaveFilePath))
+        if (inMemorySaveData != null)
         {
-            return JObject.Parse(File.ReadAllText(SaveFilePath));
+            return inMemorySaveData;
         }
 
-        // First launch: copy default from Resources
         TextAsset defaultSave = Resources.Load<TextAsset>("SaveFile/saveData");
         if (defaultSave == null)
         {
             Debug.LogError("Default saveData not found at Resources/SaveFile/saveData.json");
             return new JObject();
         }
-        return JObject.Parse(defaultSave.text);
+        
+        inMemorySaveData = JObject.Parse(defaultSave.text);
+        return inMemorySaveData;
     }
 
     public void saveData(JObject saveData)
     {
-        File.WriteAllText(SaveFilePath, saveData.ToString());
+        inMemorySaveData = saveData;
+    }
+
+    public string GetExportString()
+    {
+        if (inMemorySaveData == null)
+        {
+            readData();
+        }
+        return StringCipher.Encrypt(inMemorySaveData.ToString());
+    }
+
+    public bool ImportSaveString(string encryptedSave)
+    {
+        try
+        {
+            string decryptedJson = StringCipher.Decrypt(encryptedSave);
+            inMemorySaveData = JObject.Parse(decryptedJson);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
