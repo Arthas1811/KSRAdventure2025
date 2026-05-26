@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Newtonsoft.Json.Linq;
 
 public class MinigameDoorHinges : MonoBehaviour
 {

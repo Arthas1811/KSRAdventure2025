@@ -109,6 +109,7 @@ public class Construction : MonoBehaviour
     private float Z0PositionFloor = 1.4f;
     
     private JObject Data;
+    JObject saveData;
     public SaveDataManager saveDataManager;
     private Dictionary<GameObject, string[]> HotspotActions = new Dictionary<GameObject, string[]>();
     private Dictionary<GameObject, string[]> HotspotRequirements = new Dictionary<GameObject, string[]>();

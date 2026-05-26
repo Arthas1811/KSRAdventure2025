@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
+using Newtonsoft.Json.Linq;
 
 [System.Serializable]
 public class EnglishQuestion

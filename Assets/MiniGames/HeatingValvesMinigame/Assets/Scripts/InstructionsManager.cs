@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json.Linq;
 
 public class InstructionsManager : MonoBehaviour
 {
