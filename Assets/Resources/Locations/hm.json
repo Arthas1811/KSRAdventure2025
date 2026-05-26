@@ -71,7 +71,7 @@
             },
             "hm3DoorOpen": {
                 "requirements": [
-                    "states:hm:hm301DoorOpen:false"
+                    "states:hm:hm301DoorOpen:true"
                 ],
                 "path": "Assets/Resources/Images/Navigation/HM/hm3_door_open.jpg"
             }
@@ -138,7 +138,7 @@
             }
         ]
     },
-    "hm301_room": {
+    "hm301Room": {
         "states": {
             "main": {
                 "requirements": [],

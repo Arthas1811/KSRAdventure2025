@@ -85,7 +85,7 @@
                     "location:frontoffice:h1Rektor"
                 ],
                 "requirements": [
-                    "states:frontoffice:rektorDoorOpen:false"
+                    "states:frontoffice:rektorDoorOpen:true"
                 ],
                 "polygonString": "0.024,0.440;0.024,0.589;0.049,0.582;0.047,0.443"
             }

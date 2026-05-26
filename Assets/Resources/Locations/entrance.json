@@ -129,7 +129,7 @@
             },
             {
                 "actions": [
-                    "location:h1VendingMachine"
+                    "location:entrance:h1VendingMachine"
                 ],
                 "requirements": [],
                 "polygonString": "0.448,0.403;0.457,0.613;0.641,0.646;0.643,0.403"
@@ -147,10 +147,10 @@
             {
                 "actions": [
                     "cutscene:vendingMachine",
-                    "states:entrance:vendingMachineCuscenePlayed:true"
+                    "states:entrance:vendingMachineCutscenePlayed:true"
                 ],
                 "requirements": [
-                    "states:entrance:vendingMachineCuscenePlayed:false",
+                    "states:entrance:vendingMachineCutscenePlayed:false",
                     "item:kantiCard:true"
                 ],
                 "alwaysVisible": true,
@@ -161,7 +161,7 @@
                     "item:add:kantiCard"
                 ],
                 "requirements": [
-                    "states:entrance:vendingMachineCuscenePlayed:false",
+                    "states:entrance:vendingMachineCutscenePlayed:false",
                     "item:kantiCard:false"
                 ],
                 "alwaysVisible": true,
@@ -248,7 +248,7 @@
             },
             {
                 "actions": [
-                    "location:h1TablesLeft"
+                    "location:entrance:h1TablesLeft"
                 ],
                 "requirements": [],
                 "polygonString": "0.939,0.437;0.936,0.623;0.076,0.592;0.080,0.477;0.063,0.464;0.063,0.403"
@@ -265,7 +265,7 @@
         "customHotspots": [
             {
                 "actions": [
-                    "location:h1TablesRight"
+                    "location:entrance:h1TablesRight"
                 ],
                 "requirements": [],
                 "polygonString": "0.409,0.474;0.406,0.589;0.555,0.616;0.555,0.423;0.464,0.413;0.462,0.467;0.437,0.467"

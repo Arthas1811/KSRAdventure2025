@@ -16,7 +16,7 @@
             },
             {
                 "actions": [
-                    "h011Corridor"
+                    "location:basement:h011Corridor"
                 ],
                 "requirements": [],
                 "polygonString": "0.956,0.335;0.958,0.633;0.034,0.640;0.032,0.328"
@@ -126,7 +126,7 @@
         "customHotspots": [
             {
                 "actions": [
-                    "add:item:hammerDrill",
+                    "item:add:hammerDrill",
                     "states:basement:h012HammerDrillPickedUp:true"
                 ],
                 "requirements": [
@@ -159,13 +159,13 @@
         "states": {
             "main": {
                 "requirements": [
-                    "states:h012DoorOpen:false"
+                    "states:basement:h012DoorOpen:false"
                 ],
                 "path": "Assets/Resources/Images/Navigation/Basement/h012_door_close.jpg"
             },
             "h012DoorOpen": {
                 "requirements": [
-                    "states:h012DoorOpen:true"
+                    "states:basement:h012DoorOpen:true"
                 ],
                 "path": "Assets/Resources/Images/Navigation/Basement/h012_door_open.jpg"
             }
@@ -405,7 +405,7 @@
             },
             {
                 "actions": [
-                    "location:h015"
+                    "location:basement:h015"
                 ],
                 "requirements": [
                     "states:basement:h015DoorOpen:true"
@@ -425,7 +425,7 @@
             {
                 "actions": [
                     "cutscene:destroyVault",
-                    "add:item:h012Key"
+                    "item:add:h012Key"
                 ],
                 "requirements": [
                     "item:acid:true"
@@ -595,7 +595,7 @@
             },
             {
                 "actions": [
-                    "location:h014Corridor"
+                    "location:basement:h014Corridor"
                 ],
                 "requirements": [],
                 "polygonString": "0.726,0.396;0.724,0.592;0.768,0.592;0.768,0.406"
@@ -719,7 +719,7 @@
         "customHotspots": [
             {
                 "actions": [
-                    "location:basement:h025ServerFront"
+                    "location:basement:h025Front"
                 ],
                 "requirements": [],
                 "polygonString": "0.909,0.379;0.910,0.602;0.981,0.616;0.985,0.352"

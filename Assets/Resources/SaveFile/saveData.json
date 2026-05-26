@@ -3,7 +3,7 @@
   "itemsOwned": [],
   "states": {
     "entrance": {
-      "vendingMachineCuscenePlayed": false
+      "vendingMachineCutscenePlayed": false
     },
     "frontoffice": {
       "rektorDoorOpen": false,
