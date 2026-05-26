@@ -1,0 +1,124 @@
+{
+    "h119Corridor": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/Frontoffice/h1_frontoffice_corridor.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:entrance:h1Medio"
+                ],
+                "requirements": [],
+                "polygonString": "0.448,0.406;0.445,0.623;0.560,0.636;0.560,0.403"
+            },
+            {
+                "actions": [
+                    "location:frontoffice:h1FrontofficeCorridor"
+                ],
+                "requirements": [],
+                "polygonString": "0.002,0.453;0.003,0.548;0.029,0.548;0.027,0.450"
+            }
+        ]
+    },
+    "h1FrontofficeCorridor": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/Frontoffice/h1_frontoffice.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:frontoffice:h119Corridor"
+                ],
+                "requirements": [],
+                "polygonString": "0.462,0.396;0.460,0.562;0.504,0.569;0.506,0.393"
+            },
+            {
+                "actions": [
+                    "location:frontoffice:h1Frontoffice"
+                ],
+                "requirements": [],
+                "polygonString": "0.931,0.396;0.932,0.667;0.090,0.660;0.085,0.386"
+            }
+        ]
+    },
+    "h1Frontoffice": {
+        "states": {
+            "main": {
+                "requirements": [
+                    "states:frontoffice:rektorDoorOpen:false"
+                ],
+                "path": "Assets/Resources/Images/Navigation/Frontoffice/h1_rektor_door_close.jpg"
+            },
+            "rektorDoorOpen": {
+                "requirements": [
+                    "states:frontoffice:rektorDoorOpen:true"
+                ],
+                "path": "Assets/Resources/Images/Navigation/Frontoffice/h1_rektor_door_open.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:frontoffice:h1FrontofficeCorridor"
+                ],
+                "requirements": [],
+                "polygonString": "0.431,0.619;0.555,0.629;0.558,0.403;0.428,0.399"
+            },
+            {
+                "actions": [
+                    "states:frontoffice:rektorDoorOpen:true",
+                    "location:frontoffice:h1Frontoffice"
+                ],
+                "requirements": [
+                    "states:frontoffice:rektorDoorOpen:false"
+                ],
+                "polygonString": "0.024,0.440;0.024,0.589;0.049,0.582;0.047,0.443"
+            },
+            {
+                "actions": [
+                    "location:frontoffice:h1Rektor"
+                ],
+                "requirements": [
+                    "states:frontoffice:rektorDoorOpen:false"
+                ],
+                "polygonString": "0.024,0.440;0.024,0.589;0.049,0.582;0.047,0.443"
+            }
+        ]
+    },
+    "h1Rektor": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/Frontoffice/h1_rektor.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:frontoffice:h1Frontoffice"
+                ],
+                "requirements": [],
+                "polygonString": "0.540,0.352;0.535,0.687;0.585,0.670;0.591,0.372"
+            },
+            {
+                "actions": [
+                    "cutscene:falling",
+                    "location:basement:h010",
+                    "states:frontoffice:fallingCutscenePlayed:true",
+                    "states:basement:phoneDestroyed:true"
+                ],
+                "requirements": [
+                    "states:frontoffice:fallingCutscenePlayed:false"
+                ],
+                "alwaysVisible": true,
+                "polygonString": "0.093,0.467;0.098,0.521;0.130,0.525;0.125,0.460"
+            }
+        ]
+    }
+}

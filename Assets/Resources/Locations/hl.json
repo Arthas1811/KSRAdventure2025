@@ -1,0 +1,281 @@
+{
+    "hl2": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/HL/hl2.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:entrance:h1Medio"
+                ],
+                "requirements": [],
+                "polygonString": "0.707,0.382;0.707,0.501;0.777,0.504;0.770,0.386"
+            },
+            {
+                "actions": [
+                    "location:hl:hlStairs"
+                ],
+                "requirements": [],
+                "polygonString": "0.631,0.521;0.626,0.690;0.673,0.572;0.675,0.521"
+            },
+            {
+                "actions": [
+                    "location:hl:hlStairs"
+                ],
+                "requirements": [],
+                "polygonString": "0.843,0.528;0.800,0.525;0.802,0.582;0.851,0.738"
+            }
+        ]
+    },
+    "hlStairs": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/HL/hl_stairs.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:hl:hl3"
+                ],
+                "requirements": [],
+                "polygonString": "0.200,0.562;0.198,0.745;0.293,0.751;0.294,0.558"
+            },
+            {
+                "actions": [
+                    "location:hl:hl2"
+                ],
+                "requirements": [],
+                "polygonString": "0.049,0.399;0.134,0.525;0.181,0.528;0.093,0.321"
+            },
+            {
+                "actions": [
+                    "location:hl:hl2"
+                ],
+                "requirements": [],
+                "polygonString": "0.406,0.325;0.311,0.528;0.360,0.521;0.447,0.396"
+            }
+        ]
+    },
+    "hl3": {
+        "states": {
+            "main": {
+                "requirements": [
+                    "states:hl:hl302DoorOpen:false"
+                ],
+                "path": "Assets/Resources/Images/Navigation/HL/hl3_door_close.jpg"
+            },
+            "hl3DoorOpen": {
+                "requirements": [
+                    "states:hl:hl302DoorOpen:true"
+                ],
+                "path": "Assets/Resources/Images/Navigation/HL/hl3_door_open.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:hl:hlStairs"
+                ],
+                "requirements": [],
+                "polygonString": "0.672,0.359;0.673,0.704;0.826,0.704;0.832,0.369"
+            },
+            {
+                "actions": [
+                    "location:hl:hl302"
+                ],
+                "requirements": [],
+                "polygonString": "0.080,0.409;0.086,0.650;0.176,0.663;0.168,0.379"
+            }
+        ]
+    },
+    "hl302": {
+        "states": {
+            "main": {
+                "requirements": [
+                    "states:hl:hl302DoorOpen:false"
+                ],
+                "path": "Assets/Resources/Images/Navigation/HL/hl302_door_close.jpg"
+            },
+            "hl302DoorOpen": {
+                "requirements": [
+                    "states:hl:hl302DoorOpen:true"
+                ],
+                "path": "Assets/Resources/Images/Navigation/HL/hl302_door_open.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:hl:hl3"
+                ],
+                "requirements": [],
+                "polygonString": "0.716,0.433;0.712,0.592;0.777,0.602;0.780,0.437"
+            },
+            {
+                "actions": [
+                    "states:hl:hl302DoorOpen:true",
+                    "location:hl:hl302Room"
+                ],
+                "requirements": [
+                    "states:hl:hl302DoorOpen:false"
+                ],
+                "polygonString": "0.010,0.342;0.012,0.626;0.080,0.606;0.078,0.362"
+            },
+            {
+                "actions": [
+                    "location:hl:hl302Room"
+                ],
+                "requirements": [
+                    "states:hl:hl302DoorOpen:true"
+                ],
+                "polygonString": "0.010,0.342;0.012,0.626;0.080,0.606;0.078,0.362"
+            }
+        ]
+    },
+    "hl302Room": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/HL/hl302_room.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:hl:hl302"
+                ],
+                "requirements": [],
+                "polygonString": "0.496,0.274;0.491,0.670;0.589,0.646;0.592,0.308"
+            },
+            {
+                "actions": [
+                    "scene:CodingMinigame"
+                ],
+                "requirements": [],
+                "polygonString": "0.277,0.460;0.277,0.626;0.333,0.761;0.333,0.420"
+            },
+            {
+                "actions": [
+                    "states:hl:csTeacherClicks:++"
+                ],
+                "hidden": true,
+                "requirements": [
+                    "item:kantiCardTeacher:false"
+                ],
+                "polygonString": "0.230,0.396;0.222,0.386;0.217,0.393;0.222,0.406;0.222,0.433;0.225,0.450;0.234,0.453;0.232,0.474;0.227,0.491;0.225,0.511;0.234,0.511;0.237,0.501;0.240,0.491;0.247,0.481;0.247,0.464;0.247,0.440;0.244,0.433;0.235,0.433;0.232,0.433;0.230,0.420;0.230,0.406"
+            },
+            {
+                "actions": [
+                    "item:add:kantiCardTeacher"
+                ],
+                "hidden": true,
+                "requirements": [
+                    "states:hl:csTeacherClicks:15", 
+                    "item:kantiCardTeacher:false"
+                ],
+                "polygonString": "0.230,0.396;0.222,0.386;0.217,0.393;0.222,0.406;0.222,0.433;0.225,0.450;0.234,0.453;0.232,0.474;0.227,0.491;0.225,0.511;0.234,0.511;0.237,0.501;0.240,0.491;0.247,0.481;0.247,0.464;0.247,0.440;0.244,0.433;0.235,0.433;0.232,0.433;0.230,0.420;0.230,0.406"
+            }
+        ]
+    },
+    "hl1MusicStairs": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/HL/hl1_stairs_music.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:entrance:h1Medio"
+                ],
+                "requirements": [],
+                "polygonString": "0.619,0.409;0.614,0.650;0.701,0.687;0.704,0.376"
+            },
+            {
+                "actions": [
+                    "location:entrance:h1Medio"
+                ],
+                "requirements": [],
+                "polygonString": "0.843,0.399;0.844,0.646;0.900,0.623;0.900,0.569;0.895,0.569;0.893,0.423"
+            },
+            {
+                "actions": [
+                    "location:hl1Music"
+                ],
+                "requirements": [],
+                "polygonString": "0.107,0.416;0.112,0.548;0.178,0.602;0.174,0.558;0.168,0.535;0.168,0.501;0.169,0.464;0.173,0.443;0.174,0.430;0.174,0.399"
+            },
+            {
+                "actions": [
+                    "location:basement:h022"
+                ],
+                "requirements": [
+                    "states:basement:bossDefeated:true"
+                ],
+                "polygonString": "0.750,0.376;0.750,0.609;0.805,0.602;0.807,0.386"
+            }
+        ]
+    },
+    "hl1Music": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/HL/hl1_music.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:entrance:h1Medio"
+                ],
+                "requirements": [],
+                "polygonString": "0.733,0.450;0.731,0.585;0.782,0.592;0.782,0.562;0.772,0.545;0.772,0.450"
+            },
+            {
+                "actions": [
+                    "location:hl:hl1MusicStairs"
+                ],
+                "requirements": [],
+                "polygonString": "0.719,0.589;0.719,0.437;0.638,0.403;0.635,0.633"
+            },
+            {
+                "actions": [
+                    "location:hl:hl1Piano"
+                ],
+                "requirements": [],
+                "polygonString": "0.014,0.345;0.017,0.629;0.083,0.606;0.080,0.362"
+            }
+        ]
+    },
+    "hl1Piano": {
+        "states": {
+            "main": {
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/HL/hl1_piano.jpg"
+            }
+        },
+        "customHotspots": [
+            {
+                "actions": [
+                    "location:hl:hl1Music"
+                ],
+                "requirements": [],
+                "polygonString": "0.418,0.311;0.415,0.629;0.496,0.650;0.501,0.294"
+            },
+            {
+                "actions": [
+                    "scene:PianoMinigame"
+                ],
+                "requirements": [],
+                "alwaysVisible": true,
+                "polygonString": "0.548,0.284;0.547,0.416;0.640,0.450;0.657,0.433;0.651,0.423;0.653,0.389;0.668,0.379;0.670,0.315;0.643,0.257;0.614,0.277;0.609,0.355;0.636,0.382;0.636,0.403;0.562,0.359;0.563,0.267;0.558,0.264"
+            }
+        ]
+    }
+}
