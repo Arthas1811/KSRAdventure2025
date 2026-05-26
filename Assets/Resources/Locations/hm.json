@@ -118,7 +118,7 @@
             },
             {
                 "actions": [
-                    "states:hm:hm301DoorOpen:true",
+                    "data:states:hm:hm301DoorOpen:true",
                     "location:hm:hm301"
                 ],
                 "requirements": [

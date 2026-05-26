@@ -118,7 +118,7 @@
             },
             {
                 "actions": [
-                    "states:hl:hl302DoorOpen:true",
+                    "data:states:hl:hl302DoorOpen:true",
                     "location:hl:hl302Room"
                 ],
                 "requirements": [
@@ -161,7 +161,7 @@
             },
             {
                 "actions": [
-                    "states:hl:csTeacherClicks:++"
+                    "data:states:hl:csTeacherClicks:++"
                 ],
                 "hidden": true,
                 "requirements": [

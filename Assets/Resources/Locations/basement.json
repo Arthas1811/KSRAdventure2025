@@ -24,7 +24,7 @@
             {
                 "actions": [
                     "item:add:fireExtinguisher",
-                    "states:basement:h022FireExtinguisherPickedUp:true"
+                    "data:states:basement:h022FireExtinguisherPickedUp:true"
                 ],
                 "requirements": [
                     "item:fireExtinguisher:false",
@@ -82,7 +82,7 @@
                 "actions": [
                     "item:add:sledgeHammer",
                     "item:add:screwdriver",
-                    "states:basement:h010LootboxPickedUp:true"
+                    "data:states:basement:h010LootboxPickedUp:true"
                 ],
                 "requirements": [
                     "states:basement:h010LootboxPickedUp:false"
@@ -127,7 +127,7 @@
             {
                 "actions": [
                     "item:add:hammerDrill",
-                    "states:basement:h012HammerDrillPickedUp:true"
+                    "data:states:basement:h012HammerDrillPickedUp:true"
                 ],
                 "requirements": [
                     "item:hammerDrill:false",
@@ -187,7 +187,7 @@
             },
             {
                 "actions": [
-                    "states:basement:h012DoorOpen:true",
+                    "data:states:basement:h012DoorOpen:true",
                     "location:basement:h012Corridor"
                 ],
                 "requirements": [
@@ -240,7 +240,7 @@
             {
                 "actions": [
                     "item:add:fireExtinguisher",
-                    "states:basement:h022FireExtinguisherPickedUp:true"
+                    "data:states:basement:h022FireExtinguisherPickedUp:true"
                 ],
                 "requirements": [
                     "item:fireExtinguisher:false",
@@ -262,7 +262,7 @@
             },
             {
                 "actions": [
-                    "states:basement:h013DoorOpen:true",
+                    "data:states:basement:h013DoorOpen:true",
                     "location:basement:h013Corridor"
                 ],
                 "requirements": [
@@ -395,7 +395,7 @@
             },
             {
                 "actions": [
-                    "states:basement:h015DoorOpen:true",
+                    "data:states:basement:h015DoorOpen:true",
                     "location:basement:h014"
                 ],
                 "requirements": [
@@ -487,7 +487,7 @@
         "customHotspots": [
             {
                 "actions": [
-                    "states:basement:h014DoorOpen:true",
+                    "data:states:basement:h014DoorOpen:true",
                     "location:basement:h014Corridor"
                 ],
                 "requirements": [
@@ -506,7 +506,7 @@
             },
             {
                 "actions": [
-                    "states:basement:h022DoorOpen:true",
+                    "data:states:basement:h022DoorOpen:true",
                     "location:basement:h014Corridor"
                 ],
                 "requirements": [
@@ -584,7 +584,7 @@
             {
                 "actions": [
                     "item:add:fireExtinguisher",
-                    "states:basement:h022FireExtinguisherPickedUp:true"
+                    "data:states:basement:h022FireExtinguisherPickedUp:true"
                 ],
                 "requirements": [
                     "item:fireExtinguisher:false",
@@ -614,7 +614,7 @@
             },
             {
                 "actions": [
-                    "states:basement:h025DoorOpen:true"
+                    "data:states:basement:h025DoorOpen:true"
                 ],
                 "requirements": [
                     "states:basement:h025DoorOpen:false",
@@ -734,7 +734,7 @@
             {
                 "actions": [
                     "item:add:laptop",
-                    "states:basement:h025LaptopPickedUp:true"
+                    "data:states:basement:h025LaptopPickedUp:true"
                 ],
                 "requirements": [
                     "item:laptop:false",
@@ -746,7 +746,7 @@
             {
                 "actions": [
                     "item:add:pliers",
-                    "states:basement:h025PliersPickedUp:true"
+                    "data:states:basement:h025PliersPickedUp:true"
                 ],
                 "requirements": [
                     "item:pliers:false",

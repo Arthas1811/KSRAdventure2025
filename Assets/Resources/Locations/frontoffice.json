@@ -72,7 +72,7 @@
             },
             {
                 "actions": [
-                    "states:frontoffice:rektorDoorOpen:true",
+                    "data:states:frontoffice:rektorDoorOpen:true",
                     "location:frontoffice:h1Frontoffice"
                 ],
                 "requirements": [
@@ -109,9 +109,9 @@
             {
                 "actions": [
                     "cutscene:falling",
-                    "location:basement:h010",
-                    "states:frontoffice:fallingCutscenePlayed:true",
-                    "states:basement:phoneDestroyed:true"
+                    "data:states:frontoffice:fallingCutscenePlayed:true",
+                    "data:states:basement:phoneDestroyed:true",
+                    "location:basement:h010"
                 ],
                 "requirements": [
                     "states:frontoffice:fallingCutscenePlayed:false"

@@ -706,11 +706,11 @@ MonoBehaviour:
     - line: '|   captureStartupLogs: {}'
     - line: '|   activeInputHandler: 1'
     - line: '|   windowsGamepadBackendHint: 0'
-    - line: '|   cloudProjectId: 11ba87b3-5183-4b03-a4a9-976c48369096'
+    - line: '|   cloudProjectId: b7a41dec-8f5a-4d5f-a705-7d8c89a8d64f'
     - line: '|   framebufferDepthMemorylessMode: 0'
     - line: '|   qualitySettingsNames: []'
-    - line: '|   projectName: MiniGameAcidsFinal'
-    - line: '|   organizationId: gghetsiegseit'
+    - line: '|   projectName: 360 Demo'
+    - line: '|   organizationId: leon-sieber'
     - line: '|   cloudEnabled: 0'
     - line: '|   legacyClampBlendShapeWeights: 0'
     - line: '|   hmiLoadingImage: {instanceID: 0}'
@@ -725,6 +725,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 762246503631945915
       type: {class: WebGLPlatformSettings, ns: UnityEditor.WebGL, asm: UnityEditor.WebGL.Extensions}
       data:
