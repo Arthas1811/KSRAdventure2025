@@ -129,7 +129,7 @@
             },
             {
                 "actions": [
-                    "location:hm301Room"
+                    "location:hm:hm301Room"
                 ],
                 "requirements": [
                     "states:hm:hm301DoorOpen:true"

@@ -636,7 +636,8 @@
                     "location:hl:hl1MusicStairs"
                 ],
                 "requirements": [
-                    "states:basement:bossDefeated:true"
+                    "states:basement:bossDefeated:true",
+                    "item:basementKey:true"
                 ],
                 "polygonString": "0.225,0.481;0.227,0.609;0.257,0.609;0.255,0.481"
             }

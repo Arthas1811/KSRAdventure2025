@@ -110,6 +110,8 @@ public class SequenceChecker : MonoBehaviour
     void Quit()
     {
         saveData["states"]["minigames"]["fireExtinguished"] = true;
+        saveData["states"]["basement"]["h022IsBurning"] = false;
+        saveData["states"]["basement"]["h022IsExtinguished"] = true;
         saveData["states"]["basement"]["h025DoorOpen"] = true;
         SaveDataManager.Instance.saveData(saveData);
         SceneManager.LoadScene("main");
