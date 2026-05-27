@@ -1,17 +1,92 @@
 {
   "entries": [
-    { "id": "frog", "data": { "name": "frog", "description": "One lick away...", "image": "Inventory/inventory_items/frog" } },
-    { "id": "glycerin", "data": { "name": "Glycerin", "description": "Zutat für Nitroglycerin", "image": "Inventory/inventory_items/glycerin" } },
-    { "id": "coffeemug", "data": { "name": "Mug", "description": "Mugman", "image": "Inventory/inventory_items/Kaffeetasse" } },
-    { "id": "goldkey", "data": { "name": "Key1", "description": "Key to everything", "image": "Inventory/inventory_items/key" } },
-    { "id": "key2", "data": { "name": "Key2", "description": "Another key", "image": "Inventory/inventory_items/key2" } },
-    { "id": "keys", "data": { "name": "Kellerschlüssel", "description": "Ein Schlüssel, der den Keller öffnet", "image": "Inventory/inventory_items/keys" } },
-    { "id": "nitric_acid", "data": { "name": "Salpetersäure", "description": "Zutat für Nitroglycerin, ätzend", "image": "Inventory/inventory_items/nitric_acid" } },
-    { "id": "nitro_beaker", "data": { "name": "Nitroglyceringemisch", "description": "Gemisch mit Nitroglycerin, bereit für den Kühlschrank", "image": "Inventory/inventory_items/nitro_beaker" } },
-    { "id": "nitrogly_beaker", "data": { "name": "Nitroglycerin", "description": "Klumpen Nitroglycerin, instabil", "image": "Inventory/inventory_items/nitrogly_beaker" } },
-    { "id": "pipette", "data": { "name": "Pipette", "description": "Gefüllt mit Nitroglycerin, hochexplosiv", "image": "Inventory/inventory_items/pipette" } },
-    { "id": "redbull", "data": { "name": "RedBull", "description": "Energydrink mit mythischer Heilkraft", "image": "Inventory/inventory_items/redbull" } },
-    { "id": "sulfuric_acid", "data": { "name": "Schwefelsäure", "description": "Zutat für Nitroglycerin, ätzend, brandfördernd, giftig", "image": "Inventory/inventory_items/sulfuric_acid" } },
-    { "id": "surfacecharger", "data": { "name": "Surface Charger", "description": "fills the cup with a hole in it", "image": "Inventory/inventory_items/SurfaceCharger" } }
+    {
+      "id": "kantiCard",
+      "data": {
+        "name": "Kanti Card",
+        "description": "Sure hope you have enough money on this.",
+        "image": "Inventory/inventory_items/kantiCard" 
+      }
+    },
+    {
+      "id": "kantiCardTeacher",
+      "data": {
+        "name": "Teacher's Kanti Card",
+        "description": "A nice collector's piece.",
+        "image": "Inventory/inventory_items/teacherCard"
+      }
+    },
+    {
+      "id": "fireExtinguisher",
+      "data": {
+        "name": "Fire Extinguisher",
+        "description": "Fun to use in a chemistry lab, not so fun for its intended purpose.",
+        "image": "Inventory/inventory_items/fireExtinguisher"
+      }
+    },
+    {
+      "id": "screwdriver",
+      "data": {
+        "name": "Screwdriver",
+        "description": "Screw this!",
+        "image": "Inventory/inventory_items/screwdriver"
+      }
+    },
+    {
+      "id": "sledgeHammer",
+      "data": {
+        "name": "Sledgehammer",
+        "description": "Have fun breaking these walls.",
+        "image": "Inventory/inventory_items/sledgehammer"
+      }
+    },
+    {
+      "id": "hammerDrill",
+      "data": {
+        "name": "Hammer Drill",
+        "description": "Hammering isn't fun enough? Try drilling!",
+        "image": "Inventory/inventory_items/drillhammer"
+      }
+    },
+    {
+      "id": "pliers",
+      "data": {
+        "name": "Pliers",
+        "description": "Works on metal, plastic, and school infrastructure.",
+        "image": "Inventory/inventory_items/pliers"
+      }
+    },
+    {
+      "id": "laptop",
+      "data": {
+        "name": "Laptop",
+        "description": "Connecting it to the servers to play games has always been fun — literally.",
+        "image": "Inventory/inventory_items/laptop"
+      }
+    },
+    {
+      "id": "acid",
+      "data": {
+        "name": "Acid",
+        "description": "Strong enough to solve problems, permanently.",
+        "image": "Inventory/inventory_items/acid"
+      }
+    },
+    {
+      "id": "h012Key",
+      "data": {
+        "name": "Key to H0.12",
+        "description": "The school is controlled by AI but they still use analogue keys. WHY??",
+        "image": "Inventory/inventory_items/h012Key"
+      }
+    },
+    {
+      "id": "basementKey",
+      "data": {
+        "name": "Key to the Basement",
+        "description": "Key in to and out of the Basement. RUN!!",
+        "image": "Inventory/inventory_items/basementKey"
+      }
+    }
   ]
 }
