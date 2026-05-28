@@ -72,8 +72,8 @@
             },
             {
                 "actions": [
-                    "data:states:frontoffice:rektorDoorOpen:true",
-                    "location:frontoffice:h1Frontoffice"
+                    "location:frontoffice:h1Frontoffice",
+                    "data:states:frontoffice:rektorDoorOpen:true"
                 ],
                 "requirements": [
                     "states:frontoffice:rektorDoorOpen:false"
@@ -109,13 +109,14 @@
             {
                 "actions": [
                     "cutscene:falling",
-                    "data:states:frontoffice:fallingCutscenePlayed:true",
+                    "location:basement:h010",
                     "data:states:basement:phoneDestroyed:true",
-                    "location:basement:h010"
+                    "data:states:frontoffice:fallingCutscenePlayed:true"
                 ],
                 "requirements": [
                     "states:frontoffice:fallingCutscenePlayed:false"
                 ],
+                "onNeedOnly":true,
                 "alwaysVisible": true,
                 "polygonString": "0.093,0.467;0.098,0.521;0.130,0.525;0.125,0.460"
             }

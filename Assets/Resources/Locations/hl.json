@@ -118,8 +118,8 @@
             },
             {
                 "actions": [
-                    "data:states:hl:hl302DoorOpen:true",
-                    "location:hl:hl302Room"
+                    "location:hl:hl302Room",
+                    "data:states:hl:hl302DoorOpen:true"
                 ],
                 "requirements": [
                     "states:hl:hl302DoorOpen:false"
@@ -157,6 +157,7 @@
                     "scene:CodingMinigame"
                 ],
                 "requirements": [],
+                "onNeedOnly":true,
                 "polygonString": "0.277,0.460;0.277,0.626;0.333,0.761;0.333,0.420"
             },
             {
@@ -218,6 +219,7 @@
                 "requirements": [
                     "states:basement:bossDefeated:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.750,0.376;0.750,0.609;0.805,0.602;0.807,0.386"
             }
         ]
@@ -274,6 +276,7 @@
                 ],
                 "requirements": [],
                 "alwaysVisible": true,
+                "info": "//to fix -> redo polygonstring",
                 "polygonString": "0.548,0.284;0.547,0.416;0.640,0.450;0.657,0.433;0.651,0.423;0.653,0.389;0.668,0.379;0.670,0.315;0.643,0.257;0.614,0.277;0.609,0.355;0.636,0.382;0.636,0.403;0.562,0.359;0.563,0.267;0.558,0.264"
             }
         ]

@@ -118,8 +118,8 @@
             },
             {
                 "actions": [
-                    "data:states:hm:hm301DoorOpen:true",
-                    "location:hm:hm301"
+                    "location:hm:hm301",
+                    "data:states:hm:hm301DoorOpen:true"
                 ],
                 "requirements": [
                     "states:hm:hm301DoorOpen:false",
@@ -159,6 +159,7 @@
                 ],
                 "requirements": [],
                 "alwaysVisible": true,
+                "onNeedOnly":true,
                 "polygonString": "0.782,0.420;0.829,0.426;0.871,0.393;0.792,0.355;0.797,0.376;0.790,0.399"
             }
         ]

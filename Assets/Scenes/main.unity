@@ -6228,7 +6228,7 @@ MonoBehaviour:
   polygonToggleKey: 22
   showPolygons: 0
   MoveForwardKey: 63
-  visiblePolygonAlpha: 0.35
+  visiblePolygonAlpha: 0.1
   cameraMovement: {fileID: 330585550}
   uiImage: {fileID: 1399221654}
   imageOpen: 0
