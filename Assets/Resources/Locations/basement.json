@@ -202,7 +202,7 @@
             },
             {
                 "actions": [
-                    "location:basement:h012Corridor"
+                    "location:basement:h012"
                 ],
                 "requirements": [
                     "states:basement:h012DoorOpen:true"
