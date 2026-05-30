@@ -281,6 +281,25 @@ public class Click : MonoBehaviour
     void saveDataInFile(JObject saveData)
     {
         SaveDataManager.Instance.saveData(saveData);
+        RefreshCurrentImage();
+    }
+
+    // Re-renders the CURRENT image in place without navigating:
+    //  - re-evaluates which state is active, so an alternate image whose
+    //    requirements are now met (e.g. "door now open") shows immediately;
+    //  - rebuilds the hotspots, so requirement-gated hotspots appear/disappear.
+    // Safe to call any time the save data changes. Does NOT move the camera.
+    public void RefreshCurrentImage()
+    {
+        if (data == null || string.IsNullOrEmpty(currentImage) || data[currentImage] == null)
+            return;
+
+        hotspotDestroy(hotspotActions.Keys.ToList());
+        hotspotActions.Clear();
+        hotspotRequirements.Clear();
+        hotspotInstantiation(currentImage);
+
+        setMaterial(currentImage);
     }
 
     private bool checkRequirements(string[] requirements)
@@ -369,8 +388,11 @@ public class Click : MonoBehaviour
                 currentInventory?.add(action.Split(":")[2]);
             else if (action.Split(":")[1] == "remove")
                 currentInventory?.remove(action.Split(":")[2]);
-            
+
             saveData = SaveDataManager.Instance.readData();
+            // Picking up / using an item can change which image or hotspots are
+            // active (item:... requirements), so refresh the current view too.
+            RefreshCurrentImage();
         }
         else if (action.Split(":")[0] == "data")
         {

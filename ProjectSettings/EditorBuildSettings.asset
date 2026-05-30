@@ -59,6 +59,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MiniGames/ConstructionMinigame/Assets/Scenes/ConstructionMinigame.unity
     guid: 71af37f8c4c3e6947855fd9044459e19
+  - enabled: 1
+    path: Assets/MiniGames/Bossfight/Assets/Scenes/Bossfight.unity
+    guid: 48f2a4689b963d848a6f0d36db7f1494
+  - enabled: 1
+    path: Assets/MiniGames/Bossfight/Assets/Scenes/Intro.unity
+    guid: 3a2de8a8e618fc94eb2ce0d4b9e1dfee
+  - enabled: 1
+    path: Assets/MiniGames/Bossfight/Assets/Scenes/Outro.unity
+    guid: 6caf00f343c373f41867178d630793b5
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
