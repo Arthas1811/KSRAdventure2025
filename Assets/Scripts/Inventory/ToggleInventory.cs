@@ -25,10 +25,17 @@ public class InventoryAnimatedToggle : MonoBehaviour
         if (canvasGroup == null)
             canvasGroup = inventoryCanvas.AddComponent<CanvasGroup>();
 
-        inventoryCanvas.SetActive(false);
+        // IMPORTANT: keep the canvas GameObject ACTIVE at all times and hide it
+        // purely through the CanvasGroup. If we SetActive(false), the panel's
+        // GridLayoutGroup stops laying out children, so any item picked up while
+        // the inventory is closed never gets positioned (it would only appear
+        // after a scene reload). Alpha 0 + blocksRaycasts false is fully invisible
+        // and non-interactive, but layout keeps working so items show up instantly.
+        inventoryCanvas.SetActive(true);
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
+        inventoryCanvas.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
     }
 
     void Update()
@@ -47,8 +54,11 @@ public class InventoryAnimatedToggle : MonoBehaviour
 
     private IEnumerator AnimateInventory(bool open)
     {
-        if (open)
-            inventoryCanvas.SetActive(true);
+        // The canvas stays active the whole time (see Start), so the layout group
+        // is always live. On open we just refresh from the save in case items were
+        // picked up while it was hidden.
+        if (open && Inventory.Instance != null)
+            Inventory.Instance.LoadFromSave();
 
         float startAlpha = canvasGroup.alpha;
         float endAlpha = open ? 1f : 0f;
@@ -75,8 +85,8 @@ public class InventoryAnimatedToggle : MonoBehaviour
 
         canvasGroup.interactable = open;
         canvasGroup.blocksRaycasts = open;
-
-        if (!open)
-            inventoryCanvas.SetActive(false);
+        // NOTE: intentionally NOT calling inventoryCanvas.SetActive(false) on close.
+        // Keeping it active (alpha 0) leaves the GridLayoutGroup live so future
+        // pickups lay out immediately instead of needing a scene reload.
     }
 }

@@ -74,10 +74,9 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void RefreshInventoryUI()
+    public void RefreshInventoryUI()
     {
-        InventoryManager inventoryManager = Object.FindAnyObjectByType<InventoryManager>();
-        if (inventoryManager != null)
-            inventoryManager.UpdateInventoryUI();
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.UpdateInventoryUI();
     }
 }
