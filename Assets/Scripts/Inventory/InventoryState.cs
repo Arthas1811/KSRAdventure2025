@@ -32,6 +32,11 @@ public class InventoryState : MonoBehaviour
             receivedItems.Remove(id);
     }
 
+    public void Clear()
+    {
+        receivedItems.Clear();
+    }
+
     public IEnumerable<string> GetReceivedItems()
     {
         return receivedItems;

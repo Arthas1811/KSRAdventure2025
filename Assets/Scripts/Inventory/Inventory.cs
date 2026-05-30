@@ -1,6 +1,7 @@
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
@@ -23,8 +24,15 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
+        LoadFromSave();
+    }
+
+    public void LoadFromSave()
+    {
         saveData = SaveDataManager.Instance.readData();
         allItems = saveData["itemsOwned"].ToObject<string[]>();
+
+        InventoryState.Instance.Clear();
 
         foreach (var id in allItems)
         {
@@ -38,9 +46,9 @@ public class Inventory : MonoBehaviour
     {
         InventoryState.Instance.ReceiveItem(id);
         RefreshInventoryUI();
-        saveData = SaveDataManager.Instance.readData(); // ensure we use the latest file state
+        saveData = SaveDataManager.Instance.readData();
         JArray itemsArray = (JArray)saveData["itemsOwned"];
-        if (!itemsArray.Contains(id))
+        if (itemsArray != null && !itemsArray.Any(t => t.ToString() == id))
         {
             itemsArray.Add(id);
             saveData["itemsOwned"] = itemsArray;
@@ -52,13 +60,17 @@ public class Inventory : MonoBehaviour
     {
         InventoryState.Instance.RemoveItem(id);
         RefreshInventoryUI();
-        saveData = SaveDataManager.Instance.readData(); // ensure we use the latest file state
+        saveData = SaveDataManager.Instance.readData();
         JArray itemsArray = (JArray)saveData["itemsOwned"];
-        if (itemsArray.Contains(id))
+        if (itemsArray != null)
         {
-            itemsArray.Remove(id);
-            saveData["itemsOwned"] = itemsArray;
-            SaveDataManager.Instance.saveData(saveData);
+            var tokenToRemove = itemsArray.FirstOrDefault(t => t.ToString() == id);
+            if (tokenToRemove != null)
+            {
+                itemsArray.Remove(tokenToRemove);
+                saveData["itemsOwned"] = itemsArray;
+                SaveDataManager.Instance.saveData(saveData);
+            }
         }
     }
 

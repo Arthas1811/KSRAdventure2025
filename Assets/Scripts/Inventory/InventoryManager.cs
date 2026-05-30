@@ -7,6 +7,7 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
+        Inventory.Instance.LoadFromSave();
         InventoryDatabase.Load();
         UpdateInventoryUI();
     }

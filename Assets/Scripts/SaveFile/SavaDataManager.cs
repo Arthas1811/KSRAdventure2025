@@ -6,11 +6,16 @@ public class SaveDataManager : MonoBehaviour
 {
     public static SaveDataManager Instance { get; private set; }
 
-    private JObject inMemorySaveData;
+    // Static so the loaded/imported save survives a scene reload. This script's
+    // GameObject is NOT a root object, so DontDestroyOnLoad does not actually
+    // preserve the instance across SceneManager.LoadScene. A static field instead
+    // persists for the whole play session and only resets on app/page restart,
+    // which is exactly the lifetime we want for the in-memory save.
+    private static JObject inMemorySaveData;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;

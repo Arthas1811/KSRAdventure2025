@@ -1,6 +1,6 @@
 {
   "currentImage": "h1EntranceOutside",
-  "itemsOwned": [],
+  "itemsOwned": ["kantiCard"],
   "states": {
     "entrance": {
       "vendingMachineCutscenePlayed": false

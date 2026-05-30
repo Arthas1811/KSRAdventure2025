@@ -38,7 +38,7 @@ public class Click : MonoBehaviour
     public Key polygonToggleKey = Key.H;
     public bool showPolygons = false;
     public Key MoveForwardKey = Key.UpArrow;
-    [Range(0f, 1f)] public float visiblePolygonAlpha = 0.1f;
+    [Range(0f, 1f)] public float visiblePolygonAlpha = 0.35f;
 
     private bool isHoveringPolygon = false;
 
@@ -54,8 +54,6 @@ public class Click : MonoBehaviour
     {
         inventory = Inventory.Instance;
     }
-
-    private string SaveFilePath => Path.Combine(Application.persistentDataPath, "saveData.json");
 
     void openImage(string resourceName)
     {
@@ -101,12 +99,6 @@ public class Click : MonoBehaviour
             string[] requirements = customHotspot["requirements"].ToObject<string[]>();
             bool isHidden = customHotspot["hidden"] != null && customHotspot["hidden"].ToObject<bool>();
             bool isAlwaysVisible = customHotspot["alwaysVisible"] != null && customHotspot["alwaysVisible"].ToObject<bool>();
-            bool onNeedOnly = customHotspot["onNeedOnly"] != null && customHotspot["onNeedOnly"].ToObject<bool>();
-
-            if (onNeedOnly && !checkRequirements(requirements))
-            {
-                continue;
-            }
 
             var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
 
@@ -282,8 +274,7 @@ public class Click : MonoBehaviour
 
     void saveDataInFile(JObject saveData)
     {
-        string saveJson = saveData.ToString();
-        File.WriteAllText(SaveFilePath, saveJson);
+        SaveDataManager.Instance.saveData(saveData);
     }
 
     private bool checkRequirements(string[] requirements)
@@ -373,8 +364,7 @@ public class Click : MonoBehaviour
             else if (action.Split(":")[1] == "remove")
                 currentInventory?.remove(action.Split(":")[2]);
             
-            if (File.Exists(SaveFilePath))
-                saveData = JObject.Parse(File.ReadAllText(SaveFilePath));
+            saveData = SaveDataManager.Instance.readData();
         }
         else if (action.Split(":")[0] == "data")
         {
@@ -470,23 +460,7 @@ public class Click : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         cam.fieldOfView = FOV;
 
-        string saveJson;
-        if (File.Exists(SaveFilePath))
-        {
-            saveJson = File.ReadAllText(SaveFilePath);
-        }
-        else
-        {
-            TextAsset defaultSave = Resources.Load<TextAsset>("SaveFile/saveData");
-            if (defaultSave == null)
-            {
-                Debug.LogError("Default saveData.json not found in Resources/SaveFile/");
-                return;
-            }
-            saveJson = defaultSave.text;
-        }
-
-        saveData = JObject.Parse(saveJson);
+        saveData = SaveDataManager.Instance.readData();
 
         string locationName = saveData.ContainsKey("currentLocation")
             ? saveData["currentLocation"].ToString()
@@ -586,6 +560,9 @@ public class Click : MonoBehaviour
 
                     foreach (var hit in hits)
                     {
+                        if (hiddenHotspots.Contains(hit.collider.gameObject))
+                            continue;
+
                         if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
                         {
                             foreach (var action in actions)

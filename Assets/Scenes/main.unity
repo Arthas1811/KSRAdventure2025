@@ -1020,12 +1020,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1100913964}
-  - {fileID: 1491676325}
-  - {fileID: 1410134532}
   - {fileID: 703538922}
   - {fileID: 1275093819}
   - {fileID: 1964013280}
   - {fileID: 497150052}
+  - {fileID: 1491676325}
+  - {fileID: 1410134532}
   m_Father: {fileID: 561541604}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1620,7 +1620,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1018678389}
         m_TargetAssemblyTypeName: SaveStringUI, Assembly-CSharp
-        m_MethodName: GenerateAndCopySaveString
+        m_MethodName: GenerateSaveString
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1934,7 +1934,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 497150054}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1018678389}
+        m_TargetAssemblyTypeName: SaveStringUI, Assembly-CSharp
+        m_MethodName: CopySaveString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &497150054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3358,6 +3370,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SaveStringUI
   exportStringField: {fileID: 1410134533}
   importStringField: {fileID: 1491676326}
+  enterButton: {fileID: 1964013279}
+  copyButton: {fileID: 497150051}
 --- !u!1 &1028603864
 GameObject:
   m_ObjectHideFlags: 0
@@ -6317,7 +6331,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1964013282}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1018678389}
+        m_TargetAssemblyTypeName: SaveStringUI, Assembly-CSharp
+        m_MethodName: LoadImportedSaveString
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1964013282
 MonoBehaviour:
   m_ObjectHideFlags: 0
