@@ -99,6 +99,12 @@ public class Click : MonoBehaviour
             string[] requirements = customHotspot["requirements"].ToObject<string[]>();
             bool isHidden = customHotspot["hidden"] != null && customHotspot["hidden"].ToObject<bool>();
             bool isAlwaysVisible = customHotspot["alwaysVisible"] != null && customHotspot["alwaysVisible"].ToObject<bool>();
+            bool onNeedOnly = customHotspot["onNeedOnly"] != null && customHotspot["onNeedOnly"].ToObject<bool>();
+
+            if (onNeedOnly && !checkRequirements(requirements))
+            {
+                continue;
+            }
 
             var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
 
@@ -560,9 +566,6 @@ public class Click : MonoBehaviour
 
                     foreach (var hit in hits)
                     {
-                        if (hiddenHotspots.Contains(hit.collider.gameObject))
-                            continue;
-
                         if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
                         {
                             foreach (var action in actions)
