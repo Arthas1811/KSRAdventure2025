@@ -191,6 +191,8 @@ public class Click : MonoBehaviour
             sphere.material = mat;
     }
 
+    private string lastExecutedStateKey = "";
+
     Material GetMaterialForImage(string imageKey)
     {
         if (string.IsNullOrEmpty(imageKey) || data == null || data[imageKey] == null)
@@ -200,12 +202,30 @@ public class Click : MonoBehaviour
         if (states == null) return null;
 
         JToken activeState = states["main"];
+        string activeStateKey = "main";
 
         foreach (var state in states)
         {
             if (state.Key == "main") continue;
             if (checkRequirements(state.Value["requirements"]?.ToObject<string[]>()))
+            {
                 activeState = state.Value;
+                activeStateKey = state.Key;
+            }
+        }
+
+        string stateIdentifier = imageKey + ":" + activeStateKey;
+        if (stateIdentifier != lastExecutedStateKey)
+        {
+            lastExecutedStateKey = stateIdentifier;
+            if (activeState["actions"] != null)
+            {
+                var emptyString = Array.Empty<string>();
+                foreach (var action in activeState["actions"])
+                {
+                    completeAction(action.ToString(), emptyString, currentImage, 0f, 60f, null, null);
+                }
+            }
         }
 
         string path = activeState["path"]?.ToString();
@@ -498,6 +518,8 @@ public class Click : MonoBehaviour
 
     void LoadLocation(string locationName, string entryImage = null)
     {
+        lastExecutedStateKey = "";
+
         // load from resources...
         TextAsset json = Resources.Load<TextAsset>($"Locations/{locationName}");
         if (json == null)

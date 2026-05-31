@@ -1,18 +1,20 @@
 {
     "start": {
-        "main": {
-            "actions": [
-                "cutscene:Introduction",
-                "location:entrance:h1EntranceOutside"
-            ],
-            "info": "//to fix -> cutscene missing",
-            "requirements": [],
-            "path": "Assets/Resources/Images/Navigation/start/2.jpg"
+        "states": {
+            "main": {
+                "actions": [
+                    "cutscene:Introduction",
+                    "location:entrance:h1EntranceOutside"
+                ],
+                "info": "//to fix -> cutscene missing",
+                "requirements": [],
+                "path": "Assets/Resources/Images/Navigation/start/2.jpg"
+            }
         }
     },
     "h1EntranceOutside": {
         "states": {
-            "main": {
+            "main": {             
                 "requirements": [],
                 "path": "Assets/Resources/Images/Navigation/Entrance/h1_entrance_outside.jpg"
             }
