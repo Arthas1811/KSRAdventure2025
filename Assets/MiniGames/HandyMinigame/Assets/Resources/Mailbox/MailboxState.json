@@ -1,18 +1,36 @@
 {
   "mailStates": {
-    "FirstStoryMail": {
-      "recieved": true,
-      "read": false,
-      "archived": false,
-      "deleted": false
-    },
-    "AttachmentTestMail": {
-      "recieved": true,
-      "read": false,
-      "archived": false,
-      "deleted": false
-    },
     "PrincipalsMail": {
+      "read": false,
+      "archived": false,
+      "deleted": false
+    },
+    "SlaLeitfadenMail": {
+      "recieved": true,
+      "read": false,
+      "archived": false,
+      "deleted": false
+    },
+    "SlaRichtlinienMail": {
+      "recieved": true,
+      "read": false,
+      "archived": false,
+      "deleted": false
+    },
+    "SlaApaRichtlinienMail": {
+      "recieved": true,
+      "read": false,
+      "archived": false,
+      "deleted": false
+    },
+    "SlaZitierstandardsMail": {
+      "recieved": true,
+      "read": false,
+      "archived": false,
+      "deleted": false
+    },
+    "SlaPlagiatspraeventionMail": {
+      "recieved": true,
       "read": false,
       "archived": false,
       "deleted": false

@@ -144,11 +144,15 @@ public static class HandyUIFactory
         Vector2? textSize = null,
         float iconInset = 10f)
     {
-        RectTransform rect = CreatePanel(objectName, parent, normalColor, anchoredPosition, size);
+        bool iconOnlyButton = iconSprite != null && string.IsNullOrEmpty(label);
+        RectTransform rect = CreatePanel(objectName, parent, iconOnlyButton ? Color.clear : normalColor, anchoredPosition, size);
         Button button = rect.gameObject.AddComponent<Button>();
         button.targetGraphic = rect.GetComponent<Image>();
-        button.transition = Selectable.Transition.ColorTint;
-        button.colors = colors;
+        button.transition = iconOnlyButton ? Selectable.Transition.None : Selectable.Transition.ColorTint;
+        if (!iconOnlyButton)
+        {
+            button.colors = colors;
+        }
         if (onClick != null)
         {
             button.onClick.AddListener(onClick);

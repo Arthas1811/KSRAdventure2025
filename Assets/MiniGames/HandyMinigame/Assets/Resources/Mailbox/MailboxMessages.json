@@ -1,32 +1,6 @@
 {
   "Mails": [
     {
-      "Id": "FirstStoryMail",
-      "SenderName": "Noemi",
-      "SenderAddress": "noemi@ksr.ch",
-      "Time": "09:41",
-      "Subject": "Image attachment test",
-      "Preview": "This mail includes the PNG attachment you copied into the mailbox folder.",
-      "Body": "Hi,\n\nI attached the test PNG from the mailbox attachment folder. When this mail is opened, the picture should appear as an inline preview below the message text.\n\nIf you want to swap the image later, replace AttachmentPath with another resource path inside Resources/Mailbox/Attachments.\n\n-Noemi",
-      "ImagePath": "",
-      "AttachmentName": "Wrath_of_the_Lich_King.png",
-      "AttachmentType": "Image",
-      "AttachmentPath": "Mailbox/Attachments/Wrath_of_the_Lich_King"
-    },
-    {
-      "Id": "AttachmentTestMail",
-      "SenderName": "ICT Support",
-      "SenderAddress": "support@ksr.ch",
-      "Time": "10:12",
-      "Subject": "PDF attachment test",
-      "Preview": "Attachment from ICT Support.",
-      "Body": "Hi,\n\nI attached the test PDF as a Unity .bytes asset. Open this mail and press the PDF attachment button; the mailbox will copy the bytes to Unity's temporary cache and ask the operating system to open the PDF.\n\nThe JSON path intentionally leaves off the final .bytes extension.\n\n-ICT Support",
-      "ImagePath": "",
-      "AttachmentName": "SLA_2025_KSR_Zuest_Colin.pdf",
-      "AttachmentType": "Pdf",
-      "AttachmentPath": "Mailbox/Attachments/SLA_2025_KSR_Zuest_Colin.pdf"
-    },
-    {
       "Id": "PrincipalsMail",
       "SenderName": "Schneider Stefan",
       "SenderAddress": "Stefan.Schneider@TG.CH",
@@ -34,6 +8,71 @@
       "Subject": "Meeting with the Principal",
       "Preview": "Dear Student...",
       "Body": "Dear Student\nI am writing to address a recent incident involving inappropriate behaviour at school. It is important that we clarify what happened and discuss how we can move forward constructively.\nPlease come to my office on Saturday at 8:00am so we can talk through the situation in a calm and respectful manner. This meeting will give us the opportunity to understand each other's perspectives and find a positive way forward. Thank you for your cooperation.\nKind regards, Stefan Schneider"
+    },
+    {
+      "Id": "SlaLeitfadenMail",
+      "SenderName": "SLA Koordination",
+      "SenderAddress": "sla.koordination@ksr.ch",
+      "Time": "08:15",
+      "Subject": "SLA: Leitfaden und erste Schritte",
+      "Preview": "Der Leitfaden zur selbststaendigen Lernarbeit ist angehaengt.",
+      "Body": "Liebe Schuelerin, lieber Schueler\n\nIm Anhang findest du den Leitfaden zur selbststaendigen Lernarbeit. Er gibt dir einen Ueberblick ueber Ziele, Ablauf, Betreuung, wichtige Termine und die Erwartungen an deine Arbeit.\n\nLies diesen Leitfaden bitte zuerst. Die weiteren Dokumente in deinem Postfach ergaenzen ihn mit Regeln zum Zitieren, zur APA-Formatierung und zur Plagiatspraevention.\n\nFreundliche Gruesse\nSLA Koordination",
+      "ImagePath": "",
+      "AttachmentName": "Leidfaden_SLA.pdf",
+      "AttachmentType": "Pdf",
+      "AttachmentPath": "Mailbox/Attachments/Leidfaden_SLA.pdf"
+    },
+    {
+      "Id": "SlaRichtlinienMail",
+      "SenderName": "SLA Koordination",
+      "SenderAddress": "sla.koordination@ksr.ch",
+      "Time": "08:19",
+      "Subject": "SLA: Richtlinien fuer selbststaendige Arbeiten",
+      "Preview": "Die verbindlichen Richtlinien fuer die SLA sind angehaengt.",
+      "Body": "Liebe Schuelerin, lieber Schueler\n\nDieses Dokument enthaelt die verbindlichen Richtlinien fuer selbststaendige Arbeiten. Darin findest du Vorgaben zu Aufbau, Umfang, Betreuung, Abgabe und Bewertung.\n\nNutze die Richtlinien als Checkliste, bevor du mit der Planung und spaeter mit der Abgabe deiner SLA beginnst.\n\nFreundliche Gruesse\nSLA Koordination",
+      "ImagePath": "",
+      "AttachmentName": "Richtlinien_selbstst\u00e4ndige_Arbeiten.pdf",
+      "AttachmentType": "Pdf",
+      "AttachmentPath": "Mailbox/Attachments/Richtlinien_selbstst\u00e4ndige_Arbeiten.pdf"
+    },
+    {
+      "Id": "SlaApaRichtlinienMail",
+      "SenderName": "SLA Koordination",
+      "SenderAddress": "sla.koordination@ksr.ch",
+      "Time": "08:23",
+      "Subject": "SLA: APA-Richtlinien",
+      "Preview": "Die APA-Richtlinien fuer Quellenangaben und Literaturverzeichnis sind angehaengt.",
+      "Body": "Liebe Schuelerin, lieber Schueler\n\nIm Anhang findest du die APA-Richtlinien. Sie zeigen dir, wie du Quellen im Text korrekt nachweist und wie das Literaturverzeichnis aufgebaut sein muss.\n\nBitte verwende diese Regeln konsequent, sobald du mit fremden Quellen, Bildern, Tabellen oder Online-Material arbeitest.\n\nFreundliche Gruesse\nSLA Koordination",
+      "ImagePath": "",
+      "AttachmentName": "APA_Richtlinien.pdf",
+      "AttachmentType": "Pdf",
+      "AttachmentPath": "Mailbox/Attachments/APA_Richtlinien.pdf"
+    },
+    {
+      "Id": "SlaZitierstandardsMail",
+      "SenderName": "SLA Koordination",
+      "SenderAddress": "sla.koordination@ksr.ch",
+      "Time": "08:27",
+      "Subject": "SLA: Zitierstandards",
+      "Preview": "Die Zitierstandards fuer deine SLA sind angehaengt.",
+      "Body": "Liebe Schuelerin, lieber Schueler\n\nDieses Dokument fasst die Zitierstandards fuer deine SLA zusammen. Es hilft dir, direkte und indirekte Zitate sauber zu kennzeichnen und Quellen nachvollziehbar anzugeben.\n\nVergleiche deine Arbeit vor der Abgabe mit diesen Vorgaben, damit deine Quellenarbeit einheitlich und korrekt ist.\n\nFreundliche Gruesse\nSLA Koordination",
+      "ImagePath": "",
+      "AttachmentName": "Zitierstandards.pdf",
+      "AttachmentType": "Pdf",
+      "AttachmentPath": "Mailbox/Attachments/Zitierstandards.pdf"
+    },
+    {
+      "Id": "SlaPlagiatspraeventionMail",
+      "SenderName": "SLA Koordination",
+      "SenderAddress": "sla.koordination@ksr.ch",
+      "Time": "08:31",
+      "Subject": "SLA: Anleitung zur Plagiatspraevention",
+      "Preview": "Die Anleitung zur Plagiatspraevention ist angehaengt.",
+      "Body": "Liebe Schuelerin, lieber Schueler\n\nIm Anhang findest du die Anleitung zur Plagiatspraevention. Sie erklaert, wie du fremde Ideen korrekt uebernimmst, sauber zitierst und unbeabsichtigte Plagiate vermeidest.\n\nBitte lies dieses Dokument fruehzeitig, besonders bevor du mit Recherche, Exzerpten und dem Schreiben der ersten Kapitel beginnst.\n\nFreundliche Gruesse\nSLA Koordination",
+      "ImagePath": "",
+      "AttachmentName": "Anleitung_Plagiatspr\u00e4vention.pdf",
+      "AttachmentType": "Pdf",
+      "AttachmentPath": "Mailbox/Attachments/Anleitung_Plagiatspr\u00e4vention.pdf"
     }
   ]
 }

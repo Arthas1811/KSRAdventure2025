@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -79,6 +78,7 @@ public class MailboxController : MonoBehaviour
     private RectTransform mailboxCanvasRect;
     private GameObject contextMenuLayerObject;
     private RectTransform contextMenuPanel;
+    private MailboxPdfPreviewController pdfPreviewController;
     private string selectedMailId;
     private string selectedFolder = FolderInbox;
     private string searchQuery = string.Empty;
@@ -128,8 +128,15 @@ public class MailboxController : MonoBehaviour
         CreateMailboxColumns(shell);
         CreateHeader(shell);
         CreateContextMenuLayer(canvasRect);
-        CreateSearchDropdownLayer(canvasRect);
+        CreateSearchDropdownLayer(shell);
         CreateLandscapePhoneFrameOverlay(canvasRect);
+        pdfPreviewController = new MailboxPdfPreviewController(phoneScreen);
+    }
+
+    //cleans preview resources
+    private void OnDestroy()
+    {
+        pdfPreviewController?.Dispose();
     }
 
     //creates landscape frame art
@@ -181,7 +188,7 @@ public class MailboxController : MonoBehaviour
         CreateText(
             "AccountText",
             header,
-            "student@ksr-adventure.local",
+            "player@ksr.ch",
             16f,
             FontStyles.Normal,
             TextAlignmentOptions.Right,
@@ -211,7 +218,7 @@ public class MailboxController : MonoBehaviour
         RectTransform textArea = HandyUIFactory.CreateUIObject("TextArea", search);
         HandyUIFactory.StretchToParent(textArea);
         textArea.offsetMin = new Vector2(18f, 6f);
-        textArea.offsetMax = new Vector2(-116f, -6f);
+        textArea.offsetMax = new Vector2(-140f, -6f);
         textArea.gameObject.AddComponent<RectMask2D>();
 
         TextMeshProUGUI placeholder = CreateText(
@@ -225,6 +232,8 @@ public class MailboxController : MonoBehaviour
             Vector2.zero,
             Vector2.zero);
         HandyUIFactory.StretchToParent(placeholder.rectTransform);
+        placeholder.textWrappingMode = TextWrappingModes.NoWrap;
+        placeholder.overflowMode = TextOverflowModes.Masking;
 
         TextMeshProUGUI inputText = CreateText(
             "Text",
@@ -237,6 +246,8 @@ public class MailboxController : MonoBehaviour
             Vector2.zero,
             Vector2.zero);
         HandyUIFactory.StretchToParent(inputText.rectTransform);
+        inputText.textWrappingMode = TextWrappingModes.NoWrap;
+        inputText.overflowMode = TextOverflowModes.Masking;
 
         searchInputField.textViewport = textArea;
         searchInputField.placeholder = placeholder;
@@ -259,8 +270,8 @@ public class MailboxController : MonoBehaviour
             FontStyles.Bold,
             TextAlignmentOptions.Right,
             new Color(0.8f, 0.9f, 1f, 0.86f),
-            new Vector2(222f, 0f),
-            new Vector2(90f, 28f));
+            new Vector2(204f, 0f),
+            new Vector2(104f, 28f));
 
         AddPointerClickHandler(search.gameObject, _ =>
         {
@@ -1211,8 +1222,8 @@ public class MailboxController : MonoBehaviour
         bool isArchived = phoneSaveState.IsMailArchived(mail.Id);
         bool isRead = phoneSaveState.IsMailRead(mail.Id);
         bool isDeleted = phoneSaveState.IsMailDeleted(mail.Id);
-        bool canOpenPdf = CanOpenPdfAttachment(mail);
-        int optionCount = 3 + (isDeleted ? 0 : 1) + (canOpenPdf ? 1 : 0);
+        bool canPreviewPdf = CanPreviewPdfAttachment(mail);
+        int optionCount = 3 + (isDeleted ? 0 : 1) + (canPreviewPdf ? 1 : 0);
         float menuWidth = 230f;
         float itemHeight = 40f;
         float padding = 8f;
@@ -1247,12 +1258,12 @@ public class MailboxController : MonoBehaviour
             RenderMailbox();
         });
 
-        if (canOpenPdf)
+        if (canPreviewPdf)
         {
-            CreateContextMenuItem("Open PDF", optionIndex, menuWidth, menuHeight, itemHeight, padding, () =>
+            CreateContextMenuItem("Preview PDF", optionIndex, menuWidth, menuHeight, itemHeight, padding, () =>
             {
                 HideContextMenu();
-                OpenPdfAttachment(mail.AttachmentPath, Fallback(mail.AttachmentName, "PDF attachment"));
+                OpenPdfPreview(mail.AttachmentPath, Fallback(mail.AttachmentName, "PDF attachment"));
             });
         }
 
@@ -1351,7 +1362,7 @@ public class MailboxController : MonoBehaviour
     }
 
     //checks PDF attachment
-    private static bool CanOpenPdfAttachment(MailboxMessage mail)
+    private static bool CanPreviewPdfAttachment(MailboxMessage mail)
     {
         return mail != null
             && IsAttachmentType(mail.AttachmentType?.Trim(), "Pdf")
@@ -1411,8 +1422,8 @@ public class MailboxController : MonoBehaviour
         if (IsAttachmentType(attachmentType, "Pdf"))
         {
             string attachmentName = Fallback(mail.AttachmentName, "PDF attachment");
-            attachmentButtonText.text = $"Open PDF: {attachmentName}";
-            attachmentButton.onClick.AddListener(() => OpenPdfAttachment(mail.AttachmentPath, attachmentName));
+            attachmentButtonText.text = $"Preview PDF: {attachmentName}";
+            attachmentButton.onClick.AddListener(() => OpenPdfPreview(mail.AttachmentPath, attachmentName));
             attachmentButtonObject.SetActive(true);
             return;
         }
@@ -1447,25 +1458,16 @@ public class MailboxController : MonoBehaviour
         readingImageFrameLayoutElement.preferredHeight = Mathf.Clamp(imageHeight, 140f, ReadingImageMaxHeight);
     }
 
-    //opens PDF attachment
-    private void OpenPdfAttachment(string pdfResourcePath, string attachmentName)
+    //previews PDF attachment
+    private void OpenPdfPreview(string pdfResourcePath, string attachmentName)
     {
-        TextAsset pdfAsset = Resources.Load<TextAsset>(pdfResourcePath);
-        if (pdfAsset == null)
+        if (pdfPreviewController == null)
         {
-            Debug.LogWarning($"MailboxController: Could not load PDF attachment at Resources/{pdfResourcePath}. Use a .bytes file in Resources for PDFs.");
+            Debug.LogWarning("MailboxController: PDF preview controller is not available.");
             return;
         }
 
-        string fileName = SanitizeFileName(attachmentName);
-        if (!fileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
-        {
-            fileName += ".pdf";
-        }
-
-        string outputPath = Path.Combine(Application.temporaryCachePath, fileName);
-        File.WriteAllBytes(outputPath, pdfAsset.bytes);
-        Application.OpenURL(new Uri(outputPath).AbsoluteUri);
+        pdfPreviewController.Open(pdfResourcePath, attachmentName);
     }
 
     //updates mail cards
@@ -1519,40 +1521,23 @@ public class MailboxController : MonoBehaviour
     //adds hover handlers
     private static void AddHoverHandlers(GameObject target, UnityEngine.Events.UnityAction onEnter, UnityEngine.Events.UnityAction onExit)
     {
-        EventTrigger trigger = GetOrCreateEventTrigger(target);
-
-        EventTrigger.Entry enterEntry = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerEnter
-        };
-        enterEntry.callback.AddListener(_ => onEnter?.Invoke());
-        trigger.triggers.Add(enterEntry);
-
-        EventTrigger.Entry exitEntry = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerExit
-        };
-        exitEntry.callback.AddListener(_ => onExit?.Invoke());
-        trigger.triggers.Add(exitEntry);
+        MailboxPointerEvents pointerEvents = GetOrCreatePointerEvents(target);
+        pointerEvents.PointerEntered += onEnter;
+        pointerEvents.PointerExited += onExit;
     }
 
     //adds click handler
     private static void AddPointerClickHandler(GameObject target, Action<PointerEventData> onClick)
     {
-        EventTrigger trigger = GetOrCreateEventTrigger(target);
-        EventTrigger.Entry clickEntry = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerClick
-        };
-        clickEntry.callback.AddListener(eventData => onClick?.Invoke(eventData as PointerEventData));
-        trigger.triggers.Add(clickEntry);
+        MailboxPointerEvents pointerEvents = GetOrCreatePointerEvents(target);
+        pointerEvents.PointerClicked += onClick;
     }
 
-    //gets event trigger
-    private static EventTrigger GetOrCreateEventTrigger(GameObject target)
+    //gets pointer event relay
+    private static MailboxPointerEvents GetOrCreatePointerEvents(GameObject target)
     {
-        EventTrigger trigger = target.GetComponent<EventTrigger>();
-        return trigger != null ? trigger : target.AddComponent<EventTrigger>();
+        MailboxPointerEvents pointerEvents = target.GetComponent<MailboxPointerEvents>();
+        return pointerEvents != null ? pointerEvents : target.AddComponent<MailboxPointerEvents>();
     }
 
     //updates mail list layout
@@ -1740,16 +1725,27 @@ public class MailboxController : MonoBehaviour
         return string.Equals(value, expectedType, StringComparison.OrdinalIgnoreCase);
     }
 
-    //cleans file name
-    private static string SanitizeFileName(string value)
+    //relays only the pointer events the mailbox needs, so scroll drag events still reach ScrollRect parents
+    private sealed class MailboxPointerEvents : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        string fileName = Fallback(value, "MailboxAttachment");
-        foreach (char invalidChar in Path.GetInvalidFileNameChars())
+        public event UnityEngine.Events.UnityAction PointerEntered;
+        public event UnityEngine.Events.UnityAction PointerExited;
+        public event Action<PointerEventData> PointerClicked;
+
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            fileName = fileName.Replace(invalidChar, '_');
+            PointerEntered?.Invoke();
         }
 
-        return fileName;
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            PointerExited?.Invoke();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            PointerClicked?.Invoke(eventData);
+        }
     }
 
     //stores mail card UI

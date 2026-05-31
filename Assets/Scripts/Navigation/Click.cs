@@ -754,7 +754,14 @@ public class Click : MonoBehaviour
 
     private static string GetKeyLabel(Key key)
     {
-        return key == Key.None ? string.Empty : key.ToString();
+        if (key != Key.Escape)
+        {
+            return key == Key.None ? string.Empty : key.ToString();
+        }
+       else
+        {
+            return "ESC";
+        }
     }
 
     private static bool WasKeyPressed(Key key)
