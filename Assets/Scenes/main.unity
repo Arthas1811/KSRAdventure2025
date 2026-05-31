@@ -2135,6 +2135,8 @@ GameObject:
   - component: {fileID: 561541607}
   - component: {fileID: 561541606}
   - component: {fileID: 561541605}
+  - component: {fileID: 2026053101}
+  - component: {fileID: 2026053102}
   m_Layer: 0
   m_Name: SaveStringCanvas
   m_TagString: Untagged
@@ -2226,6 +2228,32 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2026053101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561541603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 579cdd9db9524902ae773e889e49a46d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobileIconTexture: {fileID: 2800000, guid: 51e48570147b9d04a8d4c7a5aa93a54e, type: 3}
+--- !u!114 &2026053102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561541603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f01b619856fc4aa1899e951c777d9b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryToggle: {fileID: 419998269}
 --- !u!1 &587251763
 GameObject:
   m_ObjectHideFlags: 0
@@ -6226,7 +6254,7 @@ MonoBehaviour:
   hoverCursorTexture: {fileID: 2800000, guid: 655b66dc98c9fb347992636a3666d61e, type: 3}
   hoverCursorHotspot: {x: 0, y: 0}
   forceSoftwareCursor: 1
-  polygonToggleKey: 22
+  polygonToggleKey: 3
   showPolygons: 0
   MoveForwardKey: 63
   visiblePolygonAlpha: 0.1

@@ -15,6 +15,11 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
+        if (PhoneSceneNavigation.IsPhoneOverlayOpen)
+        {
+            return;
+        }
+
         if (!main.inventoryOpen && !main.dialogueOpen && !main.imageOpen && !main.saveStringUIOpen)
         {
             if (Mouse.current != null)

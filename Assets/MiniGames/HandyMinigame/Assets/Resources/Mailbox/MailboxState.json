@@ -1,0 +1,21 @@
+{
+  "mailStates": {
+    "FirstStoryMail": {
+      "recieved": true,
+      "read": false,
+      "archived": false,
+      "deleted": false
+    },
+    "AttachmentTestMail": {
+      "recieved": true,
+      "read": false,
+      "archived": false,
+      "deleted": false
+    },
+    "PrincipalsMail": {
+      "read": false,
+      "archived": false,
+      "deleted": false
+    }
+  }
+}

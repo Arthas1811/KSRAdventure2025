@@ -11,6 +11,7 @@ public class InventoryAnimatedToggle : MonoBehaviour
     private bool isOpen = false;
     private float animationDuration = 0.25f; // seconds
     public Click main;
+    public Key toggleKey = Key.E;
 
     void Start()
     {
@@ -40,14 +41,25 @@ public class InventoryAnimatedToggle : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame && !main.dialogueOpen)
+        if (Keyboard.current == null || toggleKey == Key.None || MenuLayerManager.IsTextInputFocused())
+            return;
+
+        if (Keyboard.current[toggleKey].wasPressedThisFrame)
             ToggleInventory();
     }
 
-    private void ToggleInventory()
+    public void ToggleInventory()
     {
+        if (main != null && main.dialogueOpen)
+            return;
+
         isOpen = !isOpen;
-        main.inventoryOpen = isOpen;
+        if (main != null)
+            main.inventoryOpen = isOpen;
+
+        if (isOpen)
+            MenuLayerManager.BringToFront(inventoryCanvas);
+
         StopAllCoroutines();
         StartCoroutine(AnimateInventory(isOpen));
     }

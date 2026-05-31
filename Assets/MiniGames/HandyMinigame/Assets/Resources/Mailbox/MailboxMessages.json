@@ -1,0 +1,39 @@
+{
+  "Mails": [
+    {
+      "Id": "FirstStoryMail",
+      "SenderName": "Noemi",
+      "SenderAddress": "noemi@ksr.ch",
+      "Time": "09:41",
+      "Subject": "Image attachment test",
+      "Preview": "This mail includes the PNG attachment you copied into the mailbox folder.",
+      "Body": "Hi,\n\nI attached the test PNG from the mailbox attachment folder. When this mail is opened, the picture should appear as an inline preview below the message text.\n\nIf you want to swap the image later, replace AttachmentPath with another resource path inside Resources/Mailbox/Attachments.\n\n-Noemi",
+      "ImagePath": "",
+      "AttachmentName": "Wrath_of_the_Lich_King.png",
+      "AttachmentType": "Image",
+      "AttachmentPath": "Mailbox/Attachments/Wrath_of_the_Lich_King"
+    },
+    {
+      "Id": "AttachmentTestMail",
+      "SenderName": "ICT Support",
+      "SenderAddress": "support@ksr.ch",
+      "Time": "10:12",
+      "Subject": "PDF attachment test",
+      "Preview": "Attachment from ICT Support.",
+      "Body": "Hi,\n\nI attached the test PDF as a Unity .bytes asset. Open this mail and press the PDF attachment button; the mailbox will copy the bytes to Unity's temporary cache and ask the operating system to open the PDF.\n\nThe JSON path intentionally leaves off the final .bytes extension.\n\n-ICT Support",
+      "ImagePath": "",
+      "AttachmentName": "SLA_2025_KSR_Zuest_Colin.pdf",
+      "AttachmentType": "Pdf",
+      "AttachmentPath": "Mailbox/Attachments/SLA_2025_KSR_Zuest_Colin.pdf"
+    },
+    {
+      "Id": "PrincipalsMail",
+      "SenderName": "Schneider Stefan",
+      "SenderAddress": "Stefan.Schneider@TG.CH",
+      "Time": "12:42",
+      "Subject": "Meeting with the Principal",
+      "Preview": "Dear Student...",
+      "Body": "Dear Student\nI am writing to address a recent incident involving inappropriate behaviour at school. It is important that we clarify what happened and discuss how we can move forward constructively.\nPlease come to my office on Saturday at 8:00am so we can talk through the situation in a calm and respectful manner. This meeting will give us the opportunity to understand each other's perspectives and find a positive way forward. Thank you for your cooperation.\nKind regards, Stefan Schneider"
+    }
+  ]
+}

@@ -49,7 +49,9 @@
       "server2Destroyed": false,
       "holeCompleted": false,
       "bossDefeated": false,
-      "mailRecieved": false
+      "mailRecieved": false,
+      "blockBlastHighScore": 0,
+      "tetrisHighScore": 0
     }
   },
   "currentLocation": "entrance"

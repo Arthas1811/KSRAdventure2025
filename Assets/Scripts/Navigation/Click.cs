@@ -35,9 +35,10 @@ public class Click : MonoBehaviour
     public Texture2D hoverCursorTexture;
     public Vector2 hoverCursorHotspot = Vector2.zero;
     public bool forceSoftwareCursor = true;
-    public Key polygonToggleKey = Key.H;
+    public Key polygonToggleKey = Key.Tab;
     public bool showPolygons = false;
     public Key MoveForwardKey = Key.UpArrow;
+    public Key saveStringToggleKey = Key.Escape;
     [Range(0f, 1f)] public float visiblePolygonAlpha = 0.35f;
 
     private bool isHoveringPolygon = false;
@@ -482,6 +483,7 @@ public class Click : MonoBehaviour
         cam.fieldOfView = FOV;
 
         saveData = SaveDataManager.Instance.readData();
+        ConfigureSaveStringLauncherButton();
 
         string locationName = saveData.ContainsKey("currentLocation")
             ? saveData["currentLocation"].ToString()
@@ -538,6 +540,25 @@ public class Click : MonoBehaviour
 
     void Update()
     {
+        if (Keyboard.current != null && saveStringToggleKey != Key.None
+            && (saveStringToggleKey == Key.Escape || !MenuLayerManager.IsTextInputFocused())
+            && Keyboard.current[saveStringToggleKey].wasPressedThisFrame)
+        {
+            ToggleSaveStringUI();
+        }
+
+        if (Keyboard.current != null && WasKeyPressed(polygonToggleKey))
+        {
+            showPolygons = !showPolygons;
+            UpdateAllPolygonVisuals();
+        }
+
+        if (IsAnyMenuOpen())
+        {
+            SetHoverCursor(false);
+            return;
+        }
+
         if (!saveStringUIOpen && !inventoryOpen && !imageOpen && !dialogueOpen && Keyboard.current != null && Keyboard.current[MoveForwardKey].wasPressedThisFrame)
         {
             Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
@@ -554,12 +575,6 @@ public class Click : MonoBehaviour
                     break; // only act on the nearest matching hotspot
                 }
             }
-        }
-
-        if (Keyboard.current != null && Keyboard.current[polygonToggleKey].wasPressedThisFrame)
-        {
-            showPolygons = !showPolygons;
-            UpdateAllPolygonVisuals();
         }
 
         UpdateHoverCursor();
@@ -709,11 +724,50 @@ public class Click : MonoBehaviour
         if (saveStringUIOpen)
         {
             saveStringUi.SetActive(true);
+            MenuLayerManager.BringToFront(saveStringUi);
         }
         else
         {
             saveStringUi.SetActive(false);
         }
+    }
+
+    private bool IsAnyMenuOpen()
+    {
+        return saveStringUIOpen
+            || inventoryOpen
+            || imageOpen
+            || dialogueOpen
+            || PhoneSceneNavigation.IsPhoneOverlayOpen;
+    }
+
+    private void ConfigureSaveStringLauncherButton()
+    {
+        GameObject saveButton = GameObject.Find("SaveStringUIButton");
+        if (saveButton == null)
+        {
+            return;
+        }
+
+        MenuLayerManager.ConfigureLauncherButton(saveButton.transform as RectTransform, GetKeyLabel(saveStringToggleKey));
+    }
+
+    private static string GetKeyLabel(Key key)
+    {
+        return key == Key.None ? string.Empty : key.ToString();
+    }
+
+    private static bool WasKeyPressed(Key key)
+    {
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null || key == Key.None)
+        {
+            return false;
+        }
+
+        return key == Key.Tab
+            ? keyboard.tabKey.wasPressedThisFrame
+            : keyboard[key].wasPressedThisFrame;
     }
 
     public void openCutscene(string videoName)
