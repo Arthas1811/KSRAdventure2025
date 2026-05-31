@@ -840,9 +840,8 @@
             },
             {
                 "actions": [
-                    "scene:bossFight"
+                    "scene:Bossfight"
                 ],
-                "info": "//to fix -> adapt name",
                 "requirements": [
                     "item:laptop:true"
                 ],
