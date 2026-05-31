@@ -75,8 +75,12 @@
                 "actions": [
                     "scene:JackBlackMinigame"
                 ],
-                "requirements": [],
+                "requirements": [
+                    "states:basement:bossDefeated:true"
+                ],
+                "onNeedOnly": true,
                 "alwaysVisible": true,
+                "info": "//later remove both on need only and the requirements",
                 "polygonString": "0.293,0.433;0.288,0.440;0.286,0.470;0.318,0.474;0.321,0.447;0.328,0.437"
             },
             {
@@ -840,10 +844,14 @@
             },
             {
                 "actions": [
-                    "scene:Bossfight"
+                    "scene:Bossfight",
+                    "item:add:basementKey",
+                    "data:states:minigames:bossDefeated:true",
+                    "data:states:basement:bossDefeated:true"
                 ],
                 "requirements": [
-                    "item:laptop:true"
+                    "item:laptop:true",
+                    "states:basement:bossDefeated:false"
                 ],
                 "alwaysVisible": true,
                 "onNeedOnly": true,

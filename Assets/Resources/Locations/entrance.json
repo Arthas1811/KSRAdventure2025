@@ -39,6 +39,7 @@
                 "requirements": [
                     "states:basement:bossDefeated:true"
                 ],
+                "onNeedOnly": true,
                 "polygonString": "0.619,0.399;0.619,0.633;0.919,0.562;0.919,0.464"
             }
         ]
