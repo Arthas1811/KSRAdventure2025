@@ -60,6 +60,7 @@
                     "states:basement:h010DoorOpen:false",
                     "item:screwdriver:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.190,0.386;0.190,0.579;0.232,0.582;0.232,0.379"
             },
             {
@@ -69,6 +70,7 @@
                 "requirements": [
                     "states:basement:h010DoorOpen:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.190,0.386;0.190,0.579;0.232,0.582;0.232,0.379"
             },
             {
@@ -202,6 +204,7 @@
                     "states:basement:h012DoorOpen:false",
                     "item:h012Key:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.685,0.257;0.684,0.697;0.809,0.701;0.810,0.254"
             },
             {
@@ -211,6 +214,7 @@
                 "requirements": [
                     "states:basement:h012DoorOpen:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.685,0.257;0.684,0.697;0.809,0.701;0.810,0.254"
             }
         ]
@@ -267,6 +271,7 @@
                     "states:basement:h013DoorOpen:false",
                     "states:minigames:constructionMinigameCompleted:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.702,0.210;0.695,0.745;0.853,0.717;0.848,0.234"
             },
             {
@@ -279,6 +284,7 @@
                     "states:basement:h013DoorOpen:false",
                     "states:minigames:constructionMinigameCompleted:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.702,0.210;0.695,0.745;0.853,0.717;0.848,0.234"
             },
             {
@@ -288,6 +294,7 @@
                 "requirements": [
                     "states:basement:h013DoorOpen:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.702,0.210;0.695,0.745;0.853,0.717;0.848,0.234"
             }
         ]
@@ -411,6 +418,7 @@
                 "requirements": [
                     "states:basement:h015DoorOpen:false"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.563,0.372;0.563,0.440;0.558,0.447;0.558,0.592;0.599,0.582;0.599,0.393"
             },
             {
@@ -420,6 +428,7 @@
                 "requirements": [
                     "states:basement:h015DoorOpen:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.563,0.372;0.563,0.440;0.558,0.447;0.558,0.592;0.599,0.582;0.599,0.393"
             },
             {
@@ -506,6 +515,7 @@
                 "requirements": [
                     "states:basement:h014DoorOpen:false"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.679,0.223;0.673,0.724;0.819,0.717;0.819,0.234"
             },
             {
@@ -515,6 +525,7 @@
                 "requirements": [
                     "states:basement:h014DoorOpen:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.679,0.223;0.673,0.724;0.819,0.717;0.819,0.234"
             },
             {
@@ -525,6 +536,7 @@
                 "requirements": [
                     "states:basement:h022DoorOpen:false"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.178,0.277;0.183,0.687;0.288,0.690;0.288,0.274"
             },
             {
@@ -535,6 +547,7 @@
                     "states:basement:h014DoorOpen:true",
                     "states:basement:h022DoorOpen:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.178,0.277;0.183,0.687;0.288,0.690;0.288,0.274"
             },
             {
@@ -635,6 +648,7 @@
                     "states:basement:h025DoorOpen:false",
                     "states:basement:h022IsExtinguished:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.479,0.234;0.474,0.741;0.607,0.707;0.613,0.281"
             },
             {
@@ -644,6 +658,7 @@
                 "requirements": [
                     "states:basement:h025DoorOpen:true"
                 ],
+                "onNeedOnly":true,
                 "polygonString": "0.479,0.234;0.474,0.741;0.607,0.707;0.613,0.281"
             },
             {

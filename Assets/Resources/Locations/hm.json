@@ -125,6 +125,7 @@
                     "states:hm:hm301DoorOpen:false",
                     "states:minigames:infoMinigameCompleted:true"
                 ],
+                "onNeedOnly": true,
                 "polygonString": "0.968,0.349;0.971,0.629;0.047,0.619;0.047,0.345"
             },
             {
@@ -134,6 +135,7 @@
                 "requirements": [
                     "states:hm:hm301DoorOpen:true"
                 ],
+                "onNeedOnly": true,
                 "polygonString": "0.968,0.349;0.971,0.629;0.047,0.619;0.047,0.345"
             }
         ]

@@ -78,6 +78,7 @@
                 "requirements": [
                     "states:frontoffice:rektorDoorOpen:false"
                 ],
+                "onNeedOnly": true,
                 "polygonString": "0.024,0.440;0.024,0.589;0.049,0.582;0.047,0.443"
             },
             {
@@ -87,6 +88,7 @@
                 "requirements": [
                     "states:frontoffice:rektorDoorOpen:true"
                 ],
+                "onNeedOnly": true,
                 "polygonString": "0.024,0.440;0.024,0.589;0.049,0.582;0.047,0.443"
             }
         ]
@@ -114,7 +116,8 @@
                     "data:states:frontoffice:fallingCutscenePlayed:true"
                 ],
                 "requirements": [
-                    "states:frontoffice:fallingCutscenePlayed:false"
+                    "states:frontoffice:fallingCutscenePlayed:false",
+                    "states:minigames:englishMinigameCompleted:true"
                 ],
                 "onNeedOnly":true,
                 "alwaysVisible": true,
