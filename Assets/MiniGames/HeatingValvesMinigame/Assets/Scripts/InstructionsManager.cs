@@ -61,13 +61,14 @@ public class InstructionsManager : MonoBehaviour
         {
             message3Sent = true;
             OnTextChanged?.Invoke("Victory!");
+            saveData["states"]["minigames"]["valvesMinigameCompleted"] = true;
+            SaveDataManager.Instance.saveData(saveData);
             SceneManager.LoadScene("main");
         }
     }
 
     public void ExitGame()
     {
-        saveData["states"]["minigames"]["valvesMinigameCompleted"] = true;
         SceneManager.LoadScene("main");
     }
 }

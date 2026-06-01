@@ -232,7 +232,8 @@ public class HandyMinigameController : MonoBehaviour
             new Color(0.85f, 0.38f, 0.13f, 1f),
             new Vector2(118f, 82f),
             HandyTextureProvider.BlockBlastIcon,
-            navigation.LoadBlockBlast);
+            navigation.LoadPhoneHome);
+            // navigation.LoadBlockBlast);
 
         CreateAppButton(
             "TetrisAppButton",
@@ -242,7 +243,8 @@ public class HandyMinigameController : MonoBehaviour
             new Color(0.2f, 0.57f, 0.32f, 1f),
             new Vector2(0f, -132f),
             HandyTextureProvider.TetrosIcon,
-            navigation.LoadTetris);
+            navigation.LoadPhoneHome);
+            // navigation.LoadTetris);
 
         return homePanel;
     }
