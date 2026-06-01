@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -245,14 +245,14 @@ MonoBehaviour:
     y: 442.4
     width: 1156
     height: 274.4
-  m_MinSize: {x: 101, y: 126}
-  m_MaxSize: {x: 4001, y: 4026}
-  m_ActualView: {fileID: 16}
+  m_MinSize: {x: 231, y: 276}
+  m_MaxSize: {x: 10001, y: 10026}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
   - {fileID: 16}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -300,8 +300,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 477.8
-    y: 24
+    x: 476.80002
+    y: 79.200005
     width: 677.2
     height: 416.4
   m_SerializedDataModeController:
@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 24
+    y: 79.200005
     width: 475.8
     height: 416.4
   m_SerializedDataModeController:
@@ -421,7 +421,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 70c9ffff14fbffff
+      m_ExpandedIDs: 1ed9ffff36d9ffff20dcffff2cdcffff80dcffff20ddffff38ddffff4eddffff66ddffff6eddffff86ddffff2cdeffff42deffff50deffff60deffff66deffff9edeffffb4deffffbedeffffd2deffffd8deffffdedeffffe4deffffeadefffff4defffff8deffff4adfffffc8e8ffffe0e8ffff04ecffff18ecffff74ecffff1cedffff3cedffff5aedffff7aedffff8aedffffaaedffff58eeffff76eeffff8ceeffffa4eeffffb2eefffff2eeffff10efffff22efffff3eefffff4cefffff5aefffff68efffff76efffff88efffff94efffffeeefffff14fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -977,7 +977,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.0058069057, y: 0.99417216, z: -0.07951347, w: 0.07260456}
     speed: 2
-    m_Value: {x: 0.005806905, y: 0.9941721, z: -0.07951347, w: 0.07260455}
+    m_Value: {x: 0.005806889, y: 0.9941693, z: -0.07951324, w: 0.07260435}
   m_Size:
     m_Target: 288.4746
     speed: 2
@@ -1038,7 +1038,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 521.60004
-    width: 1139
+    width: 1155
     height: 248.4
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1062,7 +1062,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/MiniGames/Bossfight/Assets/Scripts/Boss
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1072,16 +1072,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/MiniGames/Bossfight/Assets/Scripts/Boss
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\leone\OneDrive - Kantonsschule Romanshorn\EFIF\KSRAdventure2025
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 495.6}
-    m_SelectedIDs: c0c20000
-    m_LastClickedID: 49856
-    m_ExpandedIDs: 0000000094c2000096c2000098c200009ac200009cc200009ec20000a0c20000a2c20000a4c20000a6c20000a8c20000aac20000acc20000aec20000b0c20000b2c20000b4c20000b6c20000b8c20000bac20000bcc20000bec20000c0c20000c2c20000c4c20000c6c20000c8c20000cac20000ccc20000cec20000d0c20000d2c20000d4c20000
+    scrollPos: {x: 0, y: 121.09836}
+    m_SelectedIDs: f4c50000
+    m_LastClickedID: 50676
+    m_ExpandedIDs: 0000000094c2000096c2000098c200009ac200009cc200009ec20000a0c20000a2c20000a4c20000a6c20000a8c20000aac20000acc20000aec20000b0c20000b2c20000b4c20000b6c20000b8c20000bac20000bcc20000bec20000c0c20000c2c20000c4c20000c6c20000c8c20000cac20000ccc20000cec20000d0c20000d2c20000d4c200009ec50000e2c50000eec5000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1136,9 +1136,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: dabb0000
-    m_LastClickedInstanceID: 48090
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000000000000b4a60000b6c3000052b9000030b80000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1190,7 +1190,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 466.4
+    y: 521.60004
     width: 1155
     height: 248.4
   m_SerializedDataModeController:
@@ -1225,8 +1225,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1157
-    y: 24
+    x: 1156
+    y: 79.200005
     width: 379
     height: 690.8
   m_SerializedDataModeController:
