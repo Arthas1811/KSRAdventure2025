@@ -1,4 +1,7 @@
 {
+    "meta": {
+        "music": "Music/ADayatSchool"
+    },
     "h010Corridor": {
         "states": {
             "main": {

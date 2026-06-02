@@ -1,4 +1,7 @@
 {
+    "meta": {
+        "music": "Music/TheseTeachersAndStudents"
+    },
     "h119Corridor": {
         "states": {
             "main": {
@@ -119,7 +122,7 @@
                     "states:frontoffice:fallingCutscenePlayed:false",
                     "states:minigames:englishMinigameCompleted:true"
                 ],
-                "onNeedOnly":true,
+                "onNeedOnly": true,
                 "alwaysVisible": true,
                 "polygonString": "0.093,0.467;0.098,0.521;0.130,0.525;0.125,0.460"
             }
