@@ -1,9 +1,13 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Runtime.InteropServices;
 
 public class SaveStringUI : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    private static extern void CopyToClipboard(string text);
+
     public TMP_InputField exportStringField;
     public TMP_InputField importStringField;
 
@@ -52,9 +56,6 @@ public class SaveStringUI : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoadedAfterImport;
 
-        // Persistent (DontDestroyOnLoad) singletons survive the scene reload and
-        // therefore never re-run Start(); force them to re-sync from the
-        // freshly-imported save data here.
         if (InventoryState.Instance != null)
             InventoryState.Instance.Clear();
 
@@ -66,7 +67,11 @@ public class SaveStringUI : MonoBehaviour
     {
         if (saveString != null)
         {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            CopyToClipboard(saveString);
+#else
             GUIUtility.systemCopyBuffer = saveString;
+#endif
         }
     }
 }
