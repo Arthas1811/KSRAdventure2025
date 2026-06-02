@@ -34,11 +34,7 @@ public class Click : MonoBehaviour
     public bool dialogueOpen = false;
     public Texture2D hoverCursorTexture;
     public Vector2 hoverCursorHotspot = Vector2.zero;
-#if UNITY_WEBGL && !UNITY_EDITOR
-    public bool forceSoftwareCursor = false; // Force hardware cursor on WebGL
-#else
     public bool forceSoftwareCursor = true;
-#endif
     public Key polygonToggleKey = Key.Tab;
     public bool showPolygons = false;
     public Key MoveForwardKey = Key.UpArrow;
