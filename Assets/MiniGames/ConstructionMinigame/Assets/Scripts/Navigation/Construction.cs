@@ -175,7 +175,7 @@ public class Construction : MonoBehaviour
             string[] requirements = customHotspot["requirements"].ToObject<string[]>();
 
             // Extract 2D UV coordinates from JSON
-            var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
+            var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0], System.Globalization.CultureInfo.InvariantCulture), float.Parse(a[1], System.Globalization.CultureInfo.InvariantCulture))).ToList();
 
             var vectors = new List<Vector3>();
             
