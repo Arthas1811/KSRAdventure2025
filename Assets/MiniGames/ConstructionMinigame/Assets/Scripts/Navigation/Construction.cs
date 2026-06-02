@@ -148,9 +148,11 @@ public class Construction : MonoBehaviour
     void Win()
     {
         saveData["states"]["minigames"]["constructionMinigameCompleted"] = true;
+        // saveData["currentImage"] = "h012Video";
         SaveDataManager.Instance.saveData(saveData);
         //Inventory.Instance.add("plan"); 
-        OpenCutscene("FinishedGame");
+        // OpenCutscene("FinishedGame");
+        SceneManager.LoadScene("main");
     }
 
     public void Lose()

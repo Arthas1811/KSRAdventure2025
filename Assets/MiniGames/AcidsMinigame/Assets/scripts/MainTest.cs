@@ -148,6 +148,9 @@ public class MainTest : MonoBehaviour
             off.SetActive(false);
             on.SetActive(true);
         }
+        saveData["states"]["minigames"]["acidsMinigameCompleted"] = true;
+        Inventory.Instance.add("acid");
+        SaveDataManager.Instance.saveData(saveData);
     }
 
     public void PlayExplosionSound()
@@ -188,9 +191,6 @@ public class MainTest : MonoBehaviour
 
     public void ExitGame()
     {
-        saveData["states"]["minigames"]["acidsMinigameCompleted"] = true;
-        Inventory.Instance.add("acid");
-        SaveDataManager.Instance.saveData(saveData);
         SceneManager.LoadScene("main");
     }
 }
