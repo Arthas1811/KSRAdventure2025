@@ -34,7 +34,7 @@
       "h025LaptopPickedUp": false,
       "bossDefeated": false,
       "phoneDestroyed": false,
-      "finishedGameCutscenePlayed":false
+      "constructionCutscenePlayed":false
     },
     "minigames": {
       "holeInWallSaveString": "0|0000000000",
