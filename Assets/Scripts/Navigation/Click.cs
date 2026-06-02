@@ -107,7 +107,7 @@ public class Click : MonoBehaviour
                 continue;
             }
 
-            var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0]), float.Parse(a[1]))).ToList();
+            var polygonCoordiantes = customHotspot["polygonString"].ToString().Split(";").Select(p => p.Split(",")).Select(a => new Vector2(float.Parse(a[0], System.Globalization.CultureInfo.InvariantCulture), float.Parse(a[1], System.Globalization.CultureInfo.InvariantCulture))).ToList();
 
             var vectors = new List<Vector3>();
             foreach (var coordinates in polygonCoordiantes)
