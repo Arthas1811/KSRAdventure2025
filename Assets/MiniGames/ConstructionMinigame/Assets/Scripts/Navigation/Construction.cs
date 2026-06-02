@@ -69,7 +69,11 @@ public class Construction : MonoBehaviour
     public float SpawnHeightBuffer = 1f;
     public Texture2D HoverCursorTexture;
     public Vector2 HoverCursorHotspot = Vector2.zero;
+#if UNITY_WEBGL && !UNITY_EDITOR
+    private bool ForceSoftwareCursor = false; // Force hardware cursor on WebGL
+#else
     private bool ForceSoftwareCursor = true;
+#endif
 
     // State Flags
     public bool InventoryOpen = false;
