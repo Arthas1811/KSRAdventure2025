@@ -410,7 +410,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 283.8, y: -181.27}
+  m_AnchoredPosition: {x: -120.84, y: 184.38}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &37452475
@@ -2460,6 +2460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3460af87029b2a3479bf3f8527bcb393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainTest
+  saveDataManager: {fileID: 0}
+  inventory: {fileID: 0}
   WaterUse: 0
   LithiumUse: 0
   FumeHUse: 0
@@ -4803,6 +4805,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3460af87029b2a3479bf3f8527bcb393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainTest
+  saveDataManager: {fileID: 0}
+  inventory: {fileID: 0}
   WaterUse: 0
   LithiumUse: 0
   FumeHUse: 0
