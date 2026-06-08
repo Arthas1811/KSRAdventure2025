@@ -83,6 +83,11 @@ public class SequenceChecker : MonoBehaviour
                 if (RandomArray.CurrentSequenceIndex >= RandomArray.AllSequences.Count)
                 {
                     gameOver = true;
+                    saveData["states"]["minigames"]["fireExtinguished"] = true;
+                    saveData["states"]["basement"]["h022IsBurning"] = false;
+                    saveData["states"]["basement"]["h022IsExtinguished"] = true;
+                    saveData["states"]["basement"]["h025DoorOpen"] = true;
+                    SaveDataManager.Instance.saveData(saveData);
                     if (feedbackText != null) feedbackText.text = "";
                     if (winText != null) winText.text = "Du hast gewonnen!";
                     Invoke(nameof(Quit), 2f);
@@ -109,11 +114,6 @@ public class SequenceChecker : MonoBehaviour
 
     void Quit()
     {
-        saveData["states"]["minigames"]["fireExtinguished"] = true;
-        saveData["states"]["basement"]["h022IsBurning"] = false;
-        saveData["states"]["basement"]["h022IsExtinguished"] = true;
-        saveData["states"]["basement"]["h025DoorOpen"] = true;
-        SaveDataManager.Instance.saveData(saveData);
         SceneManager.LoadScene("main");
     }
 }

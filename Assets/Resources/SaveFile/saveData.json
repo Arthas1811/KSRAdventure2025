@@ -1,5 +1,5 @@
 {
-  "currentImage": "h1EntranceOutside",
+  "currentImage": "start",
   "itemsOwned": [],
   "states": {
     "entrance": {
@@ -33,7 +33,8 @@
       "h025PliersPickedUp": false,
       "h025LaptopPickedUp": false,
       "bossDefeated": false,
-      "phoneDestroyed": false
+      "phoneDestroyed": false,
+      "constructionCutscenePlayed":false
     },
     "minigames": {
       "holeInWallSaveString": "0|0000000000",

@@ -1,4 +1,7 @@
 {
+    "meta":{
+        "music":"Music/ADayatSchool"
+    },
     "hl2": {
         "states": {
             "main": {
