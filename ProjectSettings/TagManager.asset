@@ -15,6 +15,7 @@ TagManager:
   - 5
   - zwei
   - CodeBlockClone
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -23,10 +24,10 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
-  - 
+  - Boss
+  - Ground
+  - Fire
+  - Platform
   - 
   - 
   - 
@@ -51,6 +52,18 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3352507999
+    locked: 0
+  - name: Boss
+    uniqueID: 3377126259
+    locked: 0
+  - name: Bridge
+    uniqueID: 2269615435
+    locked: 0
+  - name: Player
+    uniqueID: 1685468233
     locked: 0
   m_RenderingLayers:
   - Default

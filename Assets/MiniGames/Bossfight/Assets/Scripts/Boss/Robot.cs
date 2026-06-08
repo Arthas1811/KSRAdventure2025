@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Robot : MonoBehaviour
 {
-    public float speed = 2.7f;
+    public float speed = 2.5f;
     public int damage = 1;
-    public float lifeTime = 10f;
+    public float lifeTime = 7f;
 
     Transform player;
 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6345212830616678550}
   - component: {fileID: 5393706818077602897}
   - component: {fileID: 1114311332215171576}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: FirePiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1368703531
+  m_SortingLayerID: -2025351861
   m_SortingLayer: 3
   m_SortingOrder: 6
   m_Sprite: {fileID: 1623645165, guid: 4d67a60d207bb2b45b83fc070709e6e1, type: 3}

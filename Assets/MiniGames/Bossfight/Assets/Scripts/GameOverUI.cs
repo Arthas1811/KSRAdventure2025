@@ -15,10 +15,17 @@ public class GameOverUI : MonoBehaviour
     public void Show()
     {
         panel.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void Restart()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void Exit()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("main");
     }
 }

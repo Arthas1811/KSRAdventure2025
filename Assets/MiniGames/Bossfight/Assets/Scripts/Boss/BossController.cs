@@ -33,8 +33,15 @@ public class BossController : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(StartDelayed());
+    }
+
+    IEnumerator StartDelayed()
+    {
+        yield return new WaitForSeconds(1.3f);
         StartCoroutine(AttackLoop());
     }
+
     IEnumerator AttackLoop()
     {
         while (true)
