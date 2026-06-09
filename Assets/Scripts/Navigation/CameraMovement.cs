@@ -1,9 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class CameraMovement : MonoBehaviour
 {
-    public float sensitivity = 0.2f;
+    public float mouseSensitivity = 0.2f;
+    public float arrowSensitivity = 1f;
+    public Slider mouseSlider;
+    public Slider arrowSlider;
     public float x = 0f;
     public float y = 0f;
     public Click main;
@@ -15,6 +19,8 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
+        mouseSensitivity = mouseSlider.value;
+        arrowSensitivity = arrowSlider.value;
         if (PhoneSceneNavigation.IsPhoneOverlayOpen)
         {
             return;
@@ -28,8 +34,8 @@ public class CameraMovement : MonoBehaviour
                 {
                     Vector2 mouse = Mouse.current.delta.ReadValue();
 
-                    x -= mouse.y * sensitivity;
-                    y += mouse.x * sensitivity;
+                    x -= mouse.y * mouseSensitivity;
+                    y += mouse.x * mouseSensitivity;
 
                     x = Mathf.Clamp(x, -90f, 90f);
 
@@ -38,25 +44,25 @@ public class CameraMovement : MonoBehaviour
             }
             if (Keyboard.current != null && Keyboard.current[MoveUpwardsKey].isPressed)
             {
-                x += 0.5f;
+                x += arrowSensitivity;
                 x = Mathf.Clamp(x, -90f, 90f);
                 transform.localRotation = Quaternion.Euler(-x, -y, 0f);
             }
             if (Keyboard.current != null && Keyboard.current[MoveDownwardsKey].isPressed)
             {
-                x -= 0.5f;
+                x -= arrowSensitivity;
                 x = Mathf.Clamp(x, -90f, 90f);
                 transform.localRotation = Quaternion.Euler(-x, -y, 0f);
             }
             if (Keyboard.current != null && Keyboard.current[MoveRightKey].isPressed)
             {
-                y -= 0.5f;
+                y -= arrowSensitivity;
                 x = Mathf.Clamp(x, -90f, 90f);
                 transform.localRotation = Quaternion.Euler(-x, -y, 0f);
             }
             if (Keyboard.current != null && Keyboard.current[MoveLeftKey].isPressed)
             {
-                y += 0.5f;
+                y += arrowSensitivity;
                 x = Mathf.Clamp(x, -90f, 90f);
                 transform.localRotation = Quaternion.Euler(-x, -y, 0f);
             }
