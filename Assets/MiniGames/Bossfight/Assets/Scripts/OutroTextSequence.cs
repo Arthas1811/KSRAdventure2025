@@ -22,6 +22,8 @@ public class OutroTextSequence : MonoBehaviour
             yield return new WaitForSeconds(delayBetween);
             yield return StartCoroutine(FadeOut(canvas));
         }
+
+        SceneManager.LoadScene("main");
     }
 
     IEnumerator FadeIn(CanvasGroup canvas)

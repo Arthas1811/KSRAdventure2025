@@ -422,7 +422,14 @@ public class Click : MonoBehaviour
             string[] parts = action.Split(':');
             string locationName = parts[1];
             string entryImage = parts.Length >= 3 ? parts[2] : null;
-            LoadLocation(locationName, entryImage);
+            if (locationName != saveData["currentLocation"].ToString())
+            {
+                LoadLocation(locationName, entryImage);
+            }
+            else
+            {
+                completeAction(entryImage, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
+            }
             return;
         }
         else if (action.StartsWith("sfx:"))
