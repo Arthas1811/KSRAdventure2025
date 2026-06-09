@@ -4,7 +4,7 @@ using System.Collections;
 public class PanelSwitcher : MonoBehaviour
 {
     public string targetMessage;
-    public float delay = 3f;
+    public float delay = 0f;
 
     public GameObject oldPanel;
     public GameObject oldPanel2;
