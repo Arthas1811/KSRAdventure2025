@@ -26,6 +26,7 @@
             {
                 "actions": [
                     "location:entrance:h1Infoboard"
+
                 ],
                 "requirements": [],
                 "polygonString": "0.183,0.430;0.186,0.585;0.249,0.592;0.247,0.423"

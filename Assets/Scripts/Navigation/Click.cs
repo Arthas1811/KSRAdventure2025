@@ -223,7 +223,7 @@ public class Click : MonoBehaviour
                 var emptyString = Array.Empty<string>();
                 foreach (var action in activeState["actions"])
                 {
-                    completeAction(action.ToString(), emptyString, currentImage, 0f, 60f, null, null);
+                    completeAction(action.ToString(), emptyString, 0f, 60f, null, null);
                 }
             }
         }
@@ -386,7 +386,7 @@ public class Click : MonoBehaviour
         return true;
     }
 
-    void completeAction(string action, string[] requirements, string currentImage, float zoomDuration, float FOV, Dictionary<GameObject, string[]> hotspotActions, Dictionary<GameObject, string[]> hotspotRequirements)
+    void completeAction(string action, string[] requirements, float zoomDuration, float FOV, Dictionary<GameObject, string[]> hotspotActions, Dictionary<GameObject, string[]> hotspotRequirements)
     {
         if (!checkRequirements(requirements))
             return;
@@ -428,7 +428,7 @@ public class Click : MonoBehaviour
             }
             else
             {
-                completeAction(entryImage, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
+                completeAction(entryImage, requirements, zoomDuration, FOV, hotspotActions, hotspotRequirements);
             }
             return;
         }
@@ -600,7 +600,7 @@ public class Click : MonoBehaviour
                 if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
                 {
                     foreach (var action in actions)
-                        completeAction(action, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
+                        completeAction(action, requirements, zoomDuration, FOV, hotspotActions, hotspotRequirements);
                     break; // only act on the nearest matching hotspot
                 }
             }
@@ -628,7 +628,7 @@ public class Click : MonoBehaviour
                         if (hotspotActions.TryGetValue(hit.collider.gameObject, out string[] actions) && hotspotRequirements.TryGetValue(hit.collider.gameObject, out string[] requirements))
                         {
                             foreach (var action in actions)
-                                completeAction(action, requirements, currentImage, zoomDuration, FOV, hotspotActions, hotspotRequirements);
+                                completeAction(action, requirements, zoomDuration, FOV, hotspotActions, hotspotRequirements);
                         }
                     }
                 }

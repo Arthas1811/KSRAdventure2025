@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 10;
+    public int maxHealth = 6;
     public int currentHealth;
     public float invincibleTime = 1f;
 

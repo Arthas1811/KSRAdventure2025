@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
 
             var sources = GetComponentsInChildren<AudioSource>();
             musicSource = sources[0];
