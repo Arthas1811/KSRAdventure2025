@@ -2466,6 +2466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0adc6528cf93fd346bd518b45ac1cd75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InstructionsManager
+  saveDataManager: {fileID: 0}
 --- !u!4 &957837458
 Transform:
   m_ObjectHideFlags: 0
@@ -3416,7 +3417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelSwitcher
   targetMessage: The valve is complete!
-  delay: 3
+  delay: 0
   oldPanel: {fileID: 135479414}
   oldPanel2: {fileID: 283203686}
   Temp: {fileID: 673936302}
