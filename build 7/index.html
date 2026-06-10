@@ -7,7 +7,6 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <style>
-      /* 1. Reset page behavior and center the container */
       html, body {
         margin: 0;
         padding: 0;
@@ -20,19 +19,15 @@
         overflow: hidden;
       }
 
-      /* 2. Force the container to lock into a responsive 16:9 box */
       #unity-container {
-        /* Clear out default Unity layout styles */
         position: relative !important;
         left: auto !important;
         top: auto !important;
         transform: none !important;
         margin: 0 auto !important;
 
-        /* Enforce aspect ratio */
         aspect-ratio: 16 / 9 !important;
 
-        /* Mathematical scaling guardrail to prevent screen cutoff */
         width: min(95vw, calc(90vh * 16 / 9)) !important;
         max-width: 1280px;
         height: auto !important;
@@ -42,7 +37,6 @@
         flex-direction: column;
       }
 
-      /* 3. Keep the game canvas strictly glued to the container bounds */
       #unity-canvas {
         width: 100% !important;
         height: 100% !important;

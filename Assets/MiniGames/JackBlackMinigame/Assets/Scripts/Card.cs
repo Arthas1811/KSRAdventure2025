@@ -50,7 +50,16 @@ public class Card
         }
 
         // Sprite name
-        sprite = type + "_of_" + suit.ToString();
+        string suitStr = "";
+        switch (suit)
+        {
+            case Suit.Hearts: suitStr = "Hearts"; break;
+            case Suit.Diamonds: suitStr = "Diamonds"; break;
+            case Suit.Spades: suitStr = "Spades"; break;
+            case Suit.Clubs: suitStr = "Clubs"; break;
+        }
+
+        sprite = type + "_of_" + suitStr;
         sprite = sprite.ToLower();
     }   
 }
