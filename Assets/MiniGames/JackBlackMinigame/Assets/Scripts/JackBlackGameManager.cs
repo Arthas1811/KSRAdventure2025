@@ -44,11 +44,11 @@ public class JackBlackGameManager : MonoBehaviour
     public async void InitiateGame()
     {   
         // Deal Initial two cards to player and one to dealer
-        await Task.Delay(1000);
+        await Awaitable.WaitForSecondsAsync(1f);
         await PlayerDrawCard();
-        await Task.Delay(1000);
+        await Awaitable.WaitForSecondsAsync(1f);
         DealerDrawCard();
-        await Task.Delay(1000);
+        await Awaitable.WaitForSecondsAsync(1f);
         await PlayerDrawCard();
         PlayerLocked = false;
     }
@@ -127,13 +127,13 @@ public class JackBlackGameManager : MonoBehaviour
     {   
         // initial second card !is a must
         DealerDrawCard();
-        await Task.Delay(1000);
+        await Awaitable.WaitForSecondsAsync(1f);
 
         // Always check wheter a new card needs to be drawn (Dealer draws al long as score is < 17)
         while (DealerScore < 17)
         {
             DealerDrawCard();
-            await Task.Delay(1000);
+            await Awaitable.WaitForSecondsAsync(1f);
 
             // Fix that aces can be 1 or 11
             if (DealerScore > 21)
@@ -196,7 +196,7 @@ public class JackBlackGameManager : MonoBehaviour
             CurrentBid = 0;
         }
 
-        await Task.Delay(3000);
+        await Awaitable.WaitForSecondsAsync(3f);
         
         // return to bidding table
         ToBiddingTable();
